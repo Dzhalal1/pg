@@ -179,7 +179,7 @@ http://ionicframework.com/docs/theming/ */
 
         --ion-toolbar-background: #2db2aa;
 
-        --ion-item-background: #2db2aa;
+        --ion-item-background: #cacaca;
 
         --ion-card-background: #2db2aa;
     }
@@ -252,9 +252,9 @@ ion-tab-button {
     background-color: transparent;
 }
 
-/*ion-icon {*/
-/*    color: white;*/
-/*}*/
+ion-icon {
+    color: black;
+}
 /*ion-icon:active {*/
 /*    color: black;*/
 /*}*/
