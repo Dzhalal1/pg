@@ -71,23 +71,24 @@
 
 <style scoped>
     ion-input {
-        background-color: #cacaca !important;
+        background-color: #E5E7E9 !important;
         border-radius: 30px;
         height: 80%;
         width: 300px;
         padding-left: 1em !important;
-        color: black;
-        font-family: "TRY Clother Black";
-        /*font-family: "Jost SemiBold";*/
+        color: #7B7D7D;
+        font-family: "TRY Clother Black", sans-serif;
     }
+
+
 
     ion-button {
         border-radius: 100px;
         background-color: lightseagreen;
         color: white;
-        font-family: "TRY Clother Black";
-        /*display: flex;*/
-        /*width: 50%;/*/
+        font-family: "TRY Clother Black", sans-serif;
+        font-size: 14pt;
+        display: flex;
 
 
 
