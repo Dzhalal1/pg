@@ -48,6 +48,13 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
+        <ion-grid class="bac__image">
+            <ion-row>
+                <ion-col>
+                    <ion-img :src="require('./../assets/img/background/myapp.svg')"></ion-img>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-page>
 </template>
 
@@ -62,6 +69,7 @@
         IonCol,
         IonRow,
         IonGrid,
+        IonImg,
         IonRippleEffect,
         // IonHeader,
         // IonToolbar,
@@ -80,6 +88,7 @@
             IonCol,
             IonRow,
             IonGrid,
+            IonImg,
             // IonRippleEffect,
             // IonLabel,
             // IonItem,
@@ -137,5 +146,14 @@
         font-size: 16pt;
         color: black;
         font-family: "GeometriaMedium", sans-serif;
+    }
+
+    .bac__image {
+        background: linear-gradient(-360deg, lightseagreen, rgba(45, 178, 170, 0));
+        width: 100%;
+    }
+
+    ion-img {
+        height: 120px;
     }
 </style>
