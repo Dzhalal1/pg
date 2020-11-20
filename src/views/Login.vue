@@ -1,24 +1,52 @@
 <template>
     <ion-page>
-        <ion-grid>
+        <ion-grid fixed="default">
             <ion-row>
                 <ion-col>
-                    <ion-icon name="person-outline"></ion-icon>
-                    <ion-input placeholder="Username"></ion-input>
+                    <ion-row>
+                        <ion-col>
+                            <ion-row>
+                                <ion-col>
+                                    <p>Авторизация</p>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="login__input">
+                            <ion-row>
+                                <ion-col size="2" class="login__input__icon">
+                                    <ion-icon :icon="person"></ion-icon>
+                                </ion-col>
+                                <ion-col size="10">
+                                    <ion-input placeholder="Логин" type="email"></ion-input>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="login__input">
+                            <ion-row>
+                                <ion-col size="2" class="login__input__icon">
+                                    <ion-icon :icon="lockClosed"></ion-icon>
+                                </ion-col>
+                                <ion-col size="10">
+                                    <ion-input placeholder="Пароль" type="password"></ion-input>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-row class="ion-justify-content-center">
+                                <ion-col size="8">
+                                    <ion-button expand="full" fill="solid" shape="round" size="large">войти</ion-button>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
                 </ion-col>
             </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-icon name="person-outline"></ion-icon>
-                    <ion-input placeholder="Password"></ion-input>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col>
-                    <ion-button expand="full" fill="clear">LOGIN</ion-button>
-                </ion-col>
-            </ion-row>
-
         </ion-grid>
     </ion-page>
 </template>
@@ -34,13 +62,14 @@
         IonCol,
         IonRow,
         IonGrid,
+        IonRippleEffect,
         // IonHeader,
         // IonToolbar,
         // IonTitle,
         // IonContent
     } from '@ionic/vue';
     import ExploreContainer from '@/components/ExploreContainer.vue';
-    import {lockClosed, personOutline} from 'ionicons/icons';
+    import {lockClosed, person} from 'ionicons/icons';
 
     export default {
         name: 'Login',
@@ -51,6 +80,7 @@
             IonCol,
             IonRow,
             IonGrid,
+            // IonRippleEffect,
             // IonLabel,
             // IonItem,
             IonIcon,
@@ -63,38 +93,49 @@
         setup() {
             return {
                 lockClosed,
-                personOutline
+                person
             }
         }
     }
 </script>
 
 <style scoped>
-    ion-input {
+    ion-col.login__input {
         background-color: #E5E7E9 !important;
         border-radius: 30px;
-        height: 80%;
-        width: 300px;
-        padding-left: 1em !important;
-        color: #7B7D7D;
-        font-family: "TRY Clother Black", sans-serif;
+        margin-top: 1em;
     }
 
+    ion-col.login__input ion-input {
+        color: gray;
+        font-family: "GeometriaMedium", sans-serif;
+    }
+
+    ion-icon {
+        font-size: 25px;
+        color: #acacac;
+    }
+
+    ion-col.login__input__icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
 
     ion-button {
-        border-radius: 100px;
-        background-color: lightseagreen;
-        color: white;
-        font-family: "TRY Clother Black", sans-serif;
-        font-size: 14pt;
-        display: flex;
-
-
-
+        font-family: "Geometria", sans-serif;
+        font-weight: bold;
+        margin-top: 0.5em;
+        font-size: 12pt;
     }
 
-    ion-item {
-        background-color: red !important;
+    p {
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        font-size: 16pt;
+        color: black;
+        font-family: "GeometriaMedium", sans-serif;
     }
 </style>

@@ -4,7 +4,7 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
     /** primary **/
-    --ion-color-primary: #00695c;
+    --ion-color-primary: lightseagreen;
     --ion-color-primary-rgb: 56, 128, 255;
     --ion-color-primary-contrast: #ffffff;
     --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -241,7 +241,7 @@ body {
 ion-tab-bar {
     border-radius: 10px 10px 0 0;
     /*background-color: var(--ion-color-primary);*/
-    box-shadow: 0 0 10px rgba(100,100,100,0.5);
+    box-shadow: 0 0 10px rgba(100, 100, 100, 0.5);
 }
 
 ion-tabs {
@@ -255,6 +255,27 @@ ion-tab-button {
 ion-icon {
     color: black;
 }
-/*ion-icon:active {*/
-/*    color: black;*/
-/*}*/
+
+
+/*fonts*/
+
+@font-face {
+    font-family: 'UniSansHeavy';
+    src: url('./../fonts/UniSansHeavy.otf');
+}
+
+@font-face {
+    font-family: 'CenturyGothic';
+    src: url('./../fonts/CenturyGothic.ttf');
+}
+
+@font-face {
+    font-family: 'Geometria';
+    src: url('./../fonts/Geometria.otf');
+}
+
+@font-face {
+    font-family: 'GeometriaMedium';
+    src: url('./../fonts/GeometriaMedium.otf');
+}
+
