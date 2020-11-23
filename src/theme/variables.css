@@ -4,7 +4,7 @@ http://ionicframework.com/docs/theming/ */
 /** Ionic CSS Variables **/
 :root {
     /** primary **/
-    --ion-color-primary: lightseagreen;
+    --ion-color-primary: #20b2aa;
     --ion-color-primary-rgb: 56, 128, 255;
     --ion-color-primary-contrast: #ffffff;
     --ion-color-primary-contrast-rgb: 255, 255, 255;
@@ -228,32 +228,17 @@ http://ionicframework.com/docs/theming/ */
     }
 }
 
-body {
-    /*border: 1px solid red !important;*/
-}
-
 .toolbar-container {
-    /*border: 1px solid red !important;*/
     border-radius: 10px !important;
-    height: 100px !important;
 }
 
 ion-tab-bar {
     border-radius: 10px 10px 0 0;
-    /*background-color: var(--ion-color-primary);*/
-    box-shadow: 0 0 10px rgba(100, 100, 100, 0.5);
-}
-
-ion-tabs {
-
+    box-shadow: 0 0 20px gray;
 }
 
 ion-tab-button {
     background-color: transparent;
-}
-
-ion-icon {
-    color: black;
 }
 
 
@@ -275,7 +260,12 @@ ion-icon {
 }
 
 @font-face {
-    font-family: 'GeometriaMedium';
-    src: url('./../fonts/GeometriaMedium.otf');
+    font-family: 'Geometria Light';
+    src: url('./../fonts/GeometriaLight.otf');
+}
+
+@font-face {
+    font-family: 'Jost SemiBold';
+    src: url('./../fonts/JostSemiBold.ttf');
 }
 

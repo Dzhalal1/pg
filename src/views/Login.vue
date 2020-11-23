@@ -1,5 +1,6 @@
 <template>
     <ion-page>
+        <ion-img :src="require('./../assets/img/background/back.svg')"></ion-img>
         <ion-grid fixed="default">
             <ion-row>
                 <ion-col>
@@ -12,46 +13,43 @@
                             </ion-row>
                         </ion-col>
                     </ion-row>
-                    <ion-row>
-                        <ion-col class="login__input">
+                    <ion-row class="ion-justify-content-center">
+                        <ion-col size="10" class="login__input">
                             <ion-row>
                                 <ion-col size="2" class="login__input__icon">
                                     <ion-icon :icon="person"></ion-icon>
                                 </ion-col>
                                 <ion-col size="10">
-                                    <ion-input placeholder="Логин" type="email"></ion-input>
+                                    <ion-input placeholder="Логин" v-model="formLogin.username"></ion-input>
                                 </ion-col>
                             </ion-row>
                         </ion-col>
                     </ion-row>
-                    <ion-row>
-                        <ion-col class="login__input">
+                    <ion-row class="ion-justify-content-center">
+                        <ion-col class="login__input" size="10">
                             <ion-row>
                                 <ion-col size="2" class="login__input__icon">
                                     <ion-icon :icon="lockClosed"></ion-icon>
                                 </ion-col>
                                 <ion-col size="10">
-                                    <ion-input placeholder="Пароль" type="password"></ion-input>
+                                    <ion-input placeholder="Пароль" type="password"
+                                               v-model="formLogin.password"></ion-input>
                                 </ion-col>
                             </ion-row>
                         </ion-col>
                     </ion-row>
-                    <ion-row>
-                        <ion-col>
-                            <ion-row class="ion-justify-content-center">
-                                <ion-col size="8">
-                                    <ion-button expand="full" fill="solid" shape="round" size="large">войти</ion-button>
-                                </ion-col>
-                            </ion-row>
+                    <ion-row class="ion-justify-content-center">
+                        <ion-col style="padding: 0;" size="10">
+                            <ion-button type="submit" expand="full" fill="solid" shape="round" size="large"
+                                        @click="submit">Вход
+                            </ion-button>
                         </ion-col>
                     </ion-row>
                 </ion-col>
             </ion-row>
-        </ion-grid>
-        <ion-grid class="bac__image">
-            <ion-row>
+            <ion-row class="row__academy">
                 <ion-col>
-                    <ion-img :src="require('./../assets/img/background/myapp.svg')"></ion-img>
+                    <h5>ФГБОУ ВО Костромская ГСХА</h5>
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -78,6 +76,8 @@
     } from '@ionic/vue';
     import ExploreContainer from '@/components/ExploreContainer.vue';
     import {lockClosed, person} from 'ionicons/icons';
+    import http from "@/plugins/axios";
+    // import { IonicStorageModule } from '@ionic/storage';
 
     export default {
         name: 'Login',
@@ -102,7 +102,21 @@
         setup() {
             return {
                 lockClosed,
-                person
+                person,
+                formLogin: {
+                    username: '',
+                    password: '',
+                }
+            }
+        },
+        methods: {
+            submit() {
+                http.post('auth/token/login/', this.formLogin).then((response) => {
+                    http.defaults.headers.common['Authorization'] = 'Token ' + response.data.data.id
+                    http.get('api/user/info').then((response) => {
+                        console.log(response)
+                    })
+                })
             }
         }
     }
@@ -117,11 +131,11 @@
 
     ion-col.login__input ion-input {
         color: gray;
-        font-family: "GeometriaMedium", sans-serif;
+        font-family: "Jost SemiBold", sans-serif;
     }
 
     ion-icon {
-        font-size: 25px;
+        font-size: 20px;
         color: #acacac;
     }
 
@@ -133,10 +147,10 @@
 
 
     ion-button {
-        font-family: "Geometria", sans-serif;
+        font-family: "Jost SemiBold", sans-serif;
         font-weight: bold;
-        margin-top: 0.5em;
-        font-size: 12pt;
+        margin-top: 0.7em;
+        font-size: 18pt;
     }
 
     p {
@@ -144,16 +158,22 @@
         display: flex;
         justify-content: center;
         font-size: 16pt;
-        color: black;
-        font-family: "GeometriaMedium", sans-serif;
+        color: lightseagreen;
+        font-family: "Jost SemiBold", sans-serif;
     }
 
-    .bac__image {
-        background: linear-gradient(-360deg, lightseagreen, rgba(45, 178, 170, 0));
+    h5 {
+        color: #20b2aa;
+        font-family: "Jost SemiBold", sans-serif;
+        font-size: 12pt;
+        text-align: center;
+    }
+
+    .row__academy {
+        display: table-cell;
+        position: absolute;
+        bottom: 0;
+        left: auto;
         width: 100%;
-    }
-
-    ion-img {
-        height: 120px;
     }
 </style>
