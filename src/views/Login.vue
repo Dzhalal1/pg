@@ -158,7 +158,7 @@
         display: flex;
         justify-content: center;
         font-size: 16pt;
-        color: lightseagreen;
+        color: #20b2aa;
         font-family: "Jost SemiBold", sans-serif;
     }
 

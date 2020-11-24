@@ -14,7 +14,7 @@
                     <ion-icon :icon="statsChart"/>
                     <ion-label></ion-label>
                 </ion-tab-button>
-                <ion-tab-button tab="tab1" href="/tabs/tab1">
+                <ion-tab-button tab="profile" href="/tabs/profile">
                     <ion-icon :icon="person"/>
                     <ion-label></ion-label>
                 </ion-tab-button>
