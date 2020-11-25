@@ -122,6 +122,7 @@
     * {
         padding: 0;
         margin: 0;
+        font-family: "Jost SemiBold", sans-serif;
     }
 
     .bc__profile {
@@ -135,13 +136,13 @@
     .bc__main {
         background-color: #ececec;
         padding: 50px;
-        border-radius: 30px 30px 0 0;
-        box-shadow: 0 0 50px dimgray;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 0 20px dimgray;
     }
 
     ion-input {
         background-color: #dcddde !important;
-        border-radius: 30px;
+        border-radius: 20px;
         margin-top: 1em;
         color: black;
         font-family: "Jost SemiBold", sans-serif;

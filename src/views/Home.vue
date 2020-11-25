@@ -15,13 +15,14 @@
                 </a>
                 <a href="https://eios.kgsxa.ru/">
                     <ion-row class="eios ion-align-items-center ion-activatable ripple-parent">
+                        <ion-col>
+                            <p>Платформа ЕИОС</p>
+                        </ion-col>
                         <ion-ripple-effect></ion-ripple-effect>
                         <ion-col>
                             <ion-img :src="require('./../assets/img/homepage/EIOS.svg')"></ion-img>
                         </ion-col>
-                        <ion-col>
-                            <p>Платформа ЕИОС</p>
-                        </ion-col>
+
                     </ion-row>
                 </a>
                 <a href="https://kgsxa.ru/images/files/raspisanie_2020-2021_1/www/index.htm">
@@ -39,11 +40,12 @@
                     <ion-row class="kgsxa ion-align-items-center ion-activatable ripple-parent">
                         <ion-ripple-effect></ion-ripple-effect>
                         <ion-col>
-                            <ion-img :src="require('./../assets/img/homepage/KGSXA.svg')"></ion-img>
-                        </ion-col>
-                        <ion-col>
                             <p>Сайт ФГБОУ ВО КГСХА</p>
                         </ion-col>
+                        <ion-col>
+                            <ion-img :src="require('./../assets/img/homepage/KGSXA.svg')"></ion-img>
+                        </ion-col>
+
                     </ion-row>
                 </a>
             </ion-grid>

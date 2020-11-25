@@ -228,12 +228,18 @@ http://ionicframework.com/docs/theming/ */
     }
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        /* dark mode variables go here */
+    }
+}
+
 .toolbar-container {
-    border-radius: 10px !important;
+    /*border-radius: 50px !important;*/
 }
 
 ion-tab-bar {
-    border-radius: 10px 10px 0 0;
+    border-radius: 20px 20px 0 0;
     box-shadow: 0 0 20px gray;
 }
 
