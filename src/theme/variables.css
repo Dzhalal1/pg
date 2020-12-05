@@ -228,7 +228,7 @@ http://ionicframework.com/docs/theming/ */
     }
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
     :root {
         /* dark mode variables go here */
     }

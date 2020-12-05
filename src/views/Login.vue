@@ -78,6 +78,7 @@
     import {lockClosed, person} from 'ionicons/icons';
     import http from "@/plugins/axios";
     // import { IonicStorageModule } from '@ionic/storage';
+    import Storage from "@/plugins/storage";
 
     export default {
         name: 'Login',
@@ -111,12 +112,14 @@
         },
         methods: {
             submit() {
-                http.post('auth/token/login/', this.formLogin).then((response) => {
-                    http.defaults.headers.common['Authorization'] = 'Token ' + response.data.data.id
-                    http.get('api/user/info').then((response) => {
-                        console.log(response)
+                Storage.methods.getToken(this.formLogin).then(() => {
+                    Storage.methods.getUserInfo().then(() => {
+                        this.$router.push({
+                           name: 'Home'
+                        })
                     })
                 })
+
             }
         }
     }

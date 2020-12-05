@@ -35,7 +35,8 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: 'home',
-                component: () => import('@/views/Home.vue')
+                component: () => import('@/views/Home.vue'),
+                name:'Home'
             },
             {
                 path: 'profile',
@@ -45,10 +46,12 @@ const routes: Array<RouteRecordRaw> = [
         ]
     },
     {
+        name: 'Login',
         path: '/login',
         component: Login
     },
     {
+        name: 'LoadPage',
         path: '/first',
         component: First
     }
@@ -58,5 +61,10 @@ const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
 })
-
+router.beforeEach((to, from, next) => {
+    if (to.name !== 'Login' && localStorage.getItem('token') === null) {
+        next({name: 'Login'})
+    }
+    else next()
+})
 export default router
