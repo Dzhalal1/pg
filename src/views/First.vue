@@ -1,7 +1,7 @@
 <template>
     <ion-page>
         <ion-grid fixed="default" class="cards">
-            <ion-img :src="require('./../assets/img/firstpage/logo.svg')"></ion-img>
+            <ion-img :src="require('./../assets/img/firstpage/logomain.svg')"></ion-img>
             <ion-row class="footer__academy">
                 <ion-col>
                     <h5>ФГБОУ ВО Костромская ГСХА</h5>

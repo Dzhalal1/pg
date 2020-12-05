@@ -169,7 +169,7 @@
     }
 
     .bc__profile {
-        background-color: lightseagreen;
+        background-color: #20b2aa;
     }
 
     h1 {
