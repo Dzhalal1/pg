@@ -114,12 +114,13 @@
             submit() {
                 Storage.methods.getToken(this.formLogin).then(() => {
                     Storage.methods.getUserInfo().then(() => {
-                        this.$router.push({
-                           name: 'Home'
+                        Storage.methods.getLastSemester().then(() => {
+                            this.$router.push({
+                                name: 'Home'
+                            })
                         })
                     })
                 })
-
             }
         }
     }

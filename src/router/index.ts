@@ -2,7 +2,7 @@ import {createRouter, createWebHistory} from '@ionic/vue-router';
 import {RouteRecordRaw} from 'vue-router';
 import Tabs from '../views/Tabs.vue'
 import Login from '../views/Login.vue'
-import First from  '../views/First.vue'
+import First from '../views/First.vue'
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -36,11 +36,15 @@ const routes: Array<RouteRecordRaw> = [
             {
                 path: 'home',
                 component: () => import('@/views/Home.vue'),
-                name:'Home'
+                name: 'Home'
             },
             {
                 path: 'profile',
                 component: () => import('@/views/Profile.vue')
+            },
+            {
+                path: 'rating',
+                component: () => import('@/views/Rating.vue')
             }
 
         ]
@@ -64,7 +68,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if (to.name !== 'Login' && localStorage.getItem('token') === null) {
         next({name: 'Login'})
-    }
-    else next()
+    } else next()
 })
 export default router

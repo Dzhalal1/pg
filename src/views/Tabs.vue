@@ -10,7 +10,7 @@
                     <ion-icon :icon="book"/>
                     <ion-label>Предметы</ion-label>
                 </ion-tab-button>
-                <ion-tab-button tab="tab3" href="/tabs/tab3">
+                <ion-tab-button tab="rating" href="/tabs/rating">
                     <ion-icon :icon="statsChart"/>
                     <ion-label>Рейтинг</ion-label>
                 </ion-tab-button>
