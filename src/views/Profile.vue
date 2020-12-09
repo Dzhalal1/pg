@@ -96,7 +96,7 @@
     import Storage from "../plugins/storage";
 
     export default {
-        name: 'Home',
+        name: 'Profile',
         components: {
             // ExploreContainer,
             IonInput,

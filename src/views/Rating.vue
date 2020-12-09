@@ -55,15 +55,24 @@
                         <ion-col>
                             <p>Учебный</p>
                         </ion-col>
+                        <ion-col class="ion-text-end">
+                            {{integralRating.Ru}}
+                        </ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col>
                             <p>Внеучебный</p>
                         </ion-col>
+                          <ion-col class="ion-text-end">
+                            {{integralRating.Rv}}
+                        </ion-col>
                     </ion-row>
                     <ion-row>
                         <ion-col>
                             <p>Интегральный</p>
+                        </ion-col>
+                          <ion-col class="ion-text-end">
+                            {{integralRating.Ri}}
                         </ion-col>
                     </ion-row>
                 </ion-col>
@@ -122,6 +131,7 @@
             return {
                 tab: '1',
                 vneucRating: null,
+                integralRating: null,
             }
         },
         computed: {
@@ -159,15 +169,18 @@
             segmentChanged(ev) {
                 console.log('Segment changed', ev);
             },
-            loadVneuchRating() {
+            loadRating() {
                 Storage.methods.getVneucRating().then((response) => {
                     this.vneucRating = response
+                })
+                Storage.methods.getIntegralRating().then((response) => {
+                    this.integralRating = response
                 })
 
             }
         },
         mounted() {
-            this.loadVneuchRating()
+            this.loadRating()
         }
     }
 </script>

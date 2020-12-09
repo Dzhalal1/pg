@@ -29,6 +29,10 @@ const Storage = {
             const reitng = await http.get('api/students/vneuch_reitng/', {params: {semester_id: Storage.getItem('semester').id}})
             return reitng.data.data.attributes.vneuchreit
         },
+        getIntegralRating: async () => {
+            const reitng = await http.get('api/students/integral_reitng/', {params: {semester_id: Storage.getItem('semester').id}})
+            return reitng.data.data.attributes
+        },
         putUserInfo: async (userData: any) => {
             const user = (await http.put('api/user/update_userinfo/' + userData.id + '/', userData.form)).data.data.attributes
             const userStorage = Storage.getItem('user')

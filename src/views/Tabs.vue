@@ -16,7 +16,7 @@
                 </ion-tab-button>
                 <ion-tab-button tab="profile" href="/tabs/profile">
                     <ion-icon :icon="person"/>
-                    <ion-label>Личные данные</ion-label>
+                    <ion-label>Профиль</ion-label>
                 </ion-tab-button>
             </ion-tab-bar>
         </ion-tabs>
