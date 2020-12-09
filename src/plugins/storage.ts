@@ -44,6 +44,10 @@ const Storage = {
         },
         changePassword: async (data: any) => {
             await http.post('api/user/password/', data)
+        },
+        downloadStatements: async (statementId: any) => {
+            const statement = await http.post('api/teachers/pdf/closesubjects/download/' + statementId + '/')
+            console.log(statement)
         }
 
     }
