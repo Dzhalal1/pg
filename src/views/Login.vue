@@ -115,8 +115,10 @@
                 Storage.methods.getToken(this.formLogin).then(() => {
                     Storage.methods.getUserInfo().then(() => {
                         Storage.methods.getLastSemester().then(() => {
-                            this.$router.push({
+                            Storage.methods.getGroupInfo().then(()=>{
+                                  this.$router.push({
                                 name: 'Home'
+                            })
                             })
                         })
                     })

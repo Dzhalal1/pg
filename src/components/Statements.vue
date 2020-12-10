@@ -70,7 +70,15 @@
             },
             downloadStatements(pdf) {
                 Storage.methods.downloadStatements(pdf)
+            },
+            getStatements() {
+                Storage.methods.getStatements().then((response) =>{
+                    this.statements = response
+                })
             }
+        },
+        mounted() {
+            this.getStatements()
         }
     }
 </script>

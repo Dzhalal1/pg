@@ -19,6 +19,9 @@
                         <ion-icon class="check" :icon="checkmarkOutline" v-if="order.acepted"/>
                     </ion-col>
                 </ion-row>
+                <ion-row v-if="orders.length === 0">
+                    <ion-col><p>Список долгов пуст</p></ion-col>
+                </ion-row>
             </ion-grid>
         </ion-content>
     </ion-page>

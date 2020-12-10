@@ -51,9 +51,17 @@ const Storage = {
         },
         getOrders: async () => {
             const orders = await http.get('api/students/get_not_accept_subjects/')
-            console.log(orders.data.data.data, 'store')
             return orders.data.data.data
-        }
+        },
+        getStatements: async () => {
+            const statement = await http.get('api/students/close_subjects/',{params: {group_id: Storage.getItem('group').id}})
+            console.log(statement.data.data.data, 'store')
+            return statement.data.data.data
+        },
+        getGroupInfo: async () => {
+            const group = await http.get('api/students/get_groups_info/', {params: {semester_id: Storage.getItem('semester').id}})
+            Storage.setItem('group', group.data.data)
+        },
 
     }
 }
