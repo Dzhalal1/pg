@@ -48,6 +48,11 @@ const Storage = {
         downloadStatements: async (statementId: any) => {
             const statement = await http.post('api/teachers/pdf/closesubjects/download/' + statementId + '/')
             console.log(statement)
+        },
+        getOrders: async () => {
+            const orders = await http.get('api/students/get_not_accept_subjects/')
+            console.log(orders.data.data.data, 'store')
+            return orders.data.data.data
         }
 
     }

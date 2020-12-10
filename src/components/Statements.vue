@@ -14,7 +14,7 @@
                         </p>
                     </ion-col>
                     <ion-col size="4">
-                            {{formatDate(statement.date_close)}}
+                        {{formatDate(statement.date_close)}}
                     </ion-col>
                     <ion-col size="2">
                         <ion-button @click="downloadStatements(statement.close_subject_id)">
@@ -58,51 +58,7 @@
             return {
                 chevronBackCircleOutline,
                 cloudDownload,
-                statements: [
-                    {
-                        close_subject_id: 17740,
-                        date_close: "2021-01-13",
-                        date_decan: "Не подписано",
-                        date_formed: "Не сформировано",
-                        date_teacher: "Не подписано",
-                        groups: [{id: 4209, group: 716, group_closed_week: 0}],
-                        number: "",
-                        open: true,
-                        statements_list: [],
-                        subject: "Автоматизация сх процессов - Зачет",
-                        teacher: "Васильков Алексей Анатольевич",
-                        teacher_close: false,
-                    },
-                    {
-                        close_subject_id: 17740,
-                        date_close: "2021-01-13",
-                        date_decan: "Не подписано",
-                        date_formed: "Не сформировано",
-                        date_teacher: "Не подписано",
-                        groups: [{id: 4209, group: 716, group_closed_week: 0}],
-                        number: "",
-                        open: true,
-                        statements_list: [],
-                        subject: "Автоматизация сх процессов - Зачет",
-                        teacher: "Васильков Алексей Анатольевич",
-                        teacher_close: false,
-                    },
-                    {
-                        close_subject_id: 17740,
-                        date_close: "2021-01-13",
-                        date_decan: "Не подписано",
-                        date_formed: "Не сформировано",
-                        date_teacher: "Не подписано",
-                        groups: [{id: 4209, group: 716, group_closed_week: 0}],
-                        number: "",
-                        open: true,
-                        statements_list: [],
-                        subject: "Автоматизация сх процессов - Зачет",
-                        teacher: "Васильков Алексей Анатольевич",
-                        teacher_close: false,
-                    },
-                ]
-
+                statements: []
             }
         },
         methods: {
