@@ -17,7 +17,7 @@
                         {{formatDate(statement.date_close)}}
                     </ion-col>
                     <ion-col size="2">
-                        <ion-button @click="downloadStatements(statement.close_subject_id)">
+                        <ion-button :disabled="statement.open" @click="downloadStatements(statement.close_subject_id)">
                             <ion-icon :icon="cloudDownload"/>
                         </ion-button>
                     </ion-col>
@@ -69,7 +69,14 @@
                 return String(str).split('-').reverse().join('.')
             },
             downloadStatements(pdf) {
-                Storage.methods.downloadStatements(pdf)
+                Storage.methods.downloadStatements(pdf).then((response)=> {
+                    const link = document.createElement('a')
+                    link.href = 'https://mrs.kgsxa.ru/media/' + response
+                    link.setAttribute('download', '123.pdf')
+                    link.setAttribute('target', '_blank')
+                    document.body.appendChild(link)
+                    link.click()
+                })
             },
             getStatements() {
                 Storage.methods.getStatements().then((response) =>{

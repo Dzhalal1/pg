@@ -52,6 +52,14 @@
                                 </ion-button>
                             </ion-col>
                         </ion-row>
+                        <ion-row class="click">
+                            <ion-col>
+                                <ion-button type="submit" @click="open_semesters = true" expand="full" fill="solid"
+                                            shape="round" size="large">
+                                    Сменить семестр
+                                </ion-button>
+                            </ion-col>
+                        </ion-row>
                         <ion-row>
                             <ion-col>
                                 <ion-button @click="saveUser" type="submit" expand="full" fill="solid" shape="round"
@@ -66,12 +74,15 @@
             </ion-grid>
             <change-password :open_dialog="open_dialog" @close-dialog="closeChangePassword"
                              v-if="open_dialog"></change-password>
+            <change-semesters :open_dialog="open_semesters" @close-dialog="closeChangeSemesters"
+                              v-if="open_semesters"></change-semesters>
         </ion-content>
     </ion-page>
 </template>
 
 <script>
     import ChangePassword from "./ChangePassword";
+    import ChangeSemesters from "./ChangeSemesters";
     import {
         IonPage,
         modalController,
@@ -105,6 +116,7 @@
             IonRow,
             IonGrid,
             ChangePassword,
+            ChangeSemesters,
             // IonImg,
             // IonRippleEffect,
             // IonLabel,
@@ -119,6 +131,7 @@
         data() {
             return {
                 open_dialog: false,
+                open_semesters: false,
                 user: {
                     email: "",
                     father_name: "",
@@ -148,6 +161,9 @@
             },
             closeChangePassword(data) {
                 this.open_dialog = data
+            },
+            closeChangeSemesters(data) {
+                this.open_semesters = data
             },
             saveUser() {
                 const fd = new FormData()
@@ -208,7 +224,13 @@
     }
 
     .profile__btn {
-        padding-top: 30px;
+        margin-top: 30px;
+        --ion-color-primary: #196FBF;
+
+    }
+
+    .click {
+        --ion-color-primary: #196FBF;
     }
 
 

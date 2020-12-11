@@ -47,20 +47,24 @@ const Storage = {
         },
         downloadStatements: async (statementId: any) => {
             const statement = await http.post('api/teachers/pdf/closesubjects/download/' + statementId + '/')
-            console.log(statement)
+            return statement.data.data
         },
         getOrders: async () => {
             const orders = await http.get('api/students/get_not_accept_subjects/')
             return orders.data.data.data
         },
         getStatements: async () => {
-            const statement = await http.get('api/students/close_subjects/',{params: {group_id: Storage.getItem('group').id}})
+            const statement = await http.get('api/students/close_subjects/', {params: {group_id: Storage.getItem('group').id}})
             console.log(statement.data.data.data, 'store')
             return statement.data.data.data
         },
         getGroupInfo: async () => {
             const group = await http.get('api/students/get_groups_info/', {params: {semester_id: Storage.getItem('semester').id}})
             Storage.setItem('group', group.data.data)
+        },
+        getAcademicYear: async () => {
+            const year = await http.get('api/base/get_academic_year/')
+            return year.data.data
         },
 
     }
