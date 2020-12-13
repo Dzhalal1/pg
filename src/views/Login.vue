@@ -47,12 +47,15 @@
                     </ion-row>
                 </ion-col>
             </ion-row>
-            <ion-row class="row__academy">
+
+        </ion-grid>
+        <ion-footer>
+             <ion-row>
                 <ion-col>
                     <h5>ФГБОУ ВО Костромская ГСХА</h5>
                 </ion-col>
             </ion-row>
-        </ion-grid>
+        </ion-footer>
     </ion-page>
 </template>
 
@@ -63,6 +66,7 @@
         IonButton,
         IonLabel,
         IonItem,
+        IonFooter,
         IonIcon,
         IonCol,
         IonRow,
@@ -87,6 +91,7 @@
             IonInput,
             IonButton,
             IonCol,
+            IonFooter,
             IonRow,
             IonGrid,
             IonImg,
@@ -115,10 +120,8 @@
                 Storage.methods.getToken(this.formLogin).then(() => {
                     Storage.methods.getUserInfo().then(() => {
                         Storage.methods.getLastSemester().then(() => {
-                            Storage.methods.getGroupInfo().then(()=>{
-                                  this.$router.push({
-                                name: 'Home'
-                            })
+                            Storage.methods.getGroupInfo().then(() => {
+                                this.$router.push({name: 'Home'})
                             })
                         })
                     })

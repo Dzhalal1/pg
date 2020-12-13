@@ -3,7 +3,15 @@
         <ion-content>
             <ion-grid fixed="default">
                 <ion-row class="bc__profile">
-                    <h1>{{user.username}}</h1>
+                    <ion-col>
+                       <ion-row>
+                           <ion-col  class="ion-text-end">
+                                <ion-icon @click="logout()" :icon="exitOutline"/>
+                           </ion-col>
+                       </ion-row>
+                        <h1>{{user.username}}</h1>
+
+                    </ion-col>
                 </ion-row>
                 <ion-row class="bc__profile">
                     <ion-col class="bc__main">
@@ -90,8 +98,9 @@
         IonInput,
         IonButton,
         // IonLabel,
+
         // IonItem,
-        // IonIcon,
+        IonIcon,
         IonCol,
         IonRow,
         IonGrid,
@@ -103,7 +112,7 @@
         IonContent
     } from '@ionic/vue';
     import ExploreContainer from '@/components/ExploreContainer.vue';
-    import {lockClosed, person} from 'ionicons/icons';
+    import {exitOutline, person} from 'ionicons/icons';
     import Storage from "../plugins/storage";
 
     export default {
@@ -112,6 +121,7 @@
             // ExploreContainer,
             IonInput,
             IonButton,
+            IonIcon,
             IonCol,
             IonRow,
             IonGrid,
@@ -132,6 +142,7 @@
             return {
                 open_dialog: false,
                 open_semesters: false,
+                exitOutline,
                 user: {
                     email: "",
                     father_name: "",
@@ -172,6 +183,12 @@
                 }
 
                 Storage.methods.putUserInfo({id: this.user.id, form: fd})
+            },
+            logout() {
+                localStorage.clear()
+                this.$router.push({
+                    name: 'Login'
+                })
             }
         }
     }
@@ -231,6 +248,12 @@
 
     .click {
         --ion-color-primary: #196FBF;
+    }
+
+    .ion-text-end {
+        font-size: 25pt;
+        margin-right: 10px;
+        margin: 10px;
     }
 
 
