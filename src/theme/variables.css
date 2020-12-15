@@ -240,7 +240,7 @@ http://ionicframework.com/docs/theming/ */
 
 ion-tab-bar {
     border-radius: 20px 20px 0 0;
-    box-shadow: 0 0 20px gray;
+    box-shadow: 0 20px 25px 2px black;
 }
 
 ion-tab-button {
