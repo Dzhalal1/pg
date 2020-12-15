@@ -1,9 +1,17 @@
 <template>
     <ion-page>
         <ion-header>
-            <ion-button @click="closeComponent">
-                <ion-icon :icon="chevronBackCircleOutline"/>
-            </ion-button>
+            <ion-row>
+                <ion-col>
+                    <ion-icon size="1" class="return" @click="closeComponent" :icon="chevronBackOutline"/>
+                </ion-col>
+                <ion-col  size="12" class="ion-text-center">
+                    <ion-button type="submit" @click="open_semesters = true" expand="block" fill="clear"
+                                shape="round">
+                        Сменить семестр
+                    </ion-button>
+                </ion-col>
+            </ion-row>
         </ion-header>
         <ion-content>
             <ion-grid class="subjects">
@@ -21,7 +29,10 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
-            <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"  :subject_name="selectedSubject.name" v-if="open"></scores-table>
+            <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"
+                          :subject_name="selectedSubject.name" v-if="open"></scores-table>
+            <change-semesters :open_dialog="open_semesters" @close-dialog="closeChangeSemesters"
+                              v-if="open_semesters"></change-semesters>
         </ion-content>
     </ion-page>
 </template>
@@ -38,9 +49,10 @@
         IonIcon,
         IonButton,
     } from '@ionic/vue';
-    import {chevronBackCircleOutline} from 'ionicons/icons';
+    import {chevronBackOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
     import ScoresTable from "../views/ScoresTable";
+    import ChangeSemesters from "../views/ChangeSemesters";
 
     export default {
         name: "ListSubjects",
@@ -53,14 +65,16 @@
             IonRow,
             IonIcon,
             IonButton,
+            ChangeSemesters,
             ScoresTable
         },
         data() {
             return {
-                chevronBackCircleOutline,
+                chevronBackOutline,
                 subjects: [],
                 open: false,
                 selectedSubject: [],
+                open_semesters: false,
 
             }
         },
@@ -76,8 +90,11 @@
             closeScorestable(data) {
                 this.open = false
             },
+            closeChangeSemesters(data) {
+                this.open_semesters = data
+            },
             openScoresTable(subject) {
-                this.selectedSubject  = subject
+                this.selectedSubject = subject
                 this.open = true
             }
         },
@@ -109,5 +126,25 @@
         color: grey;
         border: 1px solid #e0dfdf;
     }
+
+    .ion-text-center {
+        /*--ion-color-primary: #196FBF;*/
+    }
+
+    ion-button {
+        font-family: "Jost SemiBold", sans-serif;
+        font-weight: bold;
+        font-size: 10pt;
+    }
+
+    ion-header {
+        /*height: 100px;*/
+    }
+
+    .return {
+        font-size: 25pt;
+        color: lightseagreen;
+    }
+
 
 </style>

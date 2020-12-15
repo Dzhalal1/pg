@@ -1,9 +1,17 @@
 <template>
     <ion-page>
         <ion-header>
-            <ion-button @click="closeComponent">
-                <ion-icon :icon="chevronBackCircleOutline"/>
-            </ion-button>
+            <ion-row>
+                <ion-col>
+                    <ion-icon size="1" class="return" @click="closeComponent" :icon="chevronBackOutline"/>
+                </ion-col>
+                <ion-col size="12" class="ion-text-center">
+                    <ion-button type="submit" @click="open_semesters = true" expand="block" fill="clear"
+                                shape="round">
+                        Сменить семестр
+                    </ion-button>
+                </ion-col>
+            </ion-row>
         </ion-header>
         <ion-content>
             <ion-grid class="statements">
@@ -23,6 +31,8 @@
                     <ion-col><p>Список долгов пуст</p></ion-col>
                 </ion-row>
             </ion-grid>
+            <change-semesters :open_dialog="open_semesters" @close-dialog="closeChangeSemesters"
+                              v-if="open_semesters"></change-semesters>
         </ion-content>
     </ion-page>
 </template>
@@ -39,8 +49,9 @@
         IonIcon,
         IonButton,
     } from '@ionic/vue';
-    import {chevronBackCircleOutline, checkmarkOutline} from 'ionicons/icons';
+    import {chevronBackOutline, checkmarkOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
+    import ChangeSemesters from "../views/ChangeSemesters";
 
     export default {
         name: "Orders",
@@ -53,12 +64,14 @@
             IonRow,
             IonIcon,
             IonButton,
+            ChangeSemesters
         },
         data() {
             return {
-                chevronBackCircleOutline,
+                chevronBackOutline,
                 checkmarkOutline,
-                orders: []
+                orders: [],
+                open_semesters: false,
             }
         },
         methods: {
@@ -69,7 +82,10 @@
                 Storage.methods.getOrders().then((response) => {
                     this.orders = response
                 })
-            }
+            },
+            closeChangeSemesters(data) {
+                this.open_semesters = data
+            },
         },
         mounted() {
             this.getOrders()
@@ -102,5 +118,16 @@
     .check {
         color: lightseagreen !important;
         font-size: 15pt;
+    }
+
+    ion-button {
+        font-family: "Jost SemiBold", sans-serif;
+        font-weight: bold;
+        font-size: 10pt;
+    }
+
+    .return {
+        font-size: 25pt;
+        color: lightseagreen;
     }
 </style>

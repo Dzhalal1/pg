@@ -3,32 +3,38 @@
         <ion-page>
             <ion-header>
                 <ion-row>
-                    <ion-col size="3">
-                        <ion-button @click="closeMe()">
-                            <ion-icon :icon="chevronBackOutline"/>
-                        </ion-button>
+                    <ion-col>
+                        <!--                        <ion-button>-->
+                        <ion-icon @click="closeMe()" :icon="chevronBackOutline"/>
+                        <!--                        </ion-button>-->
                     </ion-col>
-                    <ion-col size="9">
+                </ion-row>
+                <ion-row>
+                    <ion-col class="ion-text-center">
                         <p>{{subject_name}}</p>
                     </ion-col>
                 </ion-row>
+
+
             </ion-header>
             <ion-content>
                 <ion-grid>
-                    <ion-row>
-                        <ion-col size="2">
-                            <ion-button :disabled="(semester.current_week + week) === 1" @click="changeWeek('down')">
-                                <ion-icon :icon="chevronBackOutline"/>
-                            </ion-button>
+                    <ion-row class="week">
+                        <ion-col size="2" class="ion-text-end">
+                            <!--                            <ion-button >-->
+                            <ion-icon :disabled="(semester.current_week + week) === 1" @click="changeWeek('down')"
+                                      :icon="chevronBackOutline"/>
+                            <!--                            </ion-button>-->
                         </ion-col>
-                        <ion-col size="8">
+                        <ion-col size="8" style="margin-top: -8px !important;">
                             <p>{{semester.current_week + week}} неделя</p>
                             <p>{{subjectsInfo.dateweek.start_week}} - {{subjectsInfo.dateweek.end_week}}</p>
                         </ion-col>
-                        <ion-col size="2" class="ion-text-end">
-                            <ion-button :disabled="(semester.current_week + week) === 32" @click="changeWeek('up')">
-                                <ion-icon :icon="chevronForwardOutline"/>
-                            </ion-button>
+                        <ion-col size="2" class="ion-text-start">
+                            <!--                            <ion-button>-->
+                            <ion-icon :disabled="(semester.current_week + week) === 32" @click="changeWeek('up')"
+                                      :icon="chevronForwardOutline"/>
+                            <!--                            </ion-button>-->
                         </ion-col>
                     </ion-row>
                     <ion-row class="score">
@@ -191,7 +197,7 @@
             this.semester = Storage.getItem('semester')
         },
         computed: {
-               summSores() {
+            summSores() {
                 if (this.subjectsInfo.stype === undefined) {
                     return {
                         'active': 0,
@@ -261,7 +267,7 @@
             // IonInput,
             // IonSelectOption,
             IonModal,
-            IonButton,
+            // IonButton,
             IonCol,
             IonRow,
             IonHeader,
@@ -293,11 +299,13 @@
 
     p {
         text-align: center;
+        font-size: 11pt;
+
     }
 
     ion-icon {
-        font-size: 24pt;
-        color: white;
+        font-size: 25pt;
+        color: lightseagreen;
 
     }
 
@@ -314,6 +322,10 @@
         border-radius: 5px;
         color: grey;
         border: 1px solid #e0dfdf;
+    }
+
+    .week {
+        margin-top: 15px;
     }
 
 </style>

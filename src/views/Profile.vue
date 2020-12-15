@@ -1,16 +1,15 @@
 <template>
     <ion-page>
         <ion-content>
-            <ion-grid fixed="default">
+            <ion-grid>
                 <ion-row class="bc__profile">
                     <ion-col>
-                       <ion-row>
-                           <ion-col  class="ion-text-end">
+                        <ion-row>
+                            <ion-col class="ion-text-end">
                                 <ion-icon @click="logout()" :icon="exitOutline"/>
-                           </ion-col>
-                       </ion-row>
+                            </ion-col>
+                        </ion-row>
                         <h1>{{user.username}}</h1>
-
                     </ion-col>
                 </ion-row>
                 <ion-row class="bc__profile">
@@ -73,7 +72,6 @@
                                 <ion-button @click="saveUser" type="submit" expand="full" fill="solid" shape="round"
                                             size="large">
                                     Сохранить
-
                                 </ion-button>
                             </ion-col>
                         </ion-row>
@@ -203,6 +201,7 @@
 
     .bc__profile {
         background-color: #20b2aa;
+        height: 100%;
     }
 
     h1 {
@@ -214,8 +213,11 @@
         background-color: #ececec;
         padding: 50px;
         border-radius: 20px 20px 0 0;
-        box-shadow: 0 0 20px dimgray;
+        -webkit-box-shadow: -5px -20px 20px -15px rgba(50, 50, 50, 0.45);
+        -moz-box-shadow: -5px -20px 20px -15px rgba(50, 50, 50, 0.45);
+        box-shadow: -5px -20px 20px -15px rgba(50, 50, 50, 0.45);
     }
+
 
     ion-input {
         background-color: #dcddde !important;

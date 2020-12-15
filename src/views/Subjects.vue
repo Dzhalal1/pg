@@ -8,9 +8,7 @@
                             <p>График формирования ведомостей</p>
                         </ion-col>
                         <ion-col class="ion-text-end">
-                            <ion-button @click="page = 1">
-                                <ion-icon :icon="chevronForwardCircleOutline"/>
-                            </ion-button>
+                            <ion-icon @click="page = 1" :icon="chevronForwardOutline"/>
                         </ion-col>
                     </ion-row>
                     <ion-row>
@@ -18,9 +16,7 @@
                             <p>Список предметов</p>
                         </ion-col>
                         <ion-col class="ion-text-end">
-                            <ion-button @click="page = 2">
-                                <ion-icon :icon="chevronForwardCircleOutline"/>
-                            </ion-button>
+                            <ion-icon @click="page = 2" :icon="chevronForwardOutline"/>
                         </ion-col>
                     </ion-row>
                     <ion-row>
@@ -28,9 +24,7 @@
                             <p>Долги</p>
                         </ion-col>
                         <ion-col class="ion-text-end">
-                            <ion-button @click="page = 3">
-                                <ion-icon :icon="chevronForwardCircleOutline"/>
-                            </ion-button>
+                            <ion-icon @click="page = 3" :icon="chevronForwardOutline"/>
                         </ion-col>
                     </ion-row>
                 </ion-col>
@@ -51,7 +45,7 @@
         IonIcon,
         IonButton,
     } from '@ionic/vue';
-    import {chevronForwardCircleOutline} from 'ionicons/icons';
+    import {chevronForwardOutline} from 'ionicons/icons';
     import Statements from "@/components/Statements.vue";
     import ListSubjects from "../components/ListSubjects";
     import Orders from "../components/Orders";
@@ -63,7 +57,7 @@
             Statements,
             Orders,
             ListSubjects,
-            IonButton,
+            // IonButton,
             IonCol,
             IonIcon,
             IonRow,
@@ -73,7 +67,7 @@
         data() {
             return {
                 page: null,
-                chevronForwardCircleOutline
+                chevronForwardOutline
             }
         }
     }
@@ -97,6 +91,11 @@
         border-radius: 5px;
         color: grey;
         border: 1px solid #e0dfdf;
+    }
+
+    ion-icon {
+        font-size: 25pt;
+        color: lightseagreen;
     }
 
 </style>

@@ -198,7 +198,7 @@
 
     .segment__mrs {
         --ion-color-primary: white !important;
-        background: linear-gradient(30deg, #196FBF, #20b2aa);
+        background: #20b2aa;
         padding-top: 100px;
     }
 

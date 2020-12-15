@@ -58,7 +58,7 @@
 
 <style scoped>
     ion-grid {
-        background: linear-gradient(#20b2aa, #2c3e50);
+        background: lightseagreen;
         height: 100%;
         width: 100%;
     }
