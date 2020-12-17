@@ -5,12 +5,6 @@
                 <ion-col>
                     <ion-icon size="1" class="return" @click="closeComponent" :icon="chevronBackOutline"/>
                 </ion-col>
-                <ion-col size="12" class="ion-text-center">
-                    <ion-button type="submit" @click="open_semesters = true" expand="block" fill="clear"
-                                shape="round">
-                        Сменить семестр
-                    </ion-button>
-                </ion-col>
             </ion-row>
         </ion-header>
         <ion-content>
@@ -31,8 +25,6 @@
                     <ion-col><p>Список долгов пуст</p></ion-col>
                 </ion-row>
             </ion-grid>
-            <change-semesters :open_dialog="open_semesters" @close-dialog="closeChangeSemesters"
-                              v-if="open_semesters"></change-semesters>
         </ion-content>
     </ion-page>
 </template>
@@ -47,11 +39,10 @@
         IonCol,
         IonRow,
         IonIcon,
-        IonButton,
+        // IonButton,
     } from '@ionic/vue';
     import {chevronBackOutline, checkmarkOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
-    import ChangeSemesters from "../views/ChangeSemesters";
 
     export default {
         name: "Orders",
@@ -63,15 +54,13 @@
             IonCol,
             IonRow,
             IonIcon,
-            IonButton,
-            ChangeSemesters
+            // IonButton,
         },
         data() {
             return {
                 chevronBackOutline,
                 checkmarkOutline,
                 orders: [],
-                open_semesters: false,
             }
         },
         methods: {
@@ -82,9 +71,6 @@
                 Storage.methods.getOrders().then((response) => {
                     this.orders = response
                 })
-            },
-            closeChangeSemesters(data) {
-                this.open_semesters = data
             },
         },
         mounted() {
@@ -129,5 +115,13 @@
     .return {
         font-size: 25pt;
         color: lightseagreen;
+    }
+
+    ion-header {
+        background-color: lightseagreen;
+    }
+
+    ion-header ion-icon {
+        color: white !important;
     }
 </style>

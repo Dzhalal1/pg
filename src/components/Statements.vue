@@ -4,12 +4,6 @@
             <ion-col>
                 <ion-icon size="1" class="return" @click="closeComponent" :icon="chevronBackOutline"/>
             </ion-col>
-            <ion-col size="12" class="ion-text-center">
-                <ion-button type="submit" @click="open_semesters = true" expand="block" fill="clear"
-                            shape="round">
-                    Сменить семестр
-                </ion-button>
-            </ion-col>
         </ion-header>
         <ion-content>
             <ion-grid class="statements">
@@ -19,19 +13,18 @@
                             {{statement.subject}}
                         </p>
                     </ion-col>
-                    <ion-col size="4">
+                    <ion-col size="4" class="ion-text-center">
                         {{formatDate(statement.date_close)}}
                     </ion-col>
                     <ion-col size="2">
-                        <!--                        <ion-button>-->
-                        <ion-icon :disabled="statement.open" @click="downloadStatements(statement.close_subject_id)"
-                                  :icon="downloadOutline"/>
-                        <!--                        </ion-button>-->
+                        <ion-button fill="clear" :disabled="statement.open"
+                                    @click="downloadStatements(statement.close_subject_id)">
+                            <ion-icon
+                                    :icon="downloadOutline"/>
+                        </ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>
-            <change-semesters :open_dialog="open_semesters" @close-dialog="closeChangeSemesters"
-                              v-if="open_semesters"></change-semesters>
         </ion-content>
     </ion-page>
 </template>
@@ -50,7 +43,6 @@
     } from '@ionic/vue';
     import {chevronBackOutline, downloadOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
-    import ChangeSemesters from "../views/ChangeSemesters";
 
     export default {
         name: "Statements",
@@ -63,14 +55,12 @@
             IonRow,
             IonIcon,
             IonButton,
-            ChangeSemesters
         },
         data() {
             return {
                 chevronBackOutline,
                 downloadOutline,
                 statements: [],
-                open_semesters: false,
             }
         },
         methods: {
@@ -95,9 +85,6 @@
                     this.statements = response
                 })
             },
-            closeChangeSemesters(data) {
-                this.open_semesters = data
-            }
         },
         mounted() {
             this.getStatements()
@@ -115,7 +102,6 @@
         font-family: "Jost SemiBold", sans-serif;
         margin: 5px;
         font-size: 10pt;
-
     }
 
     .statements ion-row {
@@ -128,7 +114,7 @@
     }
 
     ion-icon {
-        color: lightseagreen;
+        /*color: white !important;*/
         font-size: 20pt;
     }
 
@@ -142,5 +128,10 @@
         font-weight: bold;
         font-size: 10pt;
     }
-
+    ion-header {
+        background-color: lightseagreen;
+    }
+    ion-header ion-icon {
+        color: white !important;
+    }
 </style>

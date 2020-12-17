@@ -1,6 +1,15 @@
 <template>
     <ion-page>
+        <ion-header>
+            <ion-col class="ion-text-center">
+
+            </ion-col>
+        </ion-header>
         <ion-grid v-if="page === null">
+            <ion-button type="submit" @click="open_semesters = true" expand="block"
+                       >
+                Сменить семестр
+            </ion-button>
             <ion-row>
                 <ion-col class="style__sub">
                     <ion-row>
@@ -30,6 +39,8 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
+        <change-semesters :open_dialog="open_semesters" @close-dialog="closeChangeSemesters"
+                          v-if="open_semesters"></change-semesters>
         <Statements @close-component="page = null" v-if="page === 1"></Statements>
         <ListSubjects @close-component="page = null" v-if="page === 2"></ListSubjects>
         <Orders @close-component="page = null" v-if="page === 3"></Orders>
@@ -44,30 +55,41 @@
         IonRow,
         IonIcon,
         IonButton,
+        IonHeader,
+
     } from '@ionic/vue';
     import {chevronForwardOutline} from 'ionicons/icons';
     import Statements from "@/components/Statements.vue";
     import ListSubjects from "../components/ListSubjects";
     import Orders from "../components/Orders";
+    import ChangeSemesters from "./ChangeSemesters";
 
 
     export default {
         name: 'Subjects',
         components: {
             Statements,
+            IonHeader,
             Orders,
             ListSubjects,
-            // IonButton,
+            IonButton,
             IonCol,
             IonIcon,
             IonRow,
             IonGrid,
-            IonPage
+            IonPage,
+            ChangeSemesters
         },
         data() {
             return {
                 page: null,
-                chevronForwardOutline
+                chevronForwardOutline,
+                open_semesters: false,
+            }
+        },
+        methods: {
+            closeChangeSemesters(data) {
+                this.open_semesters = data
             }
         }
     }
@@ -97,5 +119,22 @@
         font-size: 25pt;
         color: lightseagreen;
     }
+
+    ion-icon {
+        color: lightseagreen;
+        font-size: 20pt;
+    }
+
+    .return {
+        font-size: 25pt;
+        color: lightseagreen;
+    }
+
+    ion-button {
+        font-family: "Jost SemiBold", sans-serif;
+        font-weight: bold;
+        font-size: 10pt;
+    }
+
 
 </style>

@@ -5,12 +5,6 @@
                 <ion-col>
                     <ion-icon size="1" class="return" @click="closeComponent" :icon="chevronBackOutline"/>
                 </ion-col>
-                <ion-col  size="12" class="ion-text-center">
-                    <ion-button type="submit" @click="open_semesters = true" expand="block" fill="clear"
-                                shape="round">
-                        Сменить семестр
-                    </ion-button>
-                </ion-col>
             </ion-row>
         </ion-header>
         <ion-content>
@@ -31,8 +25,6 @@
             </ion-grid>
             <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"
                           :subject_name="selectedSubject.name" v-if="open"></scores-table>
-            <change-semesters :open_dialog="open_semesters" @close-dialog="closeChangeSemesters"
-                              v-if="open_semesters"></change-semesters>
         </ion-content>
     </ion-page>
 </template>
@@ -52,7 +44,6 @@
     import {chevronBackOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
     import ScoresTable from "../views/ScoresTable";
-    import ChangeSemesters from "../views/ChangeSemesters";
 
     export default {
         name: "ListSubjects",
@@ -65,7 +56,6 @@
             IonRow,
             IonIcon,
             IonButton,
-            ChangeSemesters,
             ScoresTable
         },
         data() {
@@ -74,8 +64,6 @@
                 subjects: [],
                 open: false,
                 selectedSubject: [],
-                open_semesters: false,
-
             }
         },
         methods: {
@@ -89,9 +77,6 @@
             },
             closeScorestable(data) {
                 this.open = false
-            },
-            closeChangeSemesters(data) {
-                this.open_semesters = data
             },
             openScoresTable(subject) {
                 this.selectedSubject = subject
@@ -144,6 +129,14 @@
     .return {
         font-size: 25pt;
         color: lightseagreen;
+    }
+
+    ion-header {
+        background-color: lightseagreen;
+    }
+
+    ion-header ion-icon {
+        color: white !important;
     }
 
 

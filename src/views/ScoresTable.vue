@@ -14,8 +14,6 @@
                         <p>{{subject_name}}</p>
                     </ion-col>
                 </ion-row>
-
-
             </ion-header>
             <ion-content>
                 <ion-grid>
@@ -55,6 +53,15 @@
                                 <ion-col>{{subjectsInfo.maxscore_info.check_forms}}</ion-col>
                                 <ion-col class="ion-text-end">{{selectScores.reference_work}} из
                                     {{subjectsInfo.maxscore_info.reference_work}}
+                                </ion-col>
+                            </ion-row>
+                            <ion-row>
+                                <ion-col size="4" class="ion-text-start">
+                                    Активность
+                                </ion-col>
+                                <ion-col>{{subjectsInfo.maxscore_info.active_more}}</ion-col>
+                                <ion-col class="ion-text-end">{{selectScores.active}} из
+                                    {{subjectsInfo.maxscore_info.active}}
                                 </ion-col>
                             </ion-row>
                             <ion-row>
@@ -119,7 +126,7 @@
         IonPage,
         // createAnimation,
         // IonInput,
-        IonButton,
+        // IonButton,
         // IonLabel,
         // IonItem,
         IonIcon,
@@ -326,6 +333,18 @@
 
     .week {
         margin-top: 15px;
+    }
+    ion-header {
+        background-color: lightseagreen;
+    }
+
+    ion-header ion-icon {
+        color: white !important;
+    }
+
+    ion-header p {
+        color: white !important;
+        margin-bottom: 20px;
     }
 
 </style>
