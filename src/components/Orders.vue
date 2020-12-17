@@ -3,9 +3,15 @@
         <ion-header>
             <ion-row>
                 <ion-col>
-                    <ion-icon size="1" class="return" @click="closeComponent" :icon="chevronBackOutline"/>
+                    <ion-icon class="return" @click="closeComponent" :icon="chevronBackOutline"/>
                 </ion-col>
             </ion-row>
+            <ion-row>
+                <ion-col class="ion-text-center">
+<!--                    <p>{{semester.title}}</p>-->
+                </ion-col>
+            </ion-row>
+
         </ion-header>
         <ion-content>
             <ion-grid class="statements">
@@ -61,6 +67,7 @@
                 chevronBackOutline,
                 checkmarkOutline,
                 orders: [],
+                semester: {},
             }
         },
         methods: {
@@ -75,6 +82,7 @@
         },
         mounted() {
             this.getOrders()
+            this.semester = Storage.getItem('semester')
         }
     }
 </script>
@@ -119,6 +127,8 @@
 
     ion-header {
         background-color: lightseagreen;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 
     ion-header ion-icon {

@@ -3,7 +3,12 @@
         <ion-header>
             <ion-row>
                 <ion-col>
-                    <ion-icon size="1" class="return" @click="closeComponent" :icon="chevronBackOutline"/>
+                    <ion-icon class="return" @click="closeComponent" :icon="chevronBackOutline"/>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col class="ion-text-center">
+                    <p>{{semester.title}}</p>
                 </ion-col>
             </ion-row>
         </ion-header>
@@ -64,6 +69,7 @@
                 subjects: [],
                 open: false,
                 selectedSubject: [],
+                semester: {},
             }
         },
         methods: {
@@ -85,6 +91,7 @@
         },
         mounted() {
             this.loadSubjects()
+            this.semester = Storage.getItem('semester')
         }
     }
 </script>
@@ -122,10 +129,6 @@
         font-size: 10pt;
     }
 
-    ion-header {
-        /*height: 100px;*/
-    }
-
     .return {
         font-size: 25pt;
         color: lightseagreen;
@@ -133,6 +136,8 @@
 
     ion-header {
         background-color: lightseagreen;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 
     ion-header ion-icon {

@@ -1,9 +1,16 @@
 <template>
     <ion-page>
         <ion-header>
-            <ion-col>
-                <ion-icon size="1" class="return" @click="closeComponent" :icon="chevronBackOutline"/>
-            </ion-col>
+            <ion-row>
+                <ion-col>
+                    <ion-icon class="return" @click="closeComponent" :icon="chevronBackOutline"/>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col class="ion-text-center">
+                    <p>{{semester.title}}</p>
+                </ion-col>
+            </ion-row>
         </ion-header>
         <ion-content>
             <ion-grid class="statements">
@@ -61,6 +68,7 @@
                 chevronBackOutline,
                 downloadOutline,
                 statements: [],
+                semester: {}
             }
         },
         methods: {
@@ -88,6 +96,7 @@
         },
         mounted() {
             this.getStatements()
+            this.semester = Storage.getItem('semester')
         }
     }
 </script>
@@ -128,9 +137,13 @@
         font-weight: bold;
         font-size: 10pt;
     }
+
     ion-header {
         background-color: lightseagreen;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
+
     ion-header ion-icon {
         color: white !important;
     }

@@ -56,7 +56,7 @@
                             <p>Учебный</p>
                         </ion-col>
                         <ion-col class="ion-text-end">
-                            {{integralRating.Ru}}
+                            {{parseFloat(integralRating.Ru).toFixed(1)}}
                         </ion-col>
                     </ion-row>
                     <ion-row>
@@ -64,7 +64,7 @@
                             <p>Внеучебный</p>
                         </ion-col>
                           <ion-col class="ion-text-end">
-                            {{integralRating.Rv}}
+                            {{parseFloat(integralRating.Rv).toFixed(1)}}
                         </ion-col>
                     </ion-row>
                     <ion-row>
@@ -72,7 +72,7 @@
                             <p>Интегральный</p>
                         </ion-col>
                           <ion-col class="ion-text-end">
-                            {{integralRating.Ri}}
+                            {{parseFloat(integralRating.Ri).toFixed(1)}}
                         </ion-col>
                     </ion-row>
                 </ion-col>
@@ -131,7 +131,7 @@
             return {
                 tab: '1',
                 vneucRating: null,
-                integralRating: null,
+                integralRating: {Ri: 0, Rv:0, Ru:0},
             }
         },
         computed: {

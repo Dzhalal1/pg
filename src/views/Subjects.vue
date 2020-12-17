@@ -1,13 +1,15 @@
 <template>
     <ion-page>
-        <ion-header>
-            <ion-col class="ion-text-center">
-
-            </ion-col>
+        <ion-header v-if="page===null">
+            <ion-row>
+                <ion-col class="ion-text-center">
+                    <p>{{semester.title}}</p>
+                </ion-col>
+            </ion-row>
         </ion-header>
         <ion-grid v-if="page === null">
-            <ion-button type="submit" @click="open_semesters = true" expand="block"
-                       >
+            <ion-button type="submit" @click="open_semesters = true" expand="block" fill="clear"
+            >
                 Сменить семестр
             </ion-button>
             <ion-row>
@@ -58,11 +60,12 @@
         IonHeader,
 
     } from '@ionic/vue';
-    import {chevronForwardOutline} from 'ionicons/icons';
+    import {chevronForwardOutline, chevronBackOutline} from 'ionicons/icons';
     import Statements from "@/components/Statements.vue";
     import ListSubjects from "../components/ListSubjects";
     import Orders from "../components/Orders";
     import ChangeSemesters from "./ChangeSemesters";
+    import Storage from "../plugins/storage";
 
 
     export default {
@@ -85,12 +88,20 @@
                 page: null,
                 chevronForwardOutline,
                 open_semesters: false,
+                semester: {},
+                chevronBackOutline
             }
         },
+        mounted() {
+            this.semester = Storage.getItem('semester')
+        },
         methods: {
-            closeChangeSemesters(data) {
-                this.open_semesters = data
-            }
+            closeChangeSemesters() {
+                this.semester = Storage.getItem('semester')
+            },
+            closeComponent() {
+                this.$emit('close-component', null)
+            },
         }
     }
 </script>
@@ -98,6 +109,7 @@
     * {
         margin: 0;
         padding: 0;
+        font-family: "Jost SemiBold", sans-serif;
     }
 
     .style__sub {
@@ -136,5 +148,14 @@
         font-size: 10pt;
     }
 
+    ion-header {
+        background-color: lightseagreen;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    ion-header ion-icon {
+        color: white !important;
+    }
 
 </style>
