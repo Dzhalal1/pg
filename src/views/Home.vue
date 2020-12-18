@@ -67,7 +67,7 @@
         IonGrid,
         IonImg,
         IonRippleEffect,
-        // IonHeader,
+        IonHeader,
         // IonToolbar,
         // IonTitle,
         IonContent
@@ -139,6 +139,12 @@
     .ripple-parent {
         position: relative;
         overflow: hidden;
+    }
+    ion-header {
+        background-color: #20b2aa;
+    }
+    ion-header ion-img {
+        height: 50px !important;
     }
 
 

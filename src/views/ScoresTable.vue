@@ -83,7 +83,7 @@
                                 </ion-col>
 
                                 <ion-col class="ion-text-end">
-                                    {{summSores}}
+<!--                                    {{summsSores.Rfact}}-->
                                 </ion-col>
                             </ion-row>
                             <ion-row>
@@ -92,7 +92,7 @@
                                     студента (%)
                                 </ion-col>
                                 <ion-col class="ion-text-end">
-                                    {{summSores.R}}
+<!--                                    {{summsSores.R}}-->
                                 </ion-col>
                             </ion-row>
                             <ion-row>
@@ -101,7 +101,7 @@
                                     баллах к текущей неделе
                                 </ion-col>
                                 <ion-col class="ion-text-end">
-                                    {{summSores.mark}}
+<!--                                    {{summsSores.mark}}-->
                                 </ion-col>
                             </ion-row>
                             <ion-row>
@@ -109,7 +109,7 @@
                                     Максимальный балл
                                 </ion-col>
                                 <ion-col class="ion-text-end">
-                                    {{subjectsInfo.Rmax.Rmax}}
+<!--                                    {{subjectsInfo.Rmax.Rmax}}-->
                                 </ion-col>
                             </ion-row>
                         </ion-col>
@@ -164,6 +164,9 @@
                 scores: [],
                 week: 0,
                 semester: null,
+                summsSores: {},
+
+
             }
         },
         methods: {
@@ -174,6 +177,7 @@
             loadSubjectInfo() {
                 Storage.methods.getSubjectInfo(this.subject_id).then((response) => {
                     this.subjectsInfo = response
+                    // this.summSores()
                     Storage.methods.getSubjectsScores(this.subject_id).then((response) => {
                         this.scores = response
                     })
@@ -185,93 +189,81 @@
                 } else this.week--
                 Storage.methods.getSubjectInfo(this.subject_id, this.semester.current_week + this.week).then((response) => {
                     this.subjectsInfo = response
+                    // this.summSores()
                 })
             },
-
-        },
-        props: {
-            open_dialog: {
-                type: Boolean
-            },
-            subject_id: {
-                type: Number
-            },
-            subject_name: {
-                type: String
-            }
-        },
-        mounted() {
-            this.isOpenRef = this.open_dialog
-            this.loadSubjectInfo()
-            this.semester = Storage.getItem('semester')
-        },
-        computed: {
             summSores() {
-                return this.subjectsInfo
-                // if (this.subjectsInfo.stype === undefined) {
-                //     return {
-                //         'active': 0,
-                //         'missed': 0,
-                //         'home_work': 0,
-                //         'reference_work': 0,
-                //         'Rfact': 0,
-                //         'R': 0,
-                //         'mark': 0,
-                //     }
-                // }
+                let activ_sum = 0
+                let missed_sum = 0
+                let ref_work_sum = 0
+                let home_work_sum = 0
+                let Rfact = 0
+                let R = 0
+                let mark = ''
+                this.scores.forEach(item => {
+                    activ_sum += Number(item.active)
+                    missed_sum += parseFloat(item.missed)
+                    home_work_sum += parseFloat(item.home_work)
+                    ref_work_sum += parseFloat(item.reference_work)
+                })
 
-                // let a = this.scores_students.filter(isBigEnough)
-                // let activ_sum = 0
-                // let missed_sum = 0
-                // let ref_work_sum = 0
-                // let home_work_sum = 0
-                // let Rfact = 0
-                // let R = 0
-                // let mark = ''
-                // this.scores.forEach(item => {
-                //     activ_sum += Number(item.active)
-                //     missed_sum += parseFloat(item.missed)
-                //     home_work_sum += parseFloat(item.home_work)
-                //     ref_work_sum += parseFloat(item.reference_work)
-                // })
-                //
-                // if (this.subjectsInfo.stype != 3 && this.subjectsInfo.stype != 5 && this.subjectsInfo.stype != 6) {
-                //     Rfact = activ_sum * this.subjectsInfo.coeficients.active_coefficient + home_work_sum * this.subjectsInfo.coeficients.home_work_coefficient + (this.subjectsInfo.Rmax['sum_missed'] - missed_sum) * this.subjectsInfo.coeficients.missed_coefficient + ref_work_sum * this.subjectsInfo.coeficients.reference_work_coefficient
-                // } else {
-                //     Rfact = activ_sum * this.subjectsInfo.coeficients.active_coefficient + home_work_sum * this.subjectsInfo.coeficients.home_work_coefficient + (missed_sum) * this.subjectsInfo.coeficients.missed_coefficient + ref_work_sum * this.subjectsInfo.coeficients.reference_work_coefficient
-                // }
-                // R = Rfact / this.subjectsInfo.Rmax['Rmax'] * 100
-                // R = R > 100 ? 100 : R
-                // R = (Math.round(R * 100) / 100)
-                // if (R <= 100 && R > 85.6) {
-                //     mark = 5
-                // } else if (R < 85.5 && R >= 64.6) {
-                //     mark = 4
-                // } else if (R < 64.5 && R >= 49.6) {
-                //     mark = 3
-                // } else if (R < 49.6) {
-                //     mark = 2
-                // }
-                // return {
-                //     'active': Math.round(activ_sum),
-                //     'missed': Math.round(missed_sum * 100) / 100,
-                //     'home_work': Math.round(home_work_sum * 100) / 100,
-                //     'reference_work': Math.round(ref_work_sum * 100) / 100,
-                //     'Rfact': Math.round(Rfact * 100) / 100,
-                //     'R': (Math.round(R * 100) / 100),
-                //     'mark': mark
-                // }
-            },
-            selectScores() {
-                if (this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1))
-                    return this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1)
-                else return {
-                    missed: 0,
-                    reference_work: 0,
-                    home_work: 0,
-                    active: 0,
+                if (this.subjectsInfo.stype != 3 && this.subjectsInfo.stype != 5 && this.subjectsInfo.stype != 6) {
+                    Rfact = activ_sum * this.subjectsInfo.coeficients.active_coefficient + home_work_sum * this.subjectsInfo.coeficients.home_work_coefficient + (this.subjectsInfo.Rmax['sum_missed'] - missed_sum) * this.subjectsInfo.coeficients.missed_coefficient + ref_work_sum * this.subjectsInfo.coeficients.reference_work_coefficient
+                } else {
+                    Rfact = activ_sum * this.subjectsInfo.coeficients.active_coefficient + home_work_sum * this.subjectsInfo.coeficients.home_work_coefficient + (missed_sum) * this.subjectsInfo.coeficients.missed_coefficient + ref_work_sum * this.subjectsInfo.coeficients.reference_work_coefficient
                 }
-            }
+                R = Rfact / this.subjectsInfo.Rmax['Rmax'] * 100
+                R = R > 100 ? 100 : R
+                R = (Math.round(R * 100) / 100)
+                if (R <= 100 && R > 85.6) {
+                    mark = 5
+                } else if (R < 85.5 && R >= 64.6) {
+                    mark = 4
+                } else if (R < 64.5 && R >= 49.6) {
+                    mark = 3
+                } else if (R < 49.6) {
+                    mark = 2
+                }
+                this.summsSores = {
+                    'active': Math.round(activ_sum),
+                    'missed': Math.round(missed_sum * 100) / 100,
+                    'home_work': Math.round(home_work_sum * 100) / 100,
+                    'reference_work': Math.round(ref_work_sum * 100) / 100,
+                    'Rfact': Math.round(Rfact * 100) / 100,
+                    'R': (Math.round(R * 100) / 100),
+                    'mark': mark
+                }
+
+            },
+            props: {
+                open_dialog: {
+                    type: Boolean
+                },
+                subject_id: {
+                    type: Number
+                },
+                subject_name: {
+                    type: String
+                }
+            },
+            mounted() {
+                this.isOpenRef = this.open_dialog
+                this.loadSubjectInfo()
+                this.semester = Storage.getItem('semester')
+            },
+            computed: {
+                selectScores() {
+                    if (this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1))
+                        return this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1)
+                    else return {
+                        missed: 0,
+                        reference_work: 0,
+                        home_work: 0,
+                        active: 0,
+                    }
+                }
+            },
+
         },
         components: {
             // ExploreContainer,
