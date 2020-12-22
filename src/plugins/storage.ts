@@ -67,27 +67,27 @@ const Storage = {
             return year.data.data
         },
         getSubjects: async () => {
-            const subjects = await http.get('api/students/' + Storage.getItem('group').id + '/' + Storage.getItem('user').students +  '/subjects/', {params: {semester_id: Storage.getItem('semester').id}})
+            const subjects = await http.get('api/students/' + Storage.getItem('group').id + '/' + Storage.getItem('user').students + '/subjects/', {params: {semester_id: Storage.getItem('semester').id}})
             return subjects.data.data.data
         },
-         getSubjectInfo: async (subjectId: number, week: number = 0) => {
+        getSubjectInfo: async (subjectId: number, week: number = 0) => {
             let selectWeek = 0
             if (week === 0) {
                 selectWeek = Storage.getItem('semester').current_week
-            }
-            else selectWeek = week
-            const subjectinfo = await http.get('api/teachers/subjects_info/' + subjectId + '/', {params:{
-                week: selectWeek,
+            } else selectWeek = week
+            const subjectinfo = await http.get('api/teachers/subjects_info/' + subjectId + '/', {
+                params: {
+                    week: selectWeek,
                     group_id: Storage.getItem('group').id,
                     subject_id: subjectId
-                }})
+                }
+            })
             return subjectinfo.data.data.data
         },
         getSubjectsScores: async (subjectId: number) => {
             const scores = await http.get('api/teachers/scores/' + subjectId + '/' + Storage.getItem('user').students + '/')
             return scores.data.data.data
-        }
-
+        },
     }
 }
 

@@ -83,7 +83,7 @@
                                 </ion-col>
 
                                 <ion-col class="ion-text-end">
-<!--                                    {{summsSores.Rfact}}-->
+                                    {{summsSores.Rfact}}
                                 </ion-col>
                             </ion-row>
                             <ion-row>
@@ -92,7 +92,7 @@
                                     студента (%)
                                 </ion-col>
                                 <ion-col class="ion-text-end">
-<!--                                    {{summsSores.R}}-->
+                                    {{summsSores.R}}
                                 </ion-col>
                             </ion-row>
                             <ion-row>
@@ -101,7 +101,7 @@
                                     баллах к текущей неделе
                                 </ion-col>
                                 <ion-col class="ion-text-end">
-<!--                                    {{summsSores.mark}}-->
+                                    {{summsSores.mark}}
                                 </ion-col>
                             </ion-row>
                             <ion-row>
@@ -109,7 +109,7 @@
                                     Максимальный балл
                                 </ion-col>
                                 <ion-col class="ion-text-end">
-<!--                                    {{subjectsInfo.Rmax.Rmax}}-->
+                                    {{subjectsInfo.Rmax.Rmax}}
                                 </ion-col>
                             </ion-row>
                         </ion-col>
@@ -163,7 +163,7 @@
                 },
                 scores: [],
                 week: 0,
-                semester: null,
+                semester: {current_week: 0},
                 summsSores: {},
 
 
@@ -177,7 +177,7 @@
             loadSubjectInfo() {
                 Storage.methods.getSubjectInfo(this.subject_id).then((response) => {
                     this.subjectsInfo = response
-                    // this.summSores()
+                    this.summSores()
                     Storage.methods.getSubjectsScores(this.subject_id).then((response) => {
                         this.scores = response
                     })
@@ -189,7 +189,7 @@
                 } else this.week--
                 Storage.methods.getSubjectInfo(this.subject_id, this.semester.current_week + this.week).then((response) => {
                     this.subjectsInfo = response
-                    // this.summSores()
+                    this.summSores()
                 })
             },
             summSores() {
@@ -233,37 +233,35 @@
                     'R': (Math.round(R * 100) / 100),
                     'mark': mark
                 }
-
+            }
+        },
+        props: {
+            open_dialog: {
+                type: Boolean
             },
-            props: {
-                open_dialog: {
-                    type: Boolean
-                },
-                subject_id: {
-                    type: Number
-                },
-                subject_name: {
-                    type: String
+            subject_id: {
+                type: Number
+            },
+            subject_name: {
+                type: String
+            }
+        },
+        mounted() {
+            this.isOpenRef = this.open_dialog
+            this.semester = Storage.getItem('semester')
+            this.loadSubjectInfo()
+        },
+        computed: {
+            selectScores() {
+                if (this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1))
+                    return this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1)
+                else return {
+                    missed: 0,
+                    reference_work: 0,
+                    home_work: 0,
+                    active: 0,
                 }
-            },
-            mounted() {
-                this.isOpenRef = this.open_dialog
-                this.loadSubjectInfo()
-                this.semester = Storage.getItem('semester')
-            },
-            computed: {
-                selectScores() {
-                    if (this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1))
-                        return this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1)
-                    else return {
-                        missed: 0,
-                        reference_work: 0,
-                        home_work: 0,
-                        active: 0,
-                    }
-                }
-            },
-
+            }
         },
         components: {
             // ExploreContainer,
