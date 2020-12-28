@@ -199,7 +199,8 @@
     .segment__mrs {
         --ion-color-primary: white !important;
         background: #20b2aa;
-        padding-top: 100px;
+        padding-top: 16px;
+        /*box-shadow: 2px 2px 5px 1px grey;*/
     }
 
     .list__rating {

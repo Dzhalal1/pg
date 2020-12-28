@@ -1,6 +1,11 @@
 <template>
     <ion-page>
         <ion-content>
+            <ion-header>
+                <ion-img :src="require('./../assets/img/firstpage/logomain.svg')">
+
+                </ion-img>
+            </ion-header>
             <ion-grid fixed="default" class="cards">
                 <a href="https://eios.kgsxa.ru/enrol/index.php?id=2211">
                     <ion-row class="by__student ion-align-items-center ion-activatable ripple-parent">
@@ -89,7 +94,7 @@
             // IonLabel,
             // IonItem,
             // IonIcon,
-            // IonHeader,
+            IonHeader,
             // IonToolbar,
             // IonTitle,
             IonContent,
@@ -100,29 +105,28 @@
 
 <style scoped>
     .by__student {
-        background-image: linear-gradient(180deg, #3366cc, #196FBF);
+        background-image: linear-gradient(180deg, #155799, #207edd);
         border-radius: 20px;
         margin: 20px;
     }
 
     .eios {
-        background-image: linear-gradient(180deg, #196FBF, #3399cc);
+        background-image: linear-gradient(180deg, #207edd, #309fd7);
         border-radius: 20px;
         margin: 20px;
     }
 
     .calendar {
-        background-image: linear-gradient(180deg, #3399cc, #339999);
+        background-image: linear-gradient(180deg, #309fd7, #4cb0b0);
         border-radius: 20px;
         margin: 20px;
 
     }
 
     .kgsxa {
-        background-image: linear-gradient(180deg, #339999, #339999);
+        background-image: linear-gradient(180deg, #4cb0b0, #20b2aa);
         border-radius: 20px;
         margin: 20px;
-
     }
 
     a {
@@ -142,6 +146,7 @@
     }
     ion-header {
         background-color: #20b2aa;
+        padding: 6px;
     }
     ion-header ion-img {
         height: 50px !important;

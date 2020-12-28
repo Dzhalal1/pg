@@ -5,11 +5,14 @@
                 <ion-row class="bc__profile">
                     <ion-col>
                         <ion-row>
-                            <ion-col class="ion-text-end">
+                            <ion-col size="8" class="ion-text-center">
+                                <h1>{{user.username}}</h1>
+                            </ion-col>
+                            <ion-col size="3" class="ion-text-end">
                                 <ion-icon @click="logout()" :icon="exitOutline"/>
                             </ion-col>
                         </ion-row>
-                        <h1>{{user.username}}</h1>
+
                     </ion-col>
                 </ion-row>
                 <ion-row class="bc__profile">
@@ -59,14 +62,14 @@
                                 </ion-button>
                             </ion-col>
                         </ion-row>
-<!--                        <ion-row class="click">-->
-<!--                            <ion-col>-->
-<!--                                <ion-button type="submit" @click="open_semesters = true" expand="full" fill="solid"-->
-<!--                                            shape="round" size="large">-->
-<!--                                    Сменить семестр-->
-<!--                                </ion-button>-->
-<!--                            </ion-col>-->
-<!--                        </ion-row>-->
+                        <!--                        <ion-row class="click">-->
+                        <!--                            <ion-col>-->
+                        <!--                                <ion-button type="submit" @click="open_semesters = true" expand="full" fill="solid"-->
+                        <!--                                            shape="round" size="large">-->
+                        <!--                                    Сменить семестр-->
+                        <!--                                </ion-button>-->
+                        <!--                            </ion-col>-->
+                        <!--                        </ion-row>-->
                         <ion-row>
                             <ion-col>
                                 <ion-button @click="saveUser" type="submit" expand="full" fill="solid" shape="round"
@@ -80,8 +83,8 @@
             </ion-grid>
             <change-password :open_dialog="open_dialog" @close-dialog="closeChangePassword"
                              v-if="open_dialog"></change-password>
-<!--            <change-semesters :open_dialog="open_semesters" @close-dialog="closeChangeSemesters"-->
-<!--                              v-if="open_semesters"></change-semesters>-->
+            <!--            <change-semesters :open_dialog="open_semesters" @close-dialog="closeChangeSemesters"-->
+            <!--                              v-if="open_semesters"></change-semesters>-->
         </ion-content>
     </ion-page>
 </template>
@@ -201,17 +204,18 @@
 
     .bc__profile {
         background-color: #20b2aa;
-        height: 100%;
     }
 
     h1 {
-        padding: 50px;
+        padding: 10px;
         color: white;
+        font-size: 19pt;
     }
 
     .bc__main {
         background-color: #ececec;
         padding: 50px;
+        margin-top: 50px;
         border-radius: 20px 20px 0 0;
         -webkit-box-shadow: -5px -20px 20px -15px rgba(50, 50, 50, 0.45);
         -moz-box-shadow: -5px -20px 20px -15px rgba(50, 50, 50, 0.45);
@@ -244,18 +248,23 @@
 
     .profile__btn {
         margin-top: 30px;
-        --ion-color-primary: #196FBF;
+        --ion-color-primary: #155799;
 
     }
 
     .click {
-        --ion-color-primary: #196FBF;
+        --ion-color-primary: #155799;
     }
 
     .ion-text-end {
         font-size: 25pt;
         margin-right: 10px;
-        margin: 10px;
+        margin-top: 10px;
+    }
+
+    .ion-text-center {
+        margin-right: 10px;
+        margin-top: 10px;
     }
 
 
