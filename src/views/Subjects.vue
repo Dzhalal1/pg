@@ -32,7 +32,8 @@
                     </ion-row>
                     <ion-row>
                         <ion-col>
-                            <p>Долги</p>
+                            <p v-if="is_student">Долги</p>
+                            <p v-else>Листы П/А</p>
                         </ion-col>
                         <ion-col class="ion-text-end">
                             <ion-icon @click="page = 3" :icon="chevronForwardOutline"/>
@@ -89,15 +90,18 @@
                 chevronForwardOutline,
                 open_semesters: false,
                 semester: {},
-                chevronBackOutline
+                chevronBackOutline,
+                is_student: false
             }
         },
         mounted() {
             this.semester = Storage.getItem('semester')
+            this.is_student = Storage.is_student()
         },
         methods: {
             closeChangeSemesters() {
                 this.semester = Storage.getItem('semester')
+                this.open_semesters = false
             },
             closeComponent() {
                 this.$emit('close-component', null)

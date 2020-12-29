@@ -92,9 +92,13 @@
             changeSemester() {
                 if (this.select_semester !== 0) {
                     Storage.setItem('semester', this.semesters.find(item => item.id === this.select_semester))
-                    Storage.methods.getGroupInfo().then(() => {
+                    if (Storage.is_student()) {
+                        Storage.methods.getGroupInfo().then(() => {
+                            this.closeMe()
+                        })
+                    } else {
                         this.closeMe()
-                    })
+                    }
                 }
             }
         },
@@ -175,8 +179,9 @@
         font-size: 16pt;
         text-align: center;
     }
+
     .return {
-         --ion-color-primary: #d65050;
+        --ion-color-primary: #d65050;
         justify-content: center;
     }
 

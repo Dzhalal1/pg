@@ -24,8 +24,8 @@
                         {{formatDate(statement.date_close)}}
                     </ion-col>
                     <ion-col size="2">
-                        <ion-button fill="clear" :disabled="statement.open"
-                                    @click="downloadStatements(statement.close_subject_id)">
+                        <ion-button fill="clear" :disabled="statement.link === ''"
+                                    @click="downloadStatements(statement.link)">
                             <ion-icon
                                     :icon="downloadOutline"/>
                         </ion-button>
@@ -78,15 +78,15 @@
             formatDate(str) {
                 return String(str).split('-').reverse().join('.')
             },
-            downloadStatements(pdf) {
-                Storage.methods.downloadStatements(pdf).then((response) => {
+            downloadStatements(file_link) {
+                // Storage.methods.downloadStatements(pdf).then((response) => {
                     const link = document.createElement('a')
-                    link.href = 'https://mrs.kgsxa.ru/media/' + response
+                    link.href = 'https://mrs.kgsxa.ru/media/' + file_link
                     link.setAttribute('download', '123.pdf')
                     link.setAttribute('target', '_blank')
                     document.body.appendChild(link)
                     link.click()
-                })
+                // })
             },
             getStatements() {
                 Storage.methods.getStatements().then((response) => {

@@ -50,7 +50,7 @@
 
         </ion-grid>
         <ion-footer>
-             <ion-row>
+            <ion-row>
                 <ion-col>
                     <h5>ФГБОУ ВО Костромская ГСХА</h5>
                 </ion-col>
@@ -120,9 +120,13 @@
                 Storage.methods.getToken(this.formLogin).then(() => {
                     Storage.methods.getUserInfo().then(() => {
                         Storage.methods.getLastSemester().then(() => {
-                            Storage.methods.getGroupInfo().then(() => {
+                            if (Storage.is_student()) {
+                                Storage.methods.getGroupInfo().then(() => {
+                                    this.$router.push({name: 'Home'})
+                                })
+                            } else {
                                 this.$router.push({name: 'Home'})
-                            })
+                            }
                         })
                     })
                 })

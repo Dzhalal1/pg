@@ -54,9 +54,18 @@ const Storage = {
             return orders.data.data.data
         },
         getStatements: async () => {
-            const statement = await http.get('api/students/close_subjects/', {params: {group_id: Storage.getItem('group').id}})
-            console.log(statement.data.data.data, 'store')
-            return statement.data.data.data
+            let url = ''
+            let params = {}
+            if (Storage.is_student()) {
+                url = 'api/students/close_subjects/'
+                params = {group_id: Storage.getItem('group').id}
+            }
+            else {
+                url = 'api/teachers/close_subjects/'
+                params = {semester_id: Storage.getItem('semester').id, learn_form: 1}
+            }
+            const statement = await http.get(url , {params})
+            return statement.data.data.data ? statement.data.data.data : statement.data.data
         },
         getGroupInfo: async () => {
             const group = await http.get('api/students/get_groups_info/', {params: {semester_id: Storage.getItem('semester').id}})
@@ -67,7 +76,12 @@ const Storage = {
             return year.data.data
         },
         getSubjects: async () => {
-            const subjects = await http.get('api/students/' + Storage.getItem('group').id + '/' + Storage.getItem('user').students + '/subjects/', {params: {semester_id: Storage.getItem('semester').id}})
+            let url = ''
+            if(Storage.is_student()) {
+                url = 'api/students/' + Storage.getItem('group').id + '/' + Storage.getItem('user').students + '/subjects/'
+            }
+            else url = 'api/teachers/subjects/' + '1' + '/' + Storage.getItem('user').id + '/' + Storage.getItem('semester').id + '/' //todo: сделать выбор формы обучения
+            const subjects = await http.get(url, {params: {semester_id: Storage.getItem('semester').id}})
             return subjects.data.data.data
         },
         getSubjectInfo: async (subjectId: number, week: number = 0) => {
@@ -88,6 +102,13 @@ const Storage = {
             const scores = await http.get('api/teachers/scores/' + subjectId + '/' + Storage.getItem('user').students + '/')
             return scores.data.data.data
         },
+    },
+    is_student() {
+        const user = Storage.getItem('user')
+        if (user !== null)
+            return user.user_group.findIndex((row: any) => {
+                return row.id === 3
+            }) !== -1
     }
 }
 
