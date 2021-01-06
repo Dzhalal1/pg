@@ -53,6 +53,22 @@
                                 </ion-input>
                             </ion-col>
                         </ion-row>
+                        <ion-row v-if="!is_student">
+                            <ion-col>
+                                <ion-radio-group v-model="selected_learning_form" @IonChange="changeLearnForm">
+                                    <ion-list-header>
+                                        <ion-label>
+                                            <h5>Форма обучения</h5>
+                                        </ion-label>
+                                    </ion-list-header>
+                                    <ion-radio :value="1"></ion-radio>
+                                    <ion-label class="label">Очно</ion-label>
+                                    <br>
+                                    <ion-radio :value="2"></ion-radio>
+                                    <ion-label class="label">Заочно</ion-label>
+                                </ion-radio-group>
+                            </ion-col>
+                        </ion-row>
                         <ion-row class="profile__btn">
                             <ion-col>
                                 <ion-button type="submit" @click="open_dialog = true" expand="full" fill="solid"
@@ -94,7 +110,12 @@
     // import ChangeSemesters from "./ChangeSemesters";
     import {
         IonPage,
+        IonRadioGroup,
+        IonListHeader,
+        IonLabel,
         modalController,
+        IonItem,
+        IonRadio,
         // createAnimation,
         IonInput,
         IonButton,
@@ -105,8 +126,8 @@
         IonCol,
         IonRow,
         IonGrid,
-        IonImg,
-        IonRippleEffect,
+        // IonImg,
+        // IonRippleEffect,
         // IonHeader,
         // IonToolbar,
         // IonTitle,
@@ -123,10 +144,15 @@
             IonInput,
             IonButton,
             IonIcon,
+            // IonItem,
             IonCol,
             IonRow,
+            IonRadio,
             IonGrid,
             ChangePassword,
+            IonRadioGroup,
+            IonListHeader,
+            IonLabel,
             // ChangeSemesters,
             // IonImg,
             // IonRippleEffect,
@@ -142,6 +168,8 @@
         data() {
             return {
                 open_dialog: false,
+                is_student: false,
+                selected_learning_form: 1,
                 // open_semesters: false,
                 exitOutline,
                 user: {
@@ -156,6 +184,8 @@
         },
         mounted() {
             const user = Storage.getItem('user')
+            this.selected_learning_form = Storage.getItem('learning_form')
+            this.is_student = Storage.is_student()
             this.user.father_name = user.father_name
             this.user.first_name = user.first_name
             this.user.last_name = user.last_name
@@ -165,6 +195,9 @@
             this.user.id = user.id
         },
         methods: {
+            changeLearnForm(data) {
+                Storage.setItem('learning_form', data.detail.value)
+            },
             async openChangePass() {
                 const modal = await modalController.create({
                     component: ChangePassword
@@ -239,6 +272,15 @@
         font-size: 12pt;
     }
 
+    .label {
+        margin-top: 20px;
+        color: black;
+        font-family: "Jost SemiBold", sans-serif;
+        font-size: 12pt;
+        vertical-align: top;
+        padding-left: 5px;
+    }
+
     ion-button {
         font-family: "Jost SemiBold", sans-serif;
         font-weight: bold;
@@ -254,6 +296,10 @@
 
     .click {
         --ion-color-primary: #155799;
+    }
+
+    ion-item {
+        background-color: red !important;
     }
 
     .ion-text-end {

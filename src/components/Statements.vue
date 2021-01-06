@@ -23,16 +23,25 @@
                     <ion-col size="4" class="ion-text-center">
                         {{formatDate(statement.date_close)}}
                     </ion-col>
-                    <ion-col size="2">
+                    <ion-col size="2" class="ion-text-end">
+                        {{statement.group}}
                         <ion-button fill="clear" :disabled="statement.link === ''"
                                     @click="downloadStatements(statement.link)">
                             <ion-icon
                                     :icon="downloadOutline"/>
                         </ion-button>
                     </ion-col>
+                    <ion-col size="12" class="ion-text-end">
+                        <ion-button @click="signStatement(statement.id)" expand="full" :disabled="!statement.open">
+                            Подписать
+                        </ion-button>
+                    </ion-col>
                 </ion-row>
             </ion-grid>
         </ion-content>
+        <scores-accept v-if="open_scores_table" :close_subject_id="selected_close_subject_id"
+                       @close-dialog="closeScoresAccept"
+                       :open_modal="open_scores_table"></scores-accept>
     </ion-page>
 </template>
 
@@ -50,10 +59,12 @@
     } from '@ionic/vue';
     import {chevronBackOutline, downloadOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
+    import ScoresAccept from "./ScoresAccept";
 
     export default {
         name: "Statements",
         components: {
+            ScoresAccept,
             IonPage,
             IonContent,
             IonHeader,
@@ -67,11 +78,31 @@
             return {
                 chevronBackOutline,
                 downloadOutline,
+                selected_close_subject_id: 0,
+                open_scores_table: false,
                 statements: [],
                 semester: {}
             }
         },
         methods: {
+            signStatement(id) {
+                this.selected_close_subject_id = id
+                this.open_scores_table = true
+                // Storage.methods.signStatement(id).then(response => {
+                //     this.downloadStatements(response)
+                // })
+            },
+            closeScoresAccept(data) {
+                if (data)
+                    Storage.methods.signStatement(this.selected_close_subject_id).then(response => {
+                        this.open_scores_table = false
+                        this.downloadStatements(response)
+                        this.getStatements()
+                    })
+                else {
+                    this.open_scores_table = false
+                }
+            },
             closeComponent() {
                 this.$emit('close-component', null)
             },
@@ -80,12 +111,12 @@
             },
             downloadStatements(file_link) {
                 // Storage.methods.downloadStatements(pdf).then((response) => {
-                    const link = document.createElement('a')
-                    link.href = 'https://mrs.kgsxa.ru/media/' + file_link
-                    link.setAttribute('download', '123.pdf')
-                    link.setAttribute('target', '_blank')
-                    document.body.appendChild(link)
-                    link.click()
+                const link = document.createElement('a')
+                link.href = 'https://mrs.kgsxa.ru/media/' + file_link
+                link.setAttribute('download', '123.pdf')
+                link.setAttribute('target', '_blank')
+                document.body.appendChild(link)
+                link.click()
                 // })
             },
             getStatements() {

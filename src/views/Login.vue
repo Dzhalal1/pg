@@ -125,6 +125,7 @@
                                     this.$router.push({name: 'Home'})
                                 })
                             } else {
+                                Storage.setItem('learning_form', 1)
                                 this.$router.push({name: 'Home'})
                             }
                         })

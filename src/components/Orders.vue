@@ -8,13 +8,13 @@
             </ion-row>
             <ion-row>
                 <ion-col class="ion-text-center">
-<!--                    <p>{{semester.title}}</p>-->
+                    <!--                    <p>{{semester.title}}</p>-->
                 </ion-col>
             </ion-row>
 
         </ion-header>
         <ion-content>
-            <ion-grid class="statements">
+            <ion-grid class="statements" v-if="is_student">
                 <ion-row v-for="(order,index) in orders" :key="index">
                     <ion-col size="6">
                         <p>{{order.name}}
@@ -26,6 +26,35 @@
                     <ion-col size="2" class="ion-text-end">
                         <ion-icon class="check" :icon="checkmarkOutline" v-if="order.acepted"/>
                     </ion-col>
+                </ion-row>
+                <ion-row v-if="orders.length === 0">
+                    <ion-col><p>Список долгов пуст</p></ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-grid class="statements" v-else>
+                <ion-row v-for="(order,index) in orders" :key="index">
+                    <ion-col size="6">
+                        <p>{{order.attributes.subject}}
+                        </p>
+                    </ion-col>
+                    <ion-col size="6" class="ion-text-end">
+                        <p>{{order.attributes.student}}
+                        </p>
+                        <ion-input type="number" :disabled="order.attributes.closed"
+                                   @change="saveOrders(order.attributes.scores,order.id)"
+                                   v-model="order.attributes.scores"></ion-input>
+                    </ion-col>
+                    <ion-col size="12" class="ion-text-end">
+                        <ion-button @click="signOrder(order.id)" :disabled="order.attributes.closed" expand="full">
+                            Подписать
+                        </ion-button>
+                    </ion-col>
+                    <ion-col size="12" style="font-size: 8pt" class="ion-text-center">
+                        До: {{order.attributes.date_finish}}
+                        Сформирован: {{order.attributes.statement_info.date_formed}}
+                        Подписан: {{order.attributes.statement_info.date_teacher}}
+                    </ion-col>
+
                 </ion-row>
                 <ion-row v-if="orders.length === 0">
                     <ion-col><p>Список долгов пуст</p></ion-col>
@@ -45,7 +74,8 @@
         IonCol,
         IonRow,
         IonIcon,
-        // IonButton,
+        IonButton,
+        IonInput
     } from '@ionic/vue';
     import {chevronBackOutline, checkmarkOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
@@ -60,19 +90,40 @@
             IonCol,
             IonRow,
             IonIcon,
-            // IonButton,
+            IonButton,
+            IonInput,
         },
         data() {
             return {
                 chevronBackOutline,
                 checkmarkOutline,
+                is_student: false,
                 orders: [],
                 semester: {},
             }
         },
+
         methods: {
+            saveOrders(score, order_id) {
+                Storage.methods.setOrderScore({scores: score, order_id})
+            },
+            downloadOrder(file_link) {
+                // Storage.methods.downloadStatements(pdf).then((response) => {
+                const link = document.createElement('a')
+                link.href = 'https://mrs.kgsxa.ru/media/' + file_link
+                link.setAttribute('download', '123.pdf')
+                link.setAttribute('target', '_blank')
+                document.body.appendChild(link)
+                link.click()
+                // })
+            },
             closeComponent() {
                 this.$emit('close-component', null)
+            },
+            signOrder(order_id) {
+                Storage.methods.signOrders(order_id).then(response => {
+                    this.downloadOrder(response)
+                })
             },
             getOrders() {
                 Storage.methods.getOrders().then((response) => {
@@ -83,6 +134,7 @@
         mounted() {
             this.getOrders()
             this.semester = Storage.getItem('semester')
+            this.is_student = Storage.is_student()
         }
     }
 </script>

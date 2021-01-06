@@ -11,7 +11,7 @@
                 </ion-row>
                 <ion-row>
                     <ion-col class="ion-text-center">
-                        <p>{{subject_name}}</p>
+                        <p>{{subject_name}} ({{selectGroup.group}})</p>
                     </ion-col>
                 </ion-row>
             </ion-header>
@@ -36,80 +36,63 @@
                                         :icon="chevronForwardOutline"/>
                             </ion-button>
                         </ion-col>
+
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-button v-for="group in subjectsInfo.groups" @click="setGroup(group)" :key="group.id">
+                                {{group.group}}
+                            </ion-button>
+                        </ion-col>
                     </ion-row>
                     <ion-row class="score">
                         <ion-col>
-                            <ion-row>
-                                <ion-col size="4" class="ion-text-start">
-                                    Пропуск
+                            <ion-row v-for="score in selectScores" :key="score.id">
+                                <ion-col size="10" class="ion-text-start">
+                                    {{score.student}}
+                                    <!--                                    Пропуск-->
                                 </ion-col>
-                                <ion-col>{{subjectsInfo.maxscore_info.more}}</ion-col>
-                                <ion-col class="ion-text-end">{{selectScores.missed}} из
-                                    {{subjectsInfo.maxscore_info.missed}}
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col size="4" class="ion-text-start">
-                                    Контроль
-                                </ion-col>
-                                <ion-col>{{subjectsInfo.maxscore_info.check_forms}}</ion-col>
-                                <ion-col class="ion-text-end">{{selectScores.reference_work}} из
-                                    {{subjectsInfo.maxscore_info.reference_work}}
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col size="4" class="ion-text-start">
-                                    Активность
-                                </ion-col>
-                                <ion-col>{{subjectsInfo.maxscore_info.active_more}}</ion-col>
-                                <ion-col class="ion-text-end">{{selectScores.active}} из
-                                    {{subjectsInfo.maxscore_info.active}}
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col size="4" class="ion-text-start">
-                                    Самост. работа
-                                </ion-col>
-                                <ion-col>{{subjectsInfo.maxscore_info.sam_more}}</ion-col>
-                                <ion-col class="ion-text-end">{{selectScores.home_work}} из
-                                    {{subjectsInfo.maxscore_info.home_work}}
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col class="ion-text-start">
-                                    Фактический
-                                    рейтинг-балл
-                                    к текущей неделе
-                                </ion-col>
-
-                                <ion-col class="ion-text-end">
-                                    {{summsSores.Rfact}}
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col class="ion-text-start">
-                                    Текущая успеваемость
-                                    студента (%)
-                                </ion-col>
-                                <ion-col class="ion-text-end">
-                                    {{summsSores.R}}
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col class="ion-text-start">
-                                    Оценка в традиционных
-                                    баллах к текущей неделе
-                                </ion-col>
-                                <ion-col class="ion-text-end">
-                                    {{summsSores.mark}}
-                                </ion-col>
-                            </ion-row>
-                            <ion-row>
-                                <ion-col class="ion-text-start">
-                                    Максимальный балл
-                                </ion-col>
-                                <ion-col class="ion-text-end">
-                                    {{subjectsInfo.Rmax.Rmax}}
+                                <ion-col>{{summSores(score.student).Rfact}}</ion-col>
+                                <ion-col size="12">
+                                    <ion-row>
+                                        <ion-col style="text-align: center">
+                                            Пропуск<br>
+                                            {{subjectsInfo.maxscore_info.missed}}
+                                            <ion-input type="number"
+                                                       style="border: 1px solid black;padding: 0; text-align: left"
+                                                       :disabled='subjectsInfo.maxscore_info.missed === 0'
+                                                       @keyup="score.missed = Number(score.missed) > Number(subjectsInfo.maxscore_info.missed) ? subjectsInfo.maxscore_info.missed :Number(score.missed)"
+                                                       @change="saveScores(score)"
+                                                       v-model="score.missed"></ion-input>
+                                        </ion-col>
+                                        <ion-col class="ion-text-center">
+                                            Контроль<br>
+                                            {{subjectsInfo.maxscore_info.reference_work }}
+                                            <ion-input type="number"
+                                                       :disabled='subjectsInfo.maxscore_info.reference_work === 0'
+                                                       @keyup="score.reference_work = Number(score.reference_work) > Number(subjectsInfo.maxscore_info.reference_work) ? subjectsInfo.maxscore_info.reference_work :Number(score.reference_work)"
+                                                       @change="saveScores(score)"
+                                                       v-model="score.reference_work"></ion-input>
+                                        </ion-col>
+                                        <ion-col class="ion-text-center">
+                                            Сам. работа<br>
+                                            {{subjectsInfo.maxscore_info.home_work }}
+                                            <ion-input type="number"
+                                                       :disabled='subjectsInfo.maxscore_info.home_work === 0'
+                                                       @keyup="score.home_work = Number(score.home_work) > Number(subjectsInfo.maxscore_info.home_work) ? subjectsInfo.maxscore_info.home_work :Number(score.home_work)"
+                                                       @change="saveScores(score)"
+                                                       v-model="score.home_work"></ion-input>
+                                        </ion-col>
+                                        <ion-col class="ion-text-center">
+                                            Активность<br>
+                                            {{subjectsInfo.maxscore_info.active }}
+                                            <ion-input type="number"
+                                                       :disabled='subjectsInfo.maxscore_info.active === 0'
+                                                       @keyup="score.active = Number(score.active) > Number(subjectsInfo.maxscore_info.active) ? subjectsInfo.maxscore_info.active :Number(score.active)"
+                                                       @change="saveScores(score)"
+                                                       v-model="score.home_work"></ion-input>
+                                        </ion-col>
+                                    </ion-row>
                                 </ion-col>
                             </ion-row>
                         </ion-col>
@@ -127,7 +110,7 @@
         IonModal,
         IonPage,
         // createAnimation,
-        // IonInput,
+        IonInput,
         IonButton,
         // IonLabel,
         // IonItem,
@@ -147,12 +130,13 @@
     } from '@ionic/vue';
 
     export default {
-        name: 'ScoresTable',
+        name: 'TeacherScoresTable',
         data() {
             return {
                 chevronBackOutline,
                 chevronForwardOutline,
                 isOpenRef: false,
+                selectGroup: {group: 0},
                 subjectsInfo: {
                     maxscore_info: {},
                     Rmax: {},
@@ -170,6 +154,12 @@
             }
         },
         methods: {
+            setGroup(group) {
+                this.selectGroup = group
+            },
+            saveScores(row) {
+                Storage.methods.saveScore(row)
+            },
             closeMe() {
                 this.isOpenRef = false
                 this.$emit('close-dialog', this.isOpenRef)
@@ -177,7 +167,8 @@
             loadSubjectInfo() {
                 Storage.methods.getSubjectInfo(this.subject_id).then((response) => {
                     this.subjectsInfo = response
-                    this.summSores()
+                    this.selectGroup = this.subjectsInfo.groups[0]
+                    // this.summSores()
                     Storage.methods.getSubjectsScores(this.subject_id).then((response) => {
                         this.scores = response
                     })
@@ -192,7 +183,24 @@
                     this.summSores()
                 })
             },
-            summSores() {
+            summSores(student) {
+                if (this.subjectsInfo.coeficients === undefined) {
+                    return {
+                        'active': 0,
+                        'missed': 0,
+                        'home_work': 0,
+                        'reference_work': 0,
+                        'Rfact': 0,
+                        'R': 0,
+                        'mark': 0
+                    }
+                }
+
+                function isBigEnough(value) {
+                    return value.student === student
+                }
+
+                const a = this.scores.filter(isBigEnough)
                 let activ_sum = 0
                 let missed_sum = 0
                 let ref_work_sum = 0
@@ -200,7 +208,7 @@
                 let Rfact = 0
                 let R = 0
                 let mark = ''
-                this.scores.forEach(item => {
+                a.forEach(item => {
                     activ_sum += Number(item.active)
                     missed_sum += parseFloat(item.missed)
                     home_work_sum += parseFloat(item.home_work)
@@ -215,16 +223,16 @@
                 R = Rfact / this.subjectsInfo.Rmax['Rmax'] * 100
                 R = R > 100 ? 100 : R
                 R = (Math.round(R * 100) / 100)
-                if (R <= 100 && R > 85.6) {
+                if (R <= 100 && R > 85.5) {
                     mark = 5
-                } else if (R < 85.5 && R >= 64.6) {
+                } else if (R < 85.5 && R >= 64.5) {
                     mark = 4
                 } else if (R < 64.5 && R >= 49.6) {
                     mark = 3
                 } else if (R < 49.6) {
                     mark = 2
                 }
-                this.summsSores = {
+                return {
                     'active': Math.round(activ_sum),
                     'missed': Math.round(missed_sum * 100) / 100,
                     'home_work': Math.round(home_work_sum * 100) / 100,
@@ -233,7 +241,9 @@
                     'R': (Math.round(R * 100) / 100),
                     'mark': mark
                 }
-            }
+
+            },
+
         },
         props: {
             open_dialog: {
@@ -253,19 +263,28 @@
         },
         computed: {
             selectScores() {
-                if (this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1))
-                    return this.scores.find(item => item.week === (this.semester.current_week + this.week) - 1)
-                else return {
-                    missed: 0,
-                    reference_work: 0,
-                    home_work: 0,
-                    active: 0,
+                let scores = []
+                if (this.selectGroup.id !== 0) {
+                    scores = this.scores.filter(item => item.week === (this.semester.current_week + this.week) - 1 && Number(item.group) === Number(this.selectGroup.group))
+                } else {
+                    scores = this.scores.filter(item => item.week === (this.semester.current_week + this.week) - 1)
                 }
+                if (scores)
+                    return scores.sort((a, b) => {
+                        if (a.student > b.student) {
+                            return 1;
+                        }
+                        if (a.student < b.student) {
+                            return -1;
+                        }
+                        return 0;
+                    })
+                else return []
             }
         },
         components: {
             // ExploreContainer,
-            // IonInput,
+            IonInput,
             // IonSelectOption,
             IonModal,
             IonButton,

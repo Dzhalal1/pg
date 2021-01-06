@@ -30,6 +30,10 @@
             </ion-grid>
             <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"
                           :subject_name="selectedSubject.name" v-if="open"></scores-table>
+            <teacher-scores-table :open_dialog="teacher_open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"
+                          :subject_name="selectedSubject.name" v-if="teacher_open">
+
+            </teacher-scores-table>
         </ion-content>
     </ion-page>
 </template>
@@ -49,10 +53,12 @@
     import {chevronBackOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
     import ScoresTable from "../views/ScoresTable";
+    import TeacherScoresTable from "./TeacherScoresTable";
 
     export default {
         name: "ListSubjects",
         components: {
+            TeacherScoresTable,
             IonPage,
             IonHeader,
             IonContent,
@@ -70,6 +76,7 @@
                 open: false,
                 selectedSubject: [],
                 semester: {},
+                teacher_open: false
             }
         },
         methods: {
@@ -83,10 +90,12 @@
             },
             closeScorestable(data) {
                 this.open = false
+                this.teacher_open = false
             },
             openScoresTable(subject) {
                 this.selectedSubject = subject
-                this.open = true
+                this.open = Storage.is_student()
+                this.teacher_open = !Storage.is_student()
             }
         },
         mounted() {

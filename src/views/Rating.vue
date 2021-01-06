@@ -75,6 +75,7 @@
                             {{parseFloat(integralRating.Ri).toFixed(1)}}
                         </ion-col>
                     </ion-row>
+<!--                    todo: проверить переменные -->
                 </ion-col>
             </ion-row>
         </ion-grid>
