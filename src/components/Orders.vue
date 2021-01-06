@@ -37,10 +37,11 @@
                         <p>{{order.attributes.subject}}
                         </p>
                     </ion-col>
-                    <ion-col size="6" class="ion-text-end">
-                        <p>{{order.attributes.student}}
+                    <ion-col>
+                        <p class="ion-text-end">{{order.attributes.student}}
                         </p>
-                        <ion-input type="number" :disabled="order.attributes.closed"
+                        <ion-input type="number"
+                                   class="ion-text-center"
                                    @change="saveOrders(order.attributes.scores,order.id)"
                                    v-model="order.attributes.scores"></ion-input>
                     </ion-col>
@@ -186,4 +187,15 @@
     ion-header ion-icon {
         color: white !important;
     }
+
+    ion-input {
+        background-color: #dcddde !important;
+        border-radius: 20px;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        color: grey !important;
+        font-family: "Jost SemiBold", sans-serif;
+        box-shadow: 0 0 2px #9c9d9d;
+    }
+
 </style>

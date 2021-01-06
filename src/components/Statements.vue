@@ -32,7 +32,7 @@
                         </ion-button>
                     </ion-col>
                     <ion-col size="12" class="ion-text-end">
-                        <ion-button @click="signStatement(statement.id)" expand="full" :disabled="!statement.open">
+                        <ion-button @click="signStatement(statement.id)" :disabled="!statement.open">
                             Подписать
                         </ion-button>
                     </ion-col>
