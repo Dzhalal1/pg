@@ -4,16 +4,16 @@
             <ion-content>
                 <ion-grid>
                     <ion-row v-for="score in scores_table" :key="score.id">
-                        <ion-col>
+                        <ion-col size="6">
                             {{score.attributes.fio}}
                         </ion-col>
-                        <ion-col>
+                        <ion-col size="2">
                             {{score.attributes.Rscores.Rfact}}
                         </ion-col>
-                        <ion-col>
+                        <ion-col size="2">
                             {{score.attributes.Rscores.R}}
                         </ion-col>
-                        <ion-col>
+                        <ion-col size="2">
                             <ion-checkbox :disabled="score.attributes.Rscores.Rfact<50"
                                           @ionChange="successSubjects(score)"
 
@@ -21,13 +21,13 @@
                         </ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-col size="12" class="ion-text-end">
-                            <ion-button @click="closeMe(true)" expand="full">
+                        <ion-col size="7" type="">
+                            <ion-button @click="closeMe(true)" expand="full" shape="round">
                                 Готово
                             </ion-button>
                         </ion-col>
-                        <ion-col size="12" class="ion-text-end">
-                            <ion-button @click="closeMe(false)" expand="full">
+                        <ion-col size="7">
+                            <ion-button @click="closeMe(false)" expand="full" shape="round">
                                 Отмена
                             </ion-button>
                         </ion-col>
@@ -109,6 +109,8 @@
     * {
         margin: 0;
         padding: 0;
+        font-family: "Jost SemiBold", sans-serif;
+        color: gray !important;
     }
 
     .statements {
@@ -139,7 +141,9 @@
     ion-button {
         font-family: "Jost SemiBold", sans-serif;
         font-weight: bold;
-        font-size: 10pt;
+        margin-top: 0.5em;
+        font-size: 12pt;
+        color: white !important;
     }
 
     ion-header {
@@ -152,7 +156,9 @@
         color: white !important;
     }
 
-    * {
-        color: black;
+    ion-col {
+    margin-top: 1em;
     }
+
+
 </style>
