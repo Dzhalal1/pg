@@ -64,15 +64,15 @@
         IonPage,
         IonInput,
         IonButton,
-        IonLabel,
-        IonItem,
+        toastController,
+        // IonItem,
         IonFooter,
         IonIcon,
         IonCol,
         IonRow,
         IonGrid,
         IonImg,
-        IonRippleEffect,
+        // IonRippleEffect,
         // IonHeader,
         // IonToolbar,
         // IonTitle,
@@ -130,6 +130,21 @@
                             }
                         })
                     })
+                }).catch(async (error) => {
+                    let message = 'Ошибка сервера'
+                    if (error.response.status === 400)
+                        message = error.response.data.errors[0].detail
+                    const toast = await toastController
+                        .create({
+                            // header: 'Toast header',
+                            message,
+                            position: 'bottom',
+                            translucent: true,
+                            cssClass: 'error-mes',
+                            animated: true,
+                            duration: 3000
+                        })
+                    return toast.present();
                 })
             }
         }
@@ -158,7 +173,6 @@
         justify-content: center;
         align-items: center;
     }
-
 
     ion-button {
         font-family: "Jost SemiBold", sans-serif;
