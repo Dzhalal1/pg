@@ -76,7 +76,8 @@
         IonRow,
         IonIcon,
         IonButton,
-        IonInput
+        IonInput,
+        loadingController,
     } from '@ionic/vue';
     import {chevronBackOutline, checkmarkOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
@@ -126,9 +127,22 @@
                     this.downloadOrder(response)
                 })
             },
-            getOrders() {
+            async getOrders() {
+                const loading = await loadingController.create({
+                    cssClass: 'loading',
+                    message: 'Ждите',
+                    animated: true,
+                    spinner: 'circular',
+                    translucent: true
+                })
+                await loading.present();
                 Storage.methods.getOrders().then((response) => {
                     this.orders = response
+
+                }).catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                    loading.dismiss()
                 })
             },
         },
