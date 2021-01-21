@@ -17,6 +17,10 @@ const Storage = {
             http.defaults.headers.common['Authorization'] = 'Token ' + token
             return token
         },
+        signOut() {
+          localStorage.clear()
+            delete http.defaults.headers.common['Authorization']
+        },
         getUserInfo: async () => {
             const user = await http.get('api/user/info/')
             Storage.setItem('user', user.data.data.data)

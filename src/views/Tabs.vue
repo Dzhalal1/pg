@@ -41,10 +41,22 @@
                 book
             }
         },
+        methods: {
+            init() {
+                console.log('mounted')
+                const user = JSON.parse(localStorage.getItem('user'))
+                if (user)
+                    this.is_student = user.user_group.findIndex(item => item.id === 3) !== -1
+            }
+        },
+        // beforeRouteEnter(to, from, next) {
+        //     console.log(to, from, next)
+        //     next((app)=> {
+        //         app.init()
+        //     })
+        // },
         mounted() {
-            const user = JSON.parse(localStorage.getItem('user'))
-            if (user)
-                this.is_student = user.user_group.findIndex(item => item.id === 3) !== -1
+            this.init()
         }
     }
 </script>

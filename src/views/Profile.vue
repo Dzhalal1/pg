@@ -182,7 +182,11 @@
                 }
             }
         },
-        mounted() {
+        setup() {
+            console.log('test')
+        },
+        created() {
+            console.log('mounted prof')
             const user = Storage.getItem('user')
             this.selected_learning_form = Storage.getItem('learning_form')
             this.is_student = Storage.is_student()
@@ -215,14 +219,14 @@
                 for (const key in this.user) {
                     fd.set(key, this.user[key])
                 }
-
                 Storage.methods.putUserInfo({id: this.user.id, form: fd})
             },
             logout() {
-                localStorage.clear()
-                this.$router.push({
-                    name: 'Login'
-                })
+                Storage.methods.signOut()
+                // this.$router.push({
+                //     name: 'Home'
+                // })
+                window.location.replace('/login')
             }
         }
     }
