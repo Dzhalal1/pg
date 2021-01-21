@@ -53,6 +53,8 @@
         IonCol,
         IonRow,
         IonGrid,
+        toastController,
+        
         // IonImg,
         // IonRippleEffect,
         // IonHeader,

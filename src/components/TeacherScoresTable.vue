@@ -59,7 +59,7 @@
                                             Пропуск<br>
                                             {{subjectsInfo.maxscore_info.missed}}
                                             <ion-input type="number"
-                                                       style="border: 1px solid black;padding: 0; text-align: left"
+
                                                        :disabled='subjectsInfo.maxscore_info.missed === 0'
                                                        @keyup="score.missed = Number(score.missed) > Number(subjectsInfo.maxscore_info.missed) ? subjectsInfo.maxscore_info.missed :Number(score.missed)"
                                                        @change="saveScores(score)"
