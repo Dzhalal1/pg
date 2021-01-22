@@ -136,13 +136,12 @@
                         message = error.response.data.errors[0].detail
                     const toast = await toastController
                         .create({
-                            // header: 'Toast header',
                             message,
                             position: 'bottom',
                             translucent: true,
-                            cssClass: 'error-mes',
+                            cssClass: 'error-message',
                             animated: true,
-                            duration: 3000
+                            duration: 2000
                         })
                     return toast.present();
                 })
@@ -204,4 +203,5 @@
         left: auto;
         width: 100%;
     }
+
 </style>

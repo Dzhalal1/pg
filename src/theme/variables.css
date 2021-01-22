@@ -247,6 +247,27 @@ ion-tab-button {
     background-color: transparent;
 }
 
+.toast-content {
+}
+
+ion-toast.error-message {
+    --background: #ebc8c4 !important;
+    font-family: "Jost SemiBold", sans-serif;
+    color: #a22c26;
+}
+
+ion-loading {
+    --background: white !important;
+    font-family: "Jost SemiBold", sans-serif !important;
+    --backdrop-opacity: 0.1 !important;
+    box-shadow: none !important;
+}
+
+ion-loading .loading-wrapper {
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+    border-radius: 5px 5px !important;
+}
 
 /*fonts*/
 

@@ -130,10 +130,10 @@
             async getOrders() {
                 const loading = await loadingController.create({
                     cssClass: 'loading',
-                    message: 'Ждите',
+                    message: 'Загрузка',
                     animated: true,
-                    spinner: 'circular',
-                    translucent: true
+                    spinner: 'crescent',
+                    translucent: true,
                 })
                 await loading.present();
                 Storage.methods.getOrders().then((response) => {
