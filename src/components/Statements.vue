@@ -55,7 +55,7 @@
         IonRow,
         IonIcon,
         IonButton,
-        IonContent,
+        IonContent, loadingController,
     } from '@ionic/vue';
     import {chevronBackOutline, downloadOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
@@ -119,9 +119,22 @@
                 link.click()
                 // })
             },
-            getStatements() {
+            async getStatements() {
+                const loading = await loadingController.create({
+                    cssClass: 'loading',
+                    message: 'Загрузка',
+                    animated: true,
+                    spinner: 'crescent',
+                    translucent: true,
+                })
+                await loading.present();
                 Storage.methods.getStatements().then((response) => {
                     this.statements = response
+
+                }).catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                    loading.dismiss()
                 })
             },
         },
