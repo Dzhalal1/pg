@@ -32,7 +32,7 @@
                         </ion-button>
                     </ion-col>
                     <ion-col size="12" class="ion-text-end">
-                        <ion-button @click="signStatement(statement.id)" :disabled="!statement.open">
+                        <ion-button v-if="!is_student" @click="signStatement(statement.id)" :disabled="!statement.open">
                             Подписать
                         </ion-button>
                     </ion-col>
@@ -81,7 +81,8 @@
                 selected_close_subject_id: 0,
                 open_scores_table: false,
                 statements: [],
-                semester: {}
+                semester: {},
+                is_student: false
             }
         },
         methods: {
@@ -141,6 +142,7 @@
         mounted() {
             this.getStatements()
             this.semester = Storage.getItem('semester')
+            this.is_student = Storage.is_student()
         }
     }
 </script>

@@ -40,7 +40,8 @@
                     </ion-row>
                     <ion-row>
                         <ion-col>
-                            <ion-button v-for="group in subjectsInfo.groups" @click="setGroup(group)" :key="group.id">
+                            <ion-button class="group" v-for="group in subjectsInfo.groups" @click="setGroup(group)"
+                                        :key="group.id">
                                 {{group.group}}
                             </ion-button>
                         </ion-col>
@@ -126,7 +127,7 @@
         // IonHeader,
         // IonToolbar,
         // IonTitle,
-        IonContent,
+        IonContent, loadingController,
     } from '@ionic/vue';
 
     export default {
@@ -164,13 +165,23 @@
                 this.isOpenRef = false
                 this.$emit('close-dialog', this.isOpenRef)
             },
-            loadSubjectInfo() {
+            async loadSubjectInfo() {
+                const loading = await loadingController.create({
+                    cssClass: 'loading',
+                    message: 'Загрузка',
+                    animated: true,
+                    spinner: 'crescent',
+                    translucent: true,
+                })
+                await loading.present();
                 Storage.methods.getSubjectInfo(this.subject_id).then((response) => {
                     this.subjectsInfo = response
                     this.selectGroup = this.subjectsInfo.groups[0]
                     // this.summSores()
                     Storage.methods.getSubjectsScores(this.subject_id).then((response) => {
                         this.scores = response
+                    }).finally(() => {
+                        loading.dismiss()
                     })
                 })
             },
@@ -361,6 +372,18 @@
     ion-header p {
         color: white !important;
         margin-bottom: 20px;
+    }
+
+    .group {
+        color: white;
+    }
+
+    ion-input {
+        background-color: #dcddde !important;
+        border-radius: 2px;
+        color: grey !important;
+        font-family: "Jost SemiBold", sans-serif;
+        box-shadow: 0 0 2px #9c9d9d;
     }
 
 </style>

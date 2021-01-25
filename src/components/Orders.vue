@@ -51,9 +51,9 @@
                         </ion-button>
                     </ion-col>
                     <ion-col size="12" style="font-size: 8pt" class="ion-text-center">
-                        До: {{order.attributes.date_finish}}
-                        Сформирован: {{order.attributes.statement_info.date_formed}}
-                        Подписан: {{order.attributes.statement_info.date_teacher}}
+                        До: {{formatDate(order.attributes.date_finish)}}
+                        Сформирован: {{formatDate(order.attributes.statement_info.date_formed)}}
+                        Подписан: {{formatDate(order.attributes.statement_info.date_teacher)}}
                     </ion-col>
 
                 </ion-row>
@@ -144,6 +144,9 @@
                 }).finally(() => {
                     loading.dismiss()
                 })
+            },
+            formatDate(str) {
+                return String(str).split('-').reverse().join('.')
             },
         },
         mounted() {

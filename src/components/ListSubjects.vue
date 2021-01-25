@@ -30,9 +30,8 @@
             </ion-grid>
             <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"
                           :subject_name="selectedSubject.name" v-if="open"></scores-table>
-            <teacher-scores-table :open_dialog="teacher_open" @close-dialog="closeScorestable"
-                                  :subject_id="selectedSubject.id"
-                                  :subject_name="selectedSubject.name" v-if="teacher_open">
+            <teacher-scores-table :open_dialog="teacher_open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"
+                          :subject_name="selectedSubject.name" v-if="teacher_open">
 
             </teacher-scores-table>
         </ion-content>
@@ -84,7 +83,6 @@
             closeComponent() {
                 this.$emit('close-component', null)
             },
-
             closeScorestable(data) {
                 this.open = false
                 this.teacher_open = false
@@ -94,7 +92,7 @@
                 this.open = Storage.is_student()
                 this.teacher_open = !Storage.is_student()
             },
-            async getSubjects() {
+            async loadSubjects() {
                 const loading = await loadingController.create({
                     cssClass: 'loading',
                     message: 'Загрузка',
@@ -114,7 +112,7 @@
             },
         },
         mounted() {
-            this.getSubjects()
+            this.loadSubjects()
             this.semester = Storage.getItem('semester')
         }
     }
