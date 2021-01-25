@@ -3,7 +3,7 @@
         <ion-grid>
             <ion-row class="segment__mrs">
                 <ion-col>
-                    <ion-segment color="primary" v-model="tab" @ionChange="segmentChanged($event)">
+                    <ion-segment color="primary" v-model="tab">
                         <ion-segment-button value="1">
                             <ion-label>Внеучебный рейтинг</ion-label>
                         </ion-segment-button>
@@ -63,7 +63,7 @@
                         <ion-col>
                             <p>Внеучебный</p>
                         </ion-col>
-                          <ion-col class="ion-text-end">
+                        <ion-col class="ion-text-end">
                             {{parseFloat(integralRating.Rv).toFixed(1)}}
                         </ion-col>
                     </ion-row>
@@ -71,11 +71,10 @@
                         <ion-col>
                             <p>Интегральный</p>
                         </ion-col>
-                          <ion-col class="ion-text-end">
+                        <ion-col class="ion-text-end">
                             {{parseFloat(integralRating.Ri).toFixed(1)}}
                         </ion-col>
                     </ion-row>
-<!--                    todo: проверить переменные -->
                 </ion-col>
             </ion-row>
         </ion-grid>
@@ -95,7 +94,7 @@
         // IonIcon,
         IonCol,
         IonRow,
-        IonGrid,
+        IonGrid, loadingController,
         // IonImg,
         // IonRippleEffect,
         // IonHeader,
@@ -105,8 +104,9 @@
     } from '@ionic/vue';
     import ExploreContainer from '@/components/ExploreContainer.vue';
     import Storage from "../plugins/storage";
+    import {defineComponent} from 'vue';
 
-    export default {
+    export default defineComponent( {
         name: 'Rating',
         components: {
             // ExploreContainer,
@@ -132,8 +132,15 @@
             return {
                 tab: '1',
                 vneucRating: null,
-                integralRating: {Ri: 0, Rv:0, Ru:0},
+                integralRating: {Ri: 0, Rv: 0, Ru: 0},
             }
+        },
+        ionViewWillEnter() {
+            console.log('will')
+        },
+        ionViewDidEnter() {
+            console.log('did')
+            this.loadRating()
         },
         computed: {
             obshReit() {
@@ -167,23 +174,31 @@
 
         },
         methods: {
-            segmentChanged(ev) {
-                console.log('Segment changed', ev);
-            },
-            loadRating() {
+            async loadRating() {
+                const loading = await loadingController.create({
+                    cssClass: 'loading',
+                    message: 'Загрузка',
+                    animated: true,
+                    spinner: 'crescent',
+                    translucent: true,
+                })
+                await loading.present();
                 Storage.methods.getVneucRating().then((response) => {
                     this.vneucRating = response
+                    Storage.methods.getIntegralRating().then((response) => {
+                        this.integralRating = response
+                    }).catch(error => {
+                        console.log(error)
+                    }).finally(() => {
+                        loading.dismiss()
+                    })
                 })
-                Storage.methods.getIntegralRating().then((response) => {
-                    this.integralRating = response
-                })
-
-            }
+            },
         },
         mounted() {
             this.loadRating()
         }
-    }
+    })
 </script>
 
 <style scoped>

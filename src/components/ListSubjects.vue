@@ -48,7 +48,7 @@
         IonRow,
         IonContent,
         IonIcon,
-        IonButton,
+        IonButton, loadingController,
     } from '@ionic/vue';
     import {chevronBackOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
@@ -83,11 +83,6 @@
             closeComponent() {
                 this.$emit('close-component', null)
             },
-            loadSubjects() {
-                Storage.methods.getSubjects().then((response) => {
-                    this.subjects = response
-                })
-            },
             closeScorestable(data) {
                 this.open = false
                 this.teacher_open = false
@@ -96,7 +91,25 @@
                 this.selectedSubject = subject
                 this.open = Storage.is_student()
                 this.teacher_open = !Storage.is_student()
-            }
+            },
+            async loadSubjects() {
+                const loading = await loadingController.create({
+                    cssClass: 'loading',
+                    message: 'Загрузка',
+                    animated: true,
+                    spinner: 'crescent',
+                    translucent: true,
+                })
+                await loading.present();
+                Storage.methods.getSubjects().then((response) => {
+                    this.subjects = response
+
+                }).catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                    loading.dismiss()
+                })
+            },
         },
         mounted() {
             this.loadSubjects()

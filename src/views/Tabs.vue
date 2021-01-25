@@ -10,7 +10,7 @@
                     <ion-icon :icon="book"/>
                     <ion-label>Предметы</ion-label>
                 </ion-tab-button>
-                <ion-tab-button v-if="is_student" tab="rating" href="/tabs/rating">
+                <ion-tab-button v-show="is_student" tab="rating" href="/tabs/rating">
                     <ion-icon :icon="statsChart"/>
                     <ion-label>Рейтинг</ion-label>
                 </ion-tab-button>
@@ -32,6 +32,9 @@
     export default {
         name: 'Tabs',
         components: {IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage},
+        ionViewWillEnter() {
+            console.log('will')
+        },
         setup() {
             return {
                 home,
@@ -43,18 +46,12 @@
         },
         methods: {
             init() {
-                console.log('mounted')
                 const user = JSON.parse(localStorage.getItem('user'))
                 if (user)
                     this.is_student = user.user_group.findIndex(item => item.id === 3) !== -1
             }
         },
-        // beforeRouteEnter(to, from, next) {
-        //     console.log(to, from, next)
-        //     next((app)=> {
-        //         app.init()
-        //     })
-        // },
+
         mounted() {
             this.init()
         }

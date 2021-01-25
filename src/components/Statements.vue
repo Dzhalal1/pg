@@ -32,7 +32,7 @@
                         </ion-button>
                     </ion-col>
                     <ion-col size="12" class="ion-text-end">
-                        <ion-button @click="signStatement(statement.id)" :disabled="!statement.open">
+                        <ion-button v-if="!is_student" @click="signStatement(statement.id)" :disabled="!statement.open">
                             Подписать
                         </ion-button>
                     </ion-col>
@@ -55,7 +55,7 @@
         IonRow,
         IonIcon,
         IonButton,
-        IonContent,
+        IonContent, loadingController,
     } from '@ionic/vue';
     import {chevronBackOutline, downloadOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
@@ -81,7 +81,8 @@
                 selected_close_subject_id: 0,
                 open_scores_table: false,
                 statements: [],
-                semester: {}
+                semester: {},
+                is_student: false
             }
         },
         methods: {
@@ -119,15 +120,29 @@
                 link.click()
                 // })
             },
-            getStatements() {
+            async getStatements() {
+                const loading = await loadingController.create({
+                    cssClass: 'loading',
+                    message: 'Загрузка',
+                    animated: true,
+                    spinner: 'crescent',
+                    translucent: true,
+                })
+                await loading.present();
                 Storage.methods.getStatements().then((response) => {
                     this.statements = response
+
+                }).catch(error => {
+                    console.log(error)
+                }).finally(() => {
+                    loading.dismiss()
                 })
             },
         },
         mounted() {
             this.getStatements()
             this.semester = Storage.getItem('semester')
+            this.is_student = Storage.is_student()
         }
     }
 </script>
