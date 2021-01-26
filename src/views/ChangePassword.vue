@@ -81,8 +81,34 @@
                 this.$emit('close-dialog', this.isOpenRef)
             },
             changePassword() {
-                Storage.methods.changePassword(this.form).then(()=> {
+                Storage.methods.changePassword(this.form).then(async ()=> {
+                    const toast = await toastController
+                        .create({
+                            message: 'Данные успешно сохранены',
+                            position: 'top',
+                            translucent: true,
+                            cssClass: 'success-message',
+                            animated: true,
+                            duration: 3000
+                        })
                     this.closeMe()
+                    return toast.present();
+                }).catch(async (error) => {
+                    let message = 'Ошибка сервера.'
+                    if (error.response.data.errors)
+                        message = error.response.data.errors[0].detail
+                    else
+                        message += ' Ошибка номер ' + error.response.status
+                    const toast = await toastController
+                        .create({
+                            message,
+                            position: 'top',
+                            translucent: true,
+                            cssClass: 'error-message',
+                            animated: true,
+                            duration: 3000
+                        })
+                    return toast.present();
                 })
             }
         },

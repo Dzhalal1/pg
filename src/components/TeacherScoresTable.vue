@@ -127,7 +127,7 @@
         // IonHeader,
         // IonToolbar,
         // IonTitle,
-        IonContent, loadingController,
+        IonContent, loadingController, toastController,
     } from '@ionic/vue';
 
     export default {
@@ -180,9 +180,41 @@
                     // this.summSores()
                     Storage.methods.getSubjectsScores(this.subject_id).then((response) => {
                         this.scores = response
-                    }).finally(() => {
+                    }).catch(async (error) => {
+                    let message = 'Ошибка сервера.'
+                    if (error.response.data.errors)
+                        message = error.response.data.errors[0].detail
+                    else
+                        message += ' Ошибка номер ' + error.response.status
+                    const toast = await toastController
+                        .create({
+                            message,
+                            position: 'bottom',
+                            translucent: true,
+                            cssClass: 'error-message',
+                            animated: true,
+                            duration: 3000
+                        })
+                    return toast.present();
+                }).finally(() => {
                         loading.dismiss()
                     })
+                }).catch(async (error) => {
+                    let message = 'Ошибка сервера.'
+                    if (error.response.data.errors)
+                        message = error.response.data.errors[0].detail
+                    else
+                        message += ' Ошибка номер ' + error.response.status
+                    const toast = await toastController
+                        .create({
+                            message,
+                            position: 'bottom',
+                            translucent: true,
+                            cssClass: 'error-message',
+                            animated: true,
+                            duration: 3000
+                        })
+                    return toast.present();
                 })
             },
             changeWeek(status) {

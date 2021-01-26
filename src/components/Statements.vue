@@ -55,7 +55,7 @@
         IonRow,
         IonIcon,
         IonButton,
-        IonContent, loadingController,
+        IonContent, loadingController, toastController,
     } from '@ionic/vue';
     import {chevronBackOutline, downloadOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
@@ -132,8 +132,22 @@
                 Storage.methods.getStatements().then((response) => {
                     this.statements = response
 
-                }).catch(error => {
-                    console.log(error)
+                }).catch(async (error) => {
+                    let message = 'Ошибка сервера.'
+                    if (error.response.data.errors)
+                        message = error.response.data.errors[0].detail
+                    else
+                        message += ' Ошибка номер ' + error.response.status
+                    const toast = await toastController
+                        .create({
+                            message,
+                            position: 'bottom',
+                            translucent: true,
+                            cssClass: 'error-message',
+                            animated: true,
+                            duration: 3000
+                        })
+                    return toast.present();
                 }).finally(() => {
                     loading.dismiss()
                 })

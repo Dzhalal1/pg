@@ -143,7 +143,7 @@
         // IonHeader,
         // IonToolbar,
         // IonTitle,
-        IonContent,
+        IonContent, loadingController, toastController,
     } from '@ionic/vue';
 
     export default {
@@ -174,13 +174,39 @@
                 this.isOpenRef = false
                 this.$emit('close-dialog', this.isOpenRef)
             },
-            loadSubjectInfo() {
+            async loadSubjectInfo() {
+                const loading = await loadingController.create({
+                    cssClass: 'loading',
+                    message: 'Загрузка',
+                    animated: true,
+                    spinner: 'crescent',
+                    translucent: true,
+                })
+                await loading.present();
                 Storage.methods.getSubjectInfo(this.subject_id).then((response) => {
                     this.subjectsInfo = response
                     this.summSores()
                     Storage.methods.getSubjectsScores(this.subject_id).then((response) => {
                         this.scores = response
                     })
+                }).catch(async (error) => {
+                    let message = 'Ошибка сервера.'
+                    if (error.response.data.errors)
+                        message = error.response.data.errors[0].detail
+                    else
+                        message += ' Ошибка номер ' + error.response.status
+                    const toast = await toastController
+                        .create({
+                            message,
+                            position: 'bottom',
+                            translucent: true,
+                            cssClass: 'error-message',
+                            animated: true,
+                            duration: 3000
+                        })
+                    return toast.present();
+                }).finally(() => {
+                    loading.dismiss()
                 })
             },
             changeWeek(status) {

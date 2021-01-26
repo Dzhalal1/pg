@@ -131,7 +131,7 @@
         // IonHeader,
         // IonToolbar,
         // IonTitle,
-        IonContent
+        IonContent, toastController
     } from '@ionic/vue';
     import ExploreContainer from '@/components/ExploreContainer.vue';
     import {exitOutline, person} from 'ionicons/icons';
@@ -219,7 +219,34 @@
                 for (const key in this.user) {
                     fd.set(key, this.user[key])
                 }
-                Storage.methods.putUserInfo({id: this.user.id, form: fd})
+                Storage.methods.putUserInfo({id: this.user.id, form: fd}).then(async () => {
+                    const toast = await toastController
+                        .create({
+                            message: 'Данные успешно сохранены',
+                            position: 'top',
+                            translucent: true,
+                            cssClass: 'success-message',
+                            animated: true,
+                            duration: 3000
+                        })
+                    return toast.present();
+                }).catch(async (error) => {
+                    let message = 'Ошибка сервера.'
+                    if (error.response.data.errors)
+                        message = error.response.data.errors[0].detail
+                    else
+                        message += ' Ошибка номер ' + error.response.status
+                    const toast = await toastController
+                        .create({
+                            message,
+                            position: 'top',
+                            translucent: true,
+                            cssClass: 'error-message',
+                            animated: true,
+                            duration: 3000
+                        })
+                    return toast.present();
+                })
             },
             logout() {
                 Storage.methods.signOut()

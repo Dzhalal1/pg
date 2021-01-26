@@ -94,7 +94,7 @@
         // IonIcon,
         IonCol,
         IonRow,
-        IonGrid, loadingController,
+        IonGrid, loadingController, toastController,
         // IonImg,
         // IonRippleEffect,
         // IonHeader,
@@ -106,7 +106,7 @@
     import Storage from "../plugins/storage";
     import {defineComponent} from 'vue';
 
-    export default defineComponent( {
+    export default defineComponent({
         name: 'Rating',
         components: {
             // ExploreContainer,
@@ -185,10 +185,42 @@
                 await loading.present();
                 Storage.methods.getVneucRating().then((response) => {
                     this.vneucRating = response
+
+                }).catch(async (error) => {
+                    let message = 'Ошибка сервера.'
+                    if (error.response.data.errors)
+                        message = error.response.data.errors[0].detail
+                    else
+                        message += ' Ошибка номер ' + error.response.status
+                    const toast = await toastController
+                        .create({
+                            message,
+                            position: 'bottom',
+                            translucent: true,
+                            cssClass: 'error-message',
+                            animated: true,
+                            duration: 3000
+                        })
+                    return toast.present();
+                }).finally(() => {
                     Storage.methods.getIntegralRating().then((response) => {
                         this.integralRating = response
-                    }).catch(error => {
-                        console.log(error)
+                    }).catch(async (error) => {
+                        let message = 'Ошибка сервера.'
+                        if (error.response.data.errors)
+                            message = error.response.data.errors[0].detail
+                        else
+                            message += ' Ошибка номер ' + error.response.status
+                        const toast = await toastController
+                            .create({
+                                message,
+                                position: 'bottom',
+                                translucent: true,
+                                cssClass: 'error-message',
+                                animated: true,
+                                duration: 3000
+                            })
+                        return toast.present();
                     }).finally(() => {
                         loading.dismiss()
                     })

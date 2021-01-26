@@ -252,6 +252,11 @@ ion-toast.error-message {
     font-family: "Jost SemiBold", sans-serif;
     color: #a22c26;
 }
+ion-toast.success-message {
+    --background: #d4edda !important;
+    font-family: "Jost SemiBold", sans-serif;
+    color: #156555;
+}
 
 ion-loading {
     --background: white !important;
