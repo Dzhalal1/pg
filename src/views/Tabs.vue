@@ -32,9 +32,6 @@
     export default {
         name: 'Tabs',
         components: {IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage},
-        ionViewWillEnter() {
-            console.log('will')
-        },
         setup() {
             return {
                 home,

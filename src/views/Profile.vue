@@ -182,11 +182,7 @@
                 }
             }
         },
-        setup() {
-            console.log('test')
-        },
         created() {
-            console.log('mounted prof')
             const user = Storage.getItem('user')
             this.selected_learning_form = Storage.getItem('learning_form')
             this.is_student = Storage.is_student()

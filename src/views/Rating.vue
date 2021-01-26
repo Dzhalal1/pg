@@ -135,13 +135,6 @@
                 integralRating: {Ri: 0, Rv: 0, Ru: 0},
             }
         },
-        ionViewWillEnter() {
-            console.log('will')
-        },
-        ionViewDidEnter() {
-            console.log('did')
-            this.loadRating()
-        },
         computed: {
             obshReit() {
                 if (this.vneucRating === null) {

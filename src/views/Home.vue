@@ -81,9 +81,7 @@
 
     export default {
         name: 'Home',
-         ionViewWillEnter() {
-            console.log('will')
-        },
+
         components: {
             // ExploreContainer,
             // IonInput,
