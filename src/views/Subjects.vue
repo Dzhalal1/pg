@@ -114,6 +114,7 @@
         margin: 0;
         padding: 0;
         font-family: "Jost SemiBold", sans-serif;
+
     }
 
     .style__sub {
@@ -125,7 +126,7 @@
     .style__sub ion-row {
         padding: 15px;
         margin-top: 15px;
-        background-color: white;
+        background-color: #ebebeb;
         border-radius: 5px;
         color: grey;
         border: 1px solid #e0dfdf;
@@ -156,6 +157,7 @@
         background-color: lightseagreen;
         padding-top: 20px;
         padding-bottom: 20px;
+        color: white !important;
     }
 
     ion-header ion-icon {

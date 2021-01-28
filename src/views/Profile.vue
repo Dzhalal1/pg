@@ -264,6 +264,7 @@
 
     .bc__profile {
         background-color: #20b2aa;
+        color: white !important;
     }
 
     h1 {
@@ -273,7 +274,7 @@
     }
 
     .bc__main {
-        background-color: #ececec;
+        background-color: white;
         padding: 50px;
         margin-top: 50px;
         border-radius: 20px 20px 0 0;
@@ -284,7 +285,7 @@
 
 
     ion-input {
-        background-color: #dcddde !important;
+        background-color: #ebebeb !important;
         border-radius: 20px;
         margin-top: 1em;
         color: grey !important;
