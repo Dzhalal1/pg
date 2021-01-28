@@ -126,7 +126,7 @@
     .style__sub ion-row {
         padding: 15px;
         margin-top: 15px;
-        background-color: #ebebeb;
+        background-color: white;
         border-radius: 5px;
         color: grey;
         border: 1px solid #e0dfdf;

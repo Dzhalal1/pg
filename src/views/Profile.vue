@@ -274,7 +274,7 @@
     }
 
     .bc__main {
-        background-color: white;
+        background-color: #ececec;
         padding: 50px;
         margin-top: 50px;
         border-radius: 20px 20px 0 0;
@@ -285,7 +285,7 @@
 
 
     ion-input {
-        background-color: #ebebeb !important;
+        background-color: #dcddde !important;
         border-radius: 20px;
         margin-top: 1em;
         color: grey !important;
