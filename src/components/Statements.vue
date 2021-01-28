@@ -202,6 +202,7 @@
         background-color: lightseagreen;
         padding-top: 20px;
         padding-bottom: 20px;
+        color: white !important;
     }
 
     ion-header ion-icon {

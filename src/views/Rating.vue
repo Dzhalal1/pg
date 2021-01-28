@@ -249,7 +249,6 @@
         margin: 5px;
 
     }
-
     .list__rating ion-row {
         padding: 15px;
         margin-top: 15px;
