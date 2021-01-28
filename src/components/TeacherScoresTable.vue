@@ -52,13 +52,30 @@
                                 <ion-col size="10" class="ion-text-start">
                                     {{score.student}}
                                     <!--                                    Пропуск-->
+
                                 </ion-col>
                                 <ion-col>{{summSores(score.student).Rfact}}</ion-col>
                                 <ion-col size="12">
                                     <ion-row>
-                                        <ion-col style="text-align: center">
-                                            Пропуск<br>
+                                        <ion-col class="ion-text-center">
+                                           <span v-if="subjectsInfo.stype_id === 3 || subjectsInfo.stype_id === 5">Посещяемость</span> <span v-else>Пропуск</span><br>
                                             {{subjectsInfo.maxscore_info.missed}}
+                                        </ion-col>
+                                        <ion-col class="ion-text-center">
+                                            <span v-if="subjectsInfo.stype_id === 3 || subjectsInfo.stype_id === 5">Эл-ты НИ</span> <span v-else>Контроль</span><br>
+                                            {{subjectsInfo.maxscore_info.reference_work }}
+                                        </ion-col>
+                                        <ion-col class="ion-text-center">
+                                             <span v-if="subjectsInfo.stype_id === 3 || subjectsInfo.stype_id === 5">Защита</span> <span v-else>Сам. работа</span><br>
+                                            {{subjectsInfo.maxscore_info.home_work }}
+                                        </ion-col>
+                                        <ion-col class="ion-text-center">
+                                            Активность<br>
+                                            {{subjectsInfo.maxscore_info.active }}
+                                        </ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                        <ion-col style="text-align: center">
                                             <ion-input type="number"
 
                                                        :disabled='subjectsInfo.maxscore_info.missed === 0'
@@ -67,8 +84,6 @@
                                                        v-model="score.missed"></ion-input>
                                         </ion-col>
                                         <ion-col class="ion-text-center">
-                                            Контроль<br>
-                                            {{subjectsInfo.maxscore_info.reference_work }}
                                             <ion-input type="number"
                                                        :disabled='subjectsInfo.maxscore_info.reference_work === 0'
                                                        @keyup="score.reference_work = Number(score.reference_work) > Number(subjectsInfo.maxscore_info.reference_work) ? subjectsInfo.maxscore_info.reference_work :Number(score.reference_work)"
@@ -76,8 +91,6 @@
                                                        v-model="score.reference_work"></ion-input>
                                         </ion-col>
                                         <ion-col class="ion-text-center">
-                                            Сам. работа<br>
-                                            {{subjectsInfo.maxscore_info.home_work }}
                                             <ion-input type="number"
                                                        :disabled='subjectsInfo.maxscore_info.home_work === 0'
                                                        @keyup="score.home_work = Number(score.home_work) > Number(subjectsInfo.maxscore_info.home_work) ? subjectsInfo.maxscore_info.home_work :Number(score.home_work)"
@@ -85,8 +98,6 @@
                                                        v-model="score.home_work"></ion-input>
                                         </ion-col>
                                         <ion-col class="ion-text-center">
-                                            Активность<br>
-                                            {{subjectsInfo.maxscore_info.active }}
                                             <ion-input type="number"
                                                        :disabled='subjectsInfo.maxscore_info.active === 0'
                                                        @keyup="score.active = Number(score.active) > Number(subjectsInfo.maxscore_info.active) ? subjectsInfo.maxscore_info.active :Number(score.active)"
@@ -181,22 +192,22 @@
                     Storage.methods.getSubjectsScores(this.subject_id).then((response) => {
                         this.scores = response
                     }).catch(async (error) => {
-                    let message = 'Ошибка сервера.'
-                    if (error.response.data.errors)
-                        message = error.response.data.errors[0].detail
-                    else
-                        message += ' Ошибка номер ' + error.response.status
-                    const toast = await toastController
-                        .create({
-                            message,
-                            position: 'bottom',
-                            translucent: true,
-                            cssClass: 'error-message',
-                            animated: true,
-                            duration: 3000
-                        })
-                    return toast.present();
-                }).finally(() => {
+                        let message = 'Ошибка сервера.'
+                        if (error.response.data.errors)
+                            message = error.response.data.errors[0].detail
+                        else
+                            message += ' Ошибка номер ' + error.response.status
+                        const toast = await toastController
+                            .create({
+                                message,
+                                position: 'bottom',
+                                translucent: true,
+                                cssClass: 'error-message',
+                                animated: true,
+                                duration: 3000
+                            })
+                        return toast.present();
+                    }).finally(() => {
                         loading.dismiss()
                     })
                 }).catch(async (error) => {
@@ -357,12 +368,12 @@
         margin: 0;
         padding: 0;
         color: grey;
-
     }
 
     p {
         text-align: center;
-        font-size: 11pt;
+        font-size: 10pt;
+
 
     }
 
@@ -378,7 +389,7 @@
 
     .score ion-row {
         font-family: "Jost SemiBold", sans-serif;
-        font-size: 11pt;
+        font-size: 8pt !important;
         padding: 15px;
         margin-top: 15px;
         background-color: white;
