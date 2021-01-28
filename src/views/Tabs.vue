@@ -55,6 +55,10 @@
     }
 </script>
 <style scoped>
+    ion-tabs {
+        background-color: #e9e9e9 !important;
+    }
+
     ion-label {
         font-family: "Jost SemiBold", sans-serif;
     }

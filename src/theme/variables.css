@@ -244,8 +244,7 @@ ion-tab-button {
     background-color: transparent;
 }
 
-.toast-content {
-}
+
 
 ion-toast.error-message {
     --background: #ebc8c4 !important;
