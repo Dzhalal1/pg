@@ -274,7 +274,8 @@ h1 {
 }
 
 .bc__main {
-  background-color: #e9e9e9 !important;
+  /*background-color: #e9e9e9 !important;*/
+  background-color: white !important;
   padding: 50px;
   margin-top: 50px;
   border-radius: 20px 20px 0 0;
@@ -285,7 +286,7 @@ h1 {
 
 
 ion-input {
-  background-color: white !important;
+  background-color: #fcfcfc;
   border-radius: 20px;
   margin-top: 1em;
   color: grey !important;

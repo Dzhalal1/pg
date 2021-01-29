@@ -152,7 +152,7 @@
 
 <style scoped>
     ion-col.login__input {
-        background-color: #E5E7E9 !important;
+      background-color: #fcfcfc;
         border-radius: 30px;
         margin-top: 1em;
     }

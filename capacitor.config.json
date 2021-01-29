@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "КГСХА МРС",
+  "appId": "uk.co.mrs.compiledemo",
+  "appName": "compile-demo-ios",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",

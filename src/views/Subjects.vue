@@ -126,10 +126,11 @@
     .style__sub ion-row {
         padding: 15px;
         margin-top: 15px;
-        background-color: white;
+        background-color: #fcfcfc;
         border-radius: 5px;
         color: grey;
         border: 1px solid #e0dfdf;
+
     }
 
     ion-icon {
