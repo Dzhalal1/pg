@@ -151,7 +151,7 @@
     }
 
     ion-input {
-        background-color: #dcddde !important;
+        background-color: #f7f7f7 !important;
         border-radius: 20px;
         margin-top: 1em;
         color: black;

@@ -187,7 +187,7 @@ export default {
 .statements ion-row {
   padding: 15px;
   margin-top: 15px;
-  background-color: #fcfcfc;
+  background-color: #f7f7f7 !important;
   border-radius: 5px;
   color: grey;
   border: 1px solid #e0dfdf;
@@ -210,7 +210,7 @@ ion-button {
 }
 
 ion-header {
-  background-color: lightseagreen;
+  background-color: #20b2aa;
   padding-top: 20px;
   padding-bottom: 20px;
   color: white !important;

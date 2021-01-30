@@ -155,6 +155,8 @@ ion-header {
 ion-header ion-img {
   height: 50px !important;
 }
-
+ion-grid {
+  background-color: white;
+}
 
 </style>

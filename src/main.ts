@@ -1,8 +1,9 @@
 import {createApp} from 'vue'
 import App from './App.vue'
 import router from './router';
-import Storage from './store/index'
+import {Plugins} from '@capacitor/core';
 
+const {SplashScreen} = Plugins;
 
 import {IonicVue} from '@ionic/vue';
 /* Core CSS required for Ionic components to work properly */
@@ -30,9 +31,18 @@ import {defineCustomElements} from '@ionic/pwa-elements/loader';
 defineCustomElements(window);
 
 const app = createApp(App)
-  .use(IonicVue)
-  .use(router);
+    .use(IonicVue)
+    .use(router);
 
 router.isReady().then(() => {
-  app.mount('#app');
+    // SplashScreen.hide().then(() => {
+    // });
+    // SplashScreen.show({
+    //     autoHide: false,
+    //     showDuration: 5000
+    // }).then(() => {
+    //
+    // });
+app.mount('#app');
+
 });

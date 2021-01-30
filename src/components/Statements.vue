@@ -12,7 +12,7 @@
                 </ion-col>
             </ion-row>
         </ion-header>
-        <ion-content>
+        <ion-content class="star">
             <ion-grid class="statements">
                 <ion-row v-for="(statement,index) in statements" :key="index">
                     <ion-col size="6">
@@ -176,7 +176,7 @@
     .statements ion-row {
         padding: 15px;
         margin-top: 15px;
-        background-color: #fcfcfc;
+        background-color: #f7f7f7 !important;
         border-radius: 5px;
         color: grey;
         border: 1px solid #e0dfdf;

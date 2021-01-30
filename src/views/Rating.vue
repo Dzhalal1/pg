@@ -253,7 +253,7 @@ ion-segment-button {
 .list__rating ion-row {
   padding: 15px;
   margin-top: 15px;
-  background-color: #fcfcfc;
+  background-color: #f7f7f7 !important;
   border-radius: 5px;
   color: grey;
   border: 1px solid #e0dfdf;

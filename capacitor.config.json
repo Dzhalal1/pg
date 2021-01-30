@@ -1,12 +1,15 @@
 {
   "appId": "uk.co.mrs.compiledemo",
-  "appName": "compile-demo-ios",
+  "appName": "КГСХА МРС",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "dist",
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 0
+      "androidScaleType": "CENTER_CROP",
+      "launchShowDuration": 2000,
+      "backgroundColor": "#20b2aa",
+      "splashImmersive": true
     }
   },
   "cordova": {}
