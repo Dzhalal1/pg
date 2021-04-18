@@ -45,7 +45,7 @@
             init() {
                 const user = JSON.parse(localStorage.getItem('user'))
                 if (user)
-                    this.is_student = user.user_group.findIndex(item => item.id === 3) !== -1
+                    this.is_student = user.role.findIndex(item => item.id === 3) !== -1
             }
         },
 

@@ -12,7 +12,7 @@ const Storage = {
     },
     methods: {
         getToken: async (form: any) => {
-            const token = (await http.post('auth/token/login/', form)).data.data.id
+            const token = (await http.post('auth/token/login/', form)).data.auth_token
             Storage.setItem('token', token)
             http.defaults.headers.common['Authorization'] = 'Token ' + token
             return token
@@ -22,12 +22,13 @@ const Storage = {
             delete http.defaults.headers.common['Authorization']
         },
         getUserInfo: async () => {
-            const user = await http.get('api/user/info/')
-            Storage.setItem('user', user.data.data.data)
+            const user = await http.get('api/users/me/')
+            console.log(user)
+            Storage.setItem('user', user.data)
         },
         getLastSemester: async () => {
-            const semester = await http.get('api/base/get_last_semesters/')
-            Storage.setItem('semester', semester.data.data.data)
+            const semester = await http.get('api/base/semesters/last/')
+            Storage.setItem('semester', semester.data)
         },
         getVneucRating: async () => {
             const reitng = await http.get('api/students/vneuch_reitng/', {params: {semester_id: Storage.getItem('semester').id}})
@@ -95,9 +96,11 @@ const Storage = {
             return statement.data.data.data ? statement.data.data.data : statement.data.data
         },
         getGroupInfo: async () => {
-            const group = await http.get('api/students/get_groups_info/', {params: {semester_id: Storage.getItem('semester').id}})
-            Storage.setItem('learning_form', group.data.data.relationships.learning_form.data.id)
-            Storage.setItem('group', group.data.data)
+            const groups = Storage.getItem('user').groups
+            const semester = Storage.getItem('semester')
+            const group = groups.find((grp: any) => grp.semester === semester.id)
+            Storage.setItem('learning_form', group.learning_form)
+            Storage.setItem('group', group)
         },
         getAcademicYear: async () => {
             const year = await http.get('api/base/get_academic_year/')
@@ -132,7 +135,7 @@ const Storage = {
         },
         async saveScore(score: any) {
             const scores = await http.put('api/teachers/scores/update/' + score.id + '/', score)
-            // console.log(scores)
+            console.log(scores)
         },
         async studenSubjectSuccess(form: any) {
             const url = 'api/teachers/scores_from_closesubjects/'
@@ -152,7 +155,7 @@ const Storage = {
     is_student() {
         const user = Storage.getItem('user')
         if (user !== null)
-            return user.user_group.findIndex((row: any) => {
+            return user.role.findIndex((row: any) => {
                 return row.id === 3
             }) !== -1
     }

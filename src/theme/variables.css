@@ -230,6 +230,9 @@ http://ionicframework.com/docs/theming/ */
         /* dark mode variables go here */
     }
 }
+* {
+    font-family: 'SFProDisplayMedium', sans-serif !important;
+}
 
 .toolbar-container {
     /*border-radius: 50px !important;*/
@@ -302,5 +305,10 @@ ion-loading .loading-wrapper {
 @font-face {
     font-family: 'SFProTextRegular';
     src: url('./../fonts/SFProTextRegular.ttf');
+}
+
+@font-face {
+    font-family: 'SFProDisplayMedium';
+    src: url('./../fonts/SFProDisplayMedium.ttf');
 }
 
