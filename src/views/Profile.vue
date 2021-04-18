@@ -9,7 +9,7 @@
                                 <h1>{{ user.username }}</h1>
                             </ion-col>
                             <ion-col size="3" class="ion-text-end">
-                                <ion-icon @click="logout()" :icon="exitOutline"/>
+                                <ion-icon @click="logout()" class="icon_exit" :icon="exitOutline"/>
                             </ion-col>
                         </ion-row>
                     </ion-col>
@@ -339,6 +339,9 @@
     .ion-text-center {
         margin-right: 10px;
         margin-top: 10px;
+    }
+    .icon_exit {
+        color: white !important;
     }
 
 

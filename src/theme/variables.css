@@ -243,7 +243,7 @@ ion-tab-bar {
 
 ion-tab-button {
     background-color: transparent;
-    color: #20b2aa;
+    /*color: #20b2aa;*/
 }
 
 
@@ -297,5 +297,10 @@ ion-loading .loading-wrapper {
 @font-face {
     font-family: 'Jost SemiBold';
     src: url('./../fonts/JostSemiBold.ttf');
+}
+
+@font-face {
+    font-family: 'SFProTextRegular';
+    src: url('./../fonts/SFProTextRegular.ttf');
 }
 

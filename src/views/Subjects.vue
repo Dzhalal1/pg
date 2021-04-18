@@ -160,6 +160,9 @@
         padding-bottom: 20px;
         color: white !important;
     }
+    ion-header p {
+        color: white !important;
+    }
 
     ion-header ion-icon {
         color: white !important;

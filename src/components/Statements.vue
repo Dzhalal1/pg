@@ -208,4 +208,8 @@
     ion-header ion-icon {
         color: white !important;
     }
+
+    ion-header p {
+        color: white !important;
+    }
 </style>
