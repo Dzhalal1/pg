@@ -26,7 +26,7 @@
                     </ion-col>
                     <ion-col size="12">
                         <ion-row>
-                            <ion-col>
+                            <ion-col v-if="subject.eios_course_id">
                                 <ion-button expand="block"
                                             :href="'https://eios.kgsxa.ru/course/view.php?id='+subject.eios_course_id">
                                     Курс в еиос
