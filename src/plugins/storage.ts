@@ -98,7 +98,6 @@ const Storage = {
             const groups = Storage.getItem('user').groups
             const semester = Storage.getItem('semester')
             let group = groups.find((grp: any) => grp.semester === semester.id)
-            console.log(groups.length)
             if (group === undefined) {
                 group = groups[groups.length - 1]
             }
@@ -116,7 +115,6 @@ const Storage = {
                 url = 'api/student/' + Storage.getItem('user').student  + '/subjects/'+ Storage.getItem('semester').id + '/'
             } else url = 'api/teachers/subjects/' + Storage.getItem('learning_form') + '/' + Storage.getItem('user').id + '/' + Storage.getItem('semester').id + '/' //todo: сделать выбор формы обучения
             const subjects = await http.get(url, {params: {semester_id: Storage.getItem('semester').id}})
-            console.log(subjects)
             return subjects.data
         },
         getSubjectInfo: async (subjectId: number, week: number = 0) => {
@@ -124,13 +122,14 @@ const Storage = {
             if (week === 0) {
                 selectWeek = Storage.getItem('semester').current_week
             } else selectWeek = week
-            const subjectinfo = await http.get('api/teachers/' + subjectId + '/journal/', {
+            const journal = await http.get('api/subject/' + subjectId + '/journal/', {
                 params: {
                     week: selectWeek,
                     group_id: Storage.is_student() ? Storage.getItem('group').id : undefined,
                 }
             })
-            return subjectinfo.data.data.data
+            console.log(journal)
+            return journal.data
         },
         getSubjectsScores: async (subjectId: number) => {
             const url = Storage.is_student() ? 'api/teachers/scores/' + subjectId + '/' + Storage.getItem('user').students + '/' : 'api/teachers/scores/' + subjectId + '/'
