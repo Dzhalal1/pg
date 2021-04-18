@@ -230,9 +230,6 @@ http://ionicframework.com/docs/theming/ */
         /* dark mode variables go here */
     }
 }
-* {
-    font-family: 'SFProDisplayMedium', sans-serif !important;
-}
 
 .toolbar-container {
     /*border-radius: 50px !important;*/

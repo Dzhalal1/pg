@@ -113,10 +113,11 @@ const Storage = {
         getSubjects: async () => {
             let url = ''
             if (Storage.is_student()) {
-                url = 'api/students/' + Storage.getItem('group').id + '/' + Storage.getItem('user').students + '/subjects/'
+                url = 'api/student/' + Storage.getItem('user').student  + '/subjects/'+ Storage.getItem('semester').id + '/'
             } else url = 'api/teachers/subjects/' + Storage.getItem('learning_form') + '/' + Storage.getItem('user').id + '/' + Storage.getItem('semester').id + '/' //todo: сделать выбор формы обучения
             const subjects = await http.get(url, {params: {semester_id: Storage.getItem('semester').id}})
-            return subjects.data.data.data
+            console.log(subjects)
+            return subjects.data
         },
         getSubjectInfo: async (subjectId: number, week: number = 0) => {
             let selectWeek = 0

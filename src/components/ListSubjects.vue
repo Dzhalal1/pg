@@ -19,9 +19,7 @@
                         <p>{{ subject.name }}</p>
                     </ion-col>
                     <ion-col class="ion-text-end">
-                        <p>{{ subject.subjectsteacher.find(item => item.head).last_name }}
-                            {{ subject.subjectsteacher.find(item => item.head).first_name }}
-                            {{ subject.subjectsteacher.find(item => item.head).father_name }} </p>
+                        <p v-if="subject.subject_teachers.find(item => item.head)">{{ subject.subject_teachers.find(item => item.head).fullname }}</p>
                         <ion-button @click="openScoresTable(subject)">
                             Журнал
                         </ion-button>
@@ -80,6 +78,7 @@
                 teacher_open: false
             }
         },
+
         methods: {
             closeComponent() {
                 this.$emit('close-component', null)
@@ -104,7 +103,6 @@
                 await loading.present();
                 Storage.methods.getSubjects().then((response) => {
                     this.subjects = response
-
                 }).catch(async (error) => {
                     let message = 'Ошибка сервера.'
                     if (error.response.data.errors)
