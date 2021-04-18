@@ -19,15 +19,17 @@
                         <p>{{ subject.name }}</p>
                     </ion-col>
                     <ion-col class="ion-text-end">
-                        <p v-if="subject.subject_teachers.find(item => item.head)">{{ subject.subject_teachers.find(item => item.head).fullname }}</p>
+                        <p v-if="subject.subject_teachers.find(item => item.head)">
+                            {{ subject.subject_teachers.find(item => item.head).fullname }}
+                        </p>
                         <ion-button @click="openScoresTable(subject)">
                             Журнал
                         </ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>
-<!--            <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"-->
-<!--                          :subject_name="selectedSubject.name" v-if="open"></scores-table>-->
+            <!--            <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"-->
+            <!--                          :subject_name="selectedSubject.name" v-if="open"></scores-table>-->
             <teacher-scores-table :open_dialog="teacher_open" @close-dialog="closeScorestable"
                                   :subject_id="selectedSubject.id" :disabled="is_student"
                                   :subject_name="selectedSubject.name" v-if="teacher_open">
@@ -105,11 +107,7 @@
                 Storage.methods.getSubjects().then((response) => {
                     this.subjects = response
                 }).catch(async (error) => {
-                    let message = 'Ошибка сервера.'
-                    if (error.response.data.errors)
-                        message = error.response.data.errors[0].detail
-                    else
-                        message += ' Ошибка номер ' + error.response.status
+                    const message = error.message
                     const toast = await toastController
                         .create({
                             message,
@@ -119,7 +117,7 @@
                             animated: true,
                             duration: 3000
                         })
-                    return toast.present();
+                    return toast.present()
                 }).finally(() => {
                     loading.dismiss()
                 })

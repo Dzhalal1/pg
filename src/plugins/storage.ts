@@ -106,20 +106,18 @@ const Storage = {
         },
         getAcademicYear: async () => {
             const year = await http.get('api/base/academic_years/')
-            console.log(year)
             return year.data
         },
         getSubjects: async () => {
             let url = ''
             if (Storage.is_student()) {
-                url = 'api/student/' + Storage.getItem('user').student  + '/subjects/'+ Storage.getItem('semester').id + '/'
-            } else url = 'api/teachers/subjects/' + Storage.getItem('learning_form') + '/' + Storage.getItem('user').id + '/' + Storage.getItem('semester').id + '/' //todo: сделать выбор формы обучения
+                url = 'api/student/' + Storage.getItem('user').student + '/subjects/' + Storage.getItem('semester').id + '/'
+            } else url = 'api/teacher/' + Storage.getItem('user').id + '/subjects/' + Storage.getItem('semester').id + '/' + Storage.getItem('learning_form') + '/'
             const subjects = await http.get(url, {params: {semester_id: Storage.getItem('semester').id}})
             return subjects.data
         },
         getSubjectInfo: async (subjectId: number, week: number = 0) => {
             const journal = await http.get('api/subject/' + subjectId + '/journal/')
-            console.log(journal.data)
             return journal.data
         },
         getSubjectsScores: async (subjectId: number) => {
@@ -128,8 +126,8 @@ const Storage = {
             return scores.data.data.data
         },
         async saveScore(score: any) {
-            const scores = await http.put('api/teachers/scores/update/' + score.id + '/', score)
-            console.log(scores)
+            console.log(score)
+            await http.patch('api/score/' + score.id + '/', score)
         },
         async studenSubjectSuccess(form: any) {
             const url = 'api/teachers/scores_from_closesubjects/'

@@ -37,7 +37,7 @@
             <ion-content>
                 <ion-grid>
                     <ion-row>
-                        <ion-col v-for="group in subjectsInfo.groups" :key="group.id" >
+                        <ion-col v-for="group in subjectsInfo.groups" :key="group.id">
                             <ion-button expand="full" color="primary" @click="setGroup(group)">
                                 {{ group.group }}
                             </ion-button>
@@ -228,26 +228,27 @@
                 await loading.present();
                 Storage.methods.getSubjectInfo(this.subject_id).then((response) => {
                     const groups = Storage.getItem('user').groups
-                    const group = groups.find((grp) => grp.semester === this.semester.id)
+                    const group = groups !== null ? groups.find((grp) => grp.semester === this.semester.id) : undefined
                     this.subjectsInfo = response
                     this.selectGroup = Storage.is_student() ? group : this.subjectsInfo.groups[0]
                     this.scores = response.scores
                 }).catch(async (error) => {
-                    let message = 'Ошибка сервера.'
-                    if (error.response.data.errors)
-                        message = error.response.data.errors[0].detail
-                    else
-                        message += ' Ошибка номер ' + error.response.status
-                    const toast = await toastController
-                        .create({
-                            message,
-                            position: 'bottom',
-                            translucent: true,
-                            cssClass: 'error-message',
-                            animated: true,
-                            duration: 3000
-                        })
-                    return toast.present();
+                    console.log(error)
+                    // let message = 'Ошибка сервера.'
+                    // if (error.response.data.errors)
+                    //     message = error.response.data.errors[0].detail
+                    // else
+                    //     message += ' Ошибка номер ' + error.response.status
+                    // const toast = await toastController
+                    //     .create({
+                    //         message,
+                    //         position: 'bottom',
+                    //         translucent: true,
+                    //         cssClass: 'error-message',
+                    //         animated: true,
+                    //         duration: 3000
+                    //     })
+                    // return toast.present();
                 }).finally(() => {
                     loading.dismiss()
                 })
