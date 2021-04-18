@@ -22,14 +22,27 @@
                         <p v-if="subject.subject_teachers.find(item => item.head)">
                             {{ subject.subject_teachers.find(item => item.head).fullname }}
                         </p>
-                        <ion-button @click="openScoresTable(subject)">
-                            Журнал
-                        </ion-button>
+
+                    </ion-col>
+                    <ion-col size="12">
+                        <ion-row>
+                            <ion-col>
+                                <ion-button expand="block"
+                                            :href="'https://eios.kgsxa.ru/course/view.php?id='+subject.eios_course_id">
+                                    Курс в еиос
+                                </ion-button>
+
+                            </ion-col>
+                            <ion-col>
+                                <ion-button expand="block" @click="openScoresTable(subject)">
+                                    Журнал
+                                </ion-button>
+                            </ion-col>
+                        </ion-row>
                     </ion-col>
                 </ion-row>
+
             </ion-grid>
-            <!--            <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"-->
-            <!--                          :subject_name="selectedSubject.name" v-if="open"></scores-table>-->
             <teacher-scores-table :open_dialog="teacher_open" @close-dialog="closeScorestable"
                                   :subject_id="selectedSubject.id" :disabled="is_student"
                                   :subject_name="selectedSubject.name" v-if="teacher_open">
