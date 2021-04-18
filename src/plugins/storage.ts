@@ -118,17 +118,8 @@ const Storage = {
             return subjects.data
         },
         getSubjectInfo: async (subjectId: number, week: number = 0) => {
-            let selectWeek = 0
-            if (week === 0) {
-                selectWeek = Storage.getItem('semester').current_week
-            } else selectWeek = week
-            const journal = await http.get('api/subject/' + subjectId + '/journal/', {
-                params: {
-                    week: selectWeek,
-                    group_id: Storage.is_student() ? Storage.getItem('group').id : undefined,
-                }
-            })
-            console.log(journal)
+            const journal = await http.get('api/subject/' + subjectId + '/journal/')
+            console.log(journal.data)
             return journal.data
         },
         getSubjectsScores: async (subjectId: number) => {

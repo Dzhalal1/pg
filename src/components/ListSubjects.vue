@@ -26,10 +26,10 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
-            <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"
-                          :subject_name="selectedSubject.name" v-if="open"></scores-table>
+<!--            <scores-table :open_dialog="open" @close-dialog="closeScorestable" :subject_id="selectedSubject.id"-->
+<!--                          :subject_name="selectedSubject.name" v-if="open"></scores-table>-->
             <teacher-scores-table :open_dialog="teacher_open" @close-dialog="closeScorestable"
-                                  :subject_id="selectedSubject.id"
+                                  :subject_id="selectedSubject.id" :disabled="is_student"
                                   :subject_name="selectedSubject.name" v-if="teacher_open">
 
             </teacher-scores-table>
@@ -51,7 +51,7 @@
     } from '@ionic/vue';
     import {chevronBackOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
-    import ScoresTable from "../views/ScoresTable";
+    // import ScoresTable from "../views/ScoresTable";
     import TeacherScoresTable from "./TeacherScoresTable";
 
     export default {
@@ -66,7 +66,7 @@
             IonRow,
             IonIcon,
             IonButton,
-            ScoresTable
+            // ScoresTable
         },
         data() {
             return {
@@ -75,6 +75,7 @@
                 open: false,
                 selectedSubject: [],
                 semester: {},
+                is_student: Storage.is_student(),
                 teacher_open: false
             }
         },
@@ -89,8 +90,8 @@
             },
             openScoresTable(subject) {
                 this.selectedSubject = subject
-                this.open = Storage.is_student()
-                this.teacher_open = !Storage.is_student()
+                // this.open = Storage.is_student()
+                this.teacher_open = true
             },
             async loadSubjects() {
                 const loading = await loadingController.create({

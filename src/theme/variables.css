@@ -138,7 +138,7 @@ http://ionicframework.com/docs/theming/ */
         --ion-color-medium-shade: #86888f;
         --ion-color-medium-tint: #a2a4ab;
 
-        --ion-color-light: #222428;
+        --ion-color-light: #ffffff;
         --ion-color-light-rgb: 34, 36, 40;
         --ion-color-light-contrast: #ffffff;
         --ion-color-light-contrast-rgb: 255, 255, 255;
@@ -156,7 +156,6 @@ http://ionicframework.com/docs/theming/ */
 
         --ion-text-color: #ffffff;
         --ion-text-color-rgb: 255, 255, 255;
-
         --ion-color-step-50: #0d0d0d;
         --ion-color-step-100: #1a1a1a;
         --ion-color-step-150: #262626;
