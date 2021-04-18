@@ -18,12 +18,11 @@ const Storage = {
             return token
         },
         signOut() {
-          localStorage.clear()
+            localStorage.clear()
             delete http.defaults.headers.common['Authorization']
         },
         getUserInfo: async () => {
             const user = await http.get('api/users/me/')
-            console.log(user)
             Storage.setItem('user', user.data)
         },
         getLastSemester: async () => {
@@ -98,13 +97,18 @@ const Storage = {
         getGroupInfo: async () => {
             const groups = Storage.getItem('user').groups
             const semester = Storage.getItem('semester')
-            const group = groups.find((grp: any) => grp.semester === semester.id)
-            Storage.setItem('learning_form', group.learning_form)
+            let group = groups.find((grp: any) => grp.semester === semester.id)
+            console.log(groups.length)
+            if (group === undefined) {
+                group = groups[groups.length - 1]
+            }
             Storage.setItem('group', group)
+            Storage.setItem('learning_form', group.learning_form)
         },
         getAcademicYear: async () => {
-            const year = await http.get('api/base/get_academic_year/')
-            return year.data.data
+            const year = await http.get('api/base/academic_years/')
+            console.log(year)
+            return year.data
         },
         getSubjects: async () => {
             let url = ''

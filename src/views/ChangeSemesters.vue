@@ -7,7 +7,7 @@
                         <ion-select class="select_years" placeholder="Учебный год" v-model="select_year"
                                     ok-text="Принять" cancel-text="Отклонить">
                             <ion-select-option v-for="year in academic_years" :key="year.id" :value="year.id">
-                                {{year.attributes.title}}
+                                {{year.title}}
                             </ion-select-option>
                         </ion-select>
                     </ion-col>
@@ -61,6 +61,8 @@
         IonSelectOption,
         IonRow,
         IonGrid,
+        toastController,
+
         // IonImg,
         // IonRippleEffect,
         // IonHeader,
@@ -89,14 +91,30 @@
                 this.isOpenRef = false
                 this.$emit('close-dialog', this.isOpenRef)
             },
-            changeSemester() {
+            async changeSemester() {
                 if (this.select_semester !== 0) {
-                    Storage.setItem('semester', this.semesters.find(item => item.id === this.select_semester))
                     if (Storage.is_student()) {
-                        Storage.methods.getGroupInfo().then(() => {
-                            this.closeMe()
-                        })
+                        const groups = Storage.getItem('user').groups
+                        if (groups.find((grp) => grp.semester === this.select_semester)) {
+                            Storage.setItem('semester', this.semesters.find(item => item.id === this.select_semester))
+                            Storage.methods.getGroupInfo().then(() => {
+                                this.closeMe()
+                            })
+                            console.log("artem")
+                        } else {
+                            const toast = await toastController
+                                .create({
+                                    message: "Нет группы в данном семестре",
+                                    position: 'bottom',
+                                    translucent: true,
+                                    cssClass: 'error-message',
+                                    animated: true,
+                                    duration: 2000
+                                })
+                            return toast.present();
+                        }
                     } else {
+                        Storage.setItem('semester', this.semesters.find(item => item.id === this.select_semester))
                         this.closeMe()
                     }
                 }
@@ -116,7 +134,7 @@
         computed: {
             semesters() {
                 if (this.select_year !== 0) {
-                    return this.academic_years.find(item => item.id === this.select_year).attributes.semester_set
+                    return this.academic_years.find(item => item.id === this.select_year).semesters
                 } else return []
             }
         },
@@ -139,6 +157,7 @@
             // IonToolbar,
             // IonTitle,
             IonContent,
+
             // IonPage
         },
     }
