@@ -124,11 +124,10 @@ const Storage = {
             if (week === 0) {
                 selectWeek = Storage.getItem('semester').current_week
             } else selectWeek = week
-            const subjectinfo = await http.get('api/teachers/subjects_info/' + subjectId + '/', {
+            const subjectinfo = await http.get('api/teachers/' + subjectId + '/journal/', {
                 params: {
                     week: selectWeek,
-                    group_id: Storage.is_student() ? Storage.getItem('group').id : 0,
-                    subject_id: subjectId
+                    group_id: Storage.is_student() ? Storage.getItem('group').id : undefined,
                 }
             })
             return subjectinfo.data.data.data
