@@ -21,27 +21,18 @@
                         </p>
                     </ion-col>
                     <ion-col size="4" class="ion-text-center">
-                        {{formatDate(statement.date_close)}}
+                        {{statement.date_close}}
                     </ion-col>
                     <ion-col size="2" class="ion-text-end">
                         {{statement.group}}
-                        <ion-button fill="clear" :disabled="statement.link === ''"
-                                    @click="downloadStatements(statement.link)">
-                            <ion-icon
-                                    :icon="downloadOutline"/>
-                        </ion-button>
-                    </ion-col>
-                    <ion-col size="12" class="ion-text-end">
-                        <ion-button v-if="!is_student" @click="signStatement(statement.id)" :disabled="!statement.open">
-                            Подписать
+                        <ion-button fill="clear" v-if="statement.file" :disabled="statement.link === ''"
+                                    @click="downloadStatements(statement.file)">
+                            <ion-icon :icon="downloadOutline"/>
                         </ion-button>
                     </ion-col>
                 </ion-row>
             </ion-grid>
         </ion-content>
-        <scores-accept v-if="open_scores_table" :close_subject_id="selected_close_subject_id"
-                       @close-dialog="closeScoresAccept"
-                       :open_modal="open_scores_table"></scores-accept>
     </ion-page>
 </template>
 
@@ -59,12 +50,10 @@
     } from '@ionic/vue';
     import {chevronBackOutline, downloadOutline} from 'ionicons/icons';
     import Storage from "../plugins/storage";
-    import ScoresAccept from "./ScoresAccept";
 
     export default {
         name: "Statements",
         components: {
-            ScoresAccept,
             IonPage,
             IonContent,
             IonHeader,
@@ -111,14 +100,12 @@
                 return String(str).split('-').reverse().join('.')
             },
             downloadStatements(file_link) {
-                // Storage.methods.downloadStatements(pdf).then((response) => {
                 const link = document.createElement('a')
-                link.href = 'https://mrs.kgsxa.ru/media/' + file_link
+                link.href = 'https://mrs.kgsxa.ru' + file_link
                 link.setAttribute('download', '123.pdf')
                 link.setAttribute('target', '_blank')
                 document.body.appendChild(link)
                 link.click()
-                // })
             },
             async getStatements() {
                 const loading = await loadingController.create({

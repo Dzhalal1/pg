@@ -83,16 +83,14 @@ const Storage = {
         },
         getStatements: async () => {
             let url = ''
-            let params = {}
             if (Storage.is_student()) {
-                url = 'api/students/close_subjects/'
-                params = {group_id: Storage.getItem('group').id}
+                url = `api/group/${Storage.getItem('group').id}/close_subjects`
             } else {
-                url = 'api/teachers/close_subjects/'
-                params = {semester_id: Storage.getItem('semester').id, learn_form: Storage.getItem('learning_form')}
+                url = `api/teacher/${Storage.getItem('user').id}/close_subjects/${Storage.getItem('semester').id}/${Storage.getItem('learning_form')}/`
             }
-            const statement = await http.get(url, {params})
-            return statement.data.data.data ? statement.data.data.data : statement.data.data
+            const statements = await http.get(url, )
+            console.log(statements)
+            return statements.data
         },
         getGroupInfo: async () => {
             const groups = Storage.getItem('user').groups

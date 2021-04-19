@@ -121,6 +121,17 @@
                             </ion-row>
                         </ion-col>
                     </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-col size="12" class="ion-text-end">
+                                <!--                                <ion-button v-if="!is_student" @click="signStatement(statement.id)"-->
+                                <!--                                            :disabled="!statement.open">-->
+                                <!--                                    Подписать-->
+                                <!--                                </ion-button>-->
+                                Дата закрытия ведомости{{dateClose}}
+                            </ion-col>
+                        </ion-col>
+                    </ion-row>
                 </ion-grid>
             </ion-content>
         </ion-page>
@@ -315,7 +326,6 @@
             },
 
         },
-
         mounted() {
             this.isOpenRef = this.open_dialog
             this.semester = Storage.getItem('semester')
@@ -358,6 +368,16 @@
                         week: "",
                     }
                 }
+            },
+            dateClose() {
+                let date_close = ''
+                if (this.subjectsInfo.dates_close) {
+                    date_close = this.subjectsInfo.dates_close.find(date => date.group_id === this.selectGroup.id)
+                    if (date_close){
+                        date_close = date_close.date_close
+                    }
+                }
+                return date_close
             }
         },
         components: {
