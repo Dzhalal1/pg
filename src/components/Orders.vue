@@ -24,7 +24,7 @@
             {{ order.semester }}
           </ion-col>
           <ion-col size="2" class="ion-text-end">
-            <ion-icon class="check" :icon="checkmarkOutline" v-if="order.acepted"/>
+            <ion-icon class="check" :icon="checkmarkOutline" v-if="order.date_teacher !== null"/>
           </ion-col>
         </ion-row>
         <ion-row v-if="orders.length === 0">
@@ -34,26 +34,26 @@
       <ion-grid class="statements" v-else>
         <ion-row v-for="(order,index) in orders" :key="index">
           <ion-col size="6">
-            <p>{{ order.attributes.subject }}
+            <p>{{ order.subject }}
             </p>
           </ion-col>
           <ion-col>
-            <p class="ion-text-end">{{ order.attributes.student }}
+            <p class="ion-text-end">{{ order.student }}
             </p>
             <ion-input type="number"
                        class="ion-text-center"
-                       @change="saveOrders(order.attributes.scores,order.id)"
-                       v-model="order.attributes.scores"></ion-input>
+                       @change="saveOrders(order.scores,order.id)"
+                       v-model="order.scores"></ion-input>
           </ion-col>
           <ion-col size="12" class="ion-text-end">
-            <ion-button @click="signOrder(order.id)" :disabled="order.attributes.closed" expand="full">
+            <ion-button @click="signOrder(order.id)" :disabled="order.closed" expand="full">
               Подписать
             </ion-button>
           </ion-col>
           <ion-col size="12" style="font-size: 8pt" class="ion-text-center">
-            До: {{ formatDate(order.attributes.date_finish) }}
-            Сформирован: {{ formatDate(order.attributes.statement_info.date_formed) }}
-            Подписан: {{ formatDate(order.attributes.statement_info.date_teacher) }}
+            До: {{ formatDate(order.date_finish) }}
+            Сформирован: {{ formatDate(order.statement_info.date_formed) }}
+            Подписан: {{ formatDate(order.statement_info.date_teacher) }}
           </ion-col>
 
         </ion-row>
@@ -136,7 +136,7 @@ export default {
         translucent: true,
       })
       await loading.present();
-      Storage.methods.getOrders().then((response) => {
+      Storage.methods.getOrders(Storage.getItem('user').student).then((response) => {
         this.orders = response
 
       }).catch(async (error) => {

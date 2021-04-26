@@ -59,15 +59,15 @@ const Storage = {
             await http.post(url, form)
             // return orders.data.data.data ? orders.data.data.data : orders.data.data
         },
-        getOrders: async () => {
-            let url = 'api/students/get_not_accept_subjects/'
+        getOrders: async (user_id: number) => {
+            let url = `api/student/${user_id}/orders/`
             let params = {}
             if (!Storage.is_student()) {
-                url = 'api/teachers/get_orders/'
-                params = {learn_form: Storage.getItem('learning_form')}
+                url = `api/teachers/${user_id}/orders/`
+                params = {learn_form_id: Storage.getItem('learning_form')}
             }
             const orders = await http.get(url, {params})
-            return orders.data.data.data ? orders.data.data.data : orders.data.data
+            return orders.data
         },
         signOrders: async (order_id: any) => {
             const url = '/api/teachers/pdf/orders/sign/' + order_id + '/'
