@@ -46,10 +46,14 @@
                     <ion-row class="score">
                         <ion-col>
                             <ion-row v-for="score in selectScores" :key="score.id">
-                                <ion-col size="10" class="ion-text-start">
+                                <ion-col size="9" class="ion-text-start">
                                     {{ score.fullname }}
                                 </ion-col>
-                                <ion-col>{{sumSores(score.student).Rfact }}
+                                <ion-col align="end">{{sumSores(score.student).Rfact }}
+                                </ion-col>
+                                <ion-col align="end" size="1" v-if="isCloseToday">
+                                    <ion-checkbox @ionChange="successSubject($event,score.student)"
+                                                  :checked="subjectsInfo.success_students.findIndex(ss=>ss===score.student)!==-1"></ion-checkbox>
                                 </ion-col>
                                 <ion-col size="12">
                                     <ion-row>
@@ -123,12 +127,18 @@
                     </ion-row>
                     <ion-row>
                         <ion-col>
-                            <ion-col size="12" class="ion-text-end">
-                                <!--                                <ion-button v-if="!is_student" @click="signStatement(statement.id)"-->
-                                <!--                                            :disabled="!statement.open">-->
-                                <!--                                    Подписать-->
-                                <!--                                </ion-button>-->
-                                Дата закрытия ведомости{{dateClose}}
+                            <ion-col size="12">
+                                <ion-button v-if="!is_student && isCloseToday" @click="signStatement"
+                                            expand="full" color="primary">
+                                    Подписать
+                                </ion-button>
+                            </ion-col>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col>
+                            <ion-col size="12">
+                                <p class="ion-text-center"> Дата закрытия ведомости {{dateClose}}</p>
                             </ion-col>
                         </ion-col>
                     </ion-row>
@@ -146,6 +156,7 @@
         IonCol,
         IonContent,
         IonGrid,
+        IonCheckbox,
         IonHeader,
         IonIcon,
         IonInput,
@@ -199,6 +210,18 @@
             setGroup(group) {
                 this.selectGroup = group
             },
+            async successSubject(even, student) {
+                const data = {student_id: student}
+                let method = 'delete'
+                if (even.target.checked) {
+                    method = 'post'
+                    this.subjectsInfo.success_students.push(student)
+                } else {
+                    this.subjectsInfo.success_students.splice(this.subjectsInfo.success_students.findIndex(item => item === student), 1)
+                }
+                console.log(method)
+                await Storage.methods.studenSubjectSuccess(data, `api/subject/${this.subject_id}/success_subject/`, method)
+            },
             getDateWeek(week) {
                 const date_start = new Date(this.semester.start)
                 const date = {
@@ -221,12 +244,28 @@
                     week_end: formatDate(date.week_end)
                 }
             },
+            reverseDate(str = String) {
+                return str.split('-').reverse().join('.')
+            },
             saveScores(row) {
                 Storage.methods.saveScore(row)
             },
             closeMe() {
                 this.isOpenRef = false
                 this.$emit('close-dialog', this.isOpenRef)
+            },
+            async signStatement() {
+                await Storage.methods.signStatement(this.subject_id, this.selectGroup.id)
+                const toast = await toastController
+                    .create({
+                        message: 'Документ успешно подписан',
+                        position: 'bottom',
+                        translucent: true,
+                        cssClass: 'success-message',
+                        animated: true,
+                        duration: 2000
+                    })
+                toast.present();
             },
             async loadSubjectInfo() {
                 const loading = await loadingController.create({
@@ -237,32 +276,12 @@
                     translucent: true,
                 })
                 await loading.present();
-                Storage.methods.getSubjectInfo(this.subject_id).then((response) => {
-                    const groups = Storage.getItem('user').groups
-                    const group = groups !== null ? groups.find((grp) => grp.semester === this.semester.id) : undefined
-                    this.subjectsInfo = response
-                    this.selectGroup = Storage.is_student() ? group : this.subjectsInfo.groups[0]
-                    this.scores = response.scores
-                }).catch(async (error) => {
-                    console.log(error)
-                    // let message = 'Ошибка сервера.'
-                    // if (error.response.data.errors)
-                    //     message = error.response.data.errors[0].detail
-                    // else
-                    //     message += ' Ошибка номер ' + error.response.status
-                    // const toast = await toastController
-                    //     .create({
-                    //         message,
-                    //         position: 'bottom',
-                    //         translucent: true,
-                    //         cssClass: 'error-message',
-                    //         animated: true,
-                    //         duration: 3000
-                    //     })
-                    // return toast.present();
-                }).finally(() => {
-                    loading.dismiss()
-                })
+                this.subjectsInfo = await Storage.methods.getSubjectInfo(this.subject_id)
+                const groups = Storage.getItem('user').groups
+                const group = groups !== null ? groups.find((grp) => grp.semester === this.semester.id) : undefined
+                this.selectGroup = Storage.is_student() ? group : this.subjectsInfo.groups[0]
+                this.scores = this.subjectsInfo.scores
+                await loading.dismiss();
             },
             changeWeek(status) {
                 if (status === 'up') {
@@ -332,6 +351,13 @@
             this.loadSubjectInfo()
         },
         computed: {
+            isCloseToday() {
+                const today = new Date
+                const mm = today.getMonth() + 1;
+                const dd = today.getDate();
+                const today_string = [(dd > 9 ? '' : '0') + dd, (mm > 9 ? '' : '0') + mm, today.getFullYear()].join('.');
+                return today_string === this.reverseDate(this.dateClose)
+            },
             selectScores() {
                 let scores = []
                 if (this.selectGroup.id !== 0) {
@@ -351,6 +377,7 @@
                     })
                 else return []
             },
+
             maxscoreInfo() {
                 const indicators = this.subjectsInfo.week_indicators.find(indicators => Number(indicators.week) === Number(this.semester.current_week + this.week))
                 if (indicators) {
@@ -373,15 +400,16 @@
                 let date_close = ''
                 if (this.subjectsInfo.dates_close) {
                     date_close = this.subjectsInfo.dates_close.find(date => date.group_id === this.selectGroup.id)
-                    if (date_close){
+                    if (date_close) {
                         date_close = date_close.date_close
                     }
                 }
-                return date_close
+                return this.reverseDate(date_close)
             }
         },
         components: {
             // ExploreContainer,
+            IonCheckbox,
             IonInput,
             // IonSelectOption,
             IonModal,

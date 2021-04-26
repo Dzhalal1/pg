@@ -75,10 +75,9 @@ const Storage = {
             return file.data.data
 
         },
-        signStatement: async (id: any) => {
-            const url = '/api/teachers/pdf/closesubjects/sign/' + id + '/'
-            const file = await http.post(url)
-            return file.data.data
+        signStatement: async (subject_id: any, group_id: any) => {
+            const file = await http.post(`/api/decanat/close_subjects/sign/${subject_id}/`, {group_id})
+            return file.data
 
         },
         getStatements: async () => {
@@ -88,8 +87,7 @@ const Storage = {
             } else {
                 url = `api/teacher/${Storage.getItem('user').id}/close_subjects/${Storage.getItem('semester').id}/${Storage.getItem('learning_form')}/`
             }
-            const statements = await http.get(url, )
-            console.log(statements)
+            const statements = await http.get(url,)
             return statements.data
         },
         getGroupInfo: async () => {
@@ -127,10 +125,9 @@ const Storage = {
             console.log(score)
             await http.patch('api/score/' + score.id + '/', score)
         },
-        async studenSubjectSuccess(form: any) {
-            const url = 'api/teachers/scores_from_closesubjects/'
-            const success = await http.post(url, form)
-            return success.data.data
+        async studenSubjectSuccess(form: any, url: string, method: "post" | "delete") {
+            const success = await http.request({url, method, data: form})
+            return success.data
         },
         async getScoresAccept(closesubject_id: number) {
             const scores_accept = await http.get('api/teachers/scores_from_closesubjects/', {
