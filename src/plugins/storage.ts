@@ -38,7 +38,7 @@ const Storage = {
             return reitng.data.data.attributes
         },
         putUserInfo: async (userData: any) => {
-            const user = (await http.put('api/user/update_userinfo/' + userData.id + '/', userData.form)).data.data.attributes
+            const user = (await http.put(`api/users/${userData.id}/`, userData.form)).data
             const userStorage = Storage.getItem('user')
             for (const key in user) {
                 userStorage[key] = user[key]
@@ -47,7 +47,7 @@ const Storage = {
             return user
         },
         changePassword: async (data: any) => {
-            await http.post('api/user/password/', data)
+            await http.post('auth/users/set_password/', data)
         },
         downloadStatements: async (statementId: any) => {
             const statement = await http.post('api/teachers/pdf/closesubjects/download/' + statementId + '/')
