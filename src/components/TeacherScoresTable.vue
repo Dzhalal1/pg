@@ -14,19 +14,19 @@
                 </ion-row>
                 <ion-row class="week">
                     <ion-col size="2" class="ion-text-end">
-                        <ion-button :disabled="(semester.current_week + week) === 1" @click="changeWeek('down')"
+                        <ion-button :disabled="(week) === weeks[0]" @click="changeWeek('down')"
                                     fill="clear">
                             <ion-icon
                                     :icon="chevronBackOutline"/>
                         </ion-button>
                     </ion-col>
                     <ion-col size="8" style="margin-top: -8px !important;">
-                        <p>{{ semester.current_week + week }} неделя</p>
-                        <p>{{ getDateWeek(semester.current_week + week ).week_start }} - {{
-                            getDateWeek(semester.current_week + week ).week_end }}</p>
+                        <p>{{ week }} неделя</p>
+                        <p>{{ getDateWeek(week).week_start }} - {{
+                            getDateWeek(week).week_end }}</p>
                     </ion-col>
                     <ion-col size="2" class="ion-text-start">
-                        <ion-button :disabled="(semester.current_week + week) === 32" @click="changeWeek('up')"
+                        <ion-button :disabled="(week) === weeks[weeks.length - 1]" @click="changeWeek('up')"
                                     fill="clear">
                             <ion-icon :icon="chevronForwardOutline"/>
                         </ion-button>
@@ -200,8 +200,10 @@
                 },
                 scores: [],
                 week: 0,
+                weeks: [],
                 semester: {current_week: 0},
                 summsSores: {},
+                is_student: Storage.is_student()
 
 
             }
@@ -277,6 +279,12 @@
                 })
                 await loading.present();
                 this.subjectsInfo = await Storage.methods.getSubjectInfo(this.subject_id)
+                this.weeks = this.subjectsInfo.weeks
+                for(const w of this.weeks) {
+                    if(w <= this.semester.current_week) {
+                        this.week = w
+                    }
+                }
                 const groups = Storage.getItem('user').groups
                 const group = groups !== null ? groups.find((grp) => grp.semester === this.semester.id) : undefined
                 this.selectGroup = Storage.is_student() ? group : this.subjectsInfo.groups[0]
@@ -361,9 +369,9 @@
             selectScores() {
                 let scores = []
                 if (this.selectGroup.id !== 0) {
-                    scores = this.scores.filter(item => item.week === (this.semester.current_week + this.week) && Number(item.group) === Number(this.selectGroup.id))
+                    scores = this.scores.filter(item => item.week === (this.week) && Number(item.group) === Number(this.selectGroup.id))
                 } else {
-                    scores = this.scores.filter(item => item.week === (this.semester.current_week + this.week))
+                    scores = this.scores.filter(item => item.week === (this.week))
                 }
                 if (scores)
                     return scores.sort((a, b) => {
@@ -379,7 +387,7 @@
             },
 
             maxscoreInfo() {
-                const indicators = this.subjectsInfo.week_indicators.find(indicators => Number(indicators.week) === Number(this.semester.current_week + this.week))
+                const indicators = this.subjectsInfo.week_indicators.find(indicators => Number(indicators.week) === Number(this.week))
                 if (indicators) {
                     return indicators
                 } else {
