@@ -29,13 +29,13 @@ const Storage = {
             const semester = await http.get('api/base/semesters/last/')
             Storage.setItem('semester', semester.data)
         },
-        getVneucRating: async () => {
-            const reitng = await http.get('api/students/vneuch_reitng/', {params: {semester_id: Storage.getItem('semester').id}})
-            return reitng.data.data.attributes.vneuchreit
+        getVneucRating: async (student_id: number) => {
+            const reitng = await http.get(`api/student/${student_id}/extracurricular_rating/${Storage.getItem('semester').id}/`)
+            return reitng.data
         },
-        getIntegralRating: async () => {
-            const reitng = await http.get('api/students/integral_reitng/', {params: {semester_id: Storage.getItem('semester').id}})
-            return reitng.data.data.attributes
+        getIntegralRating: async (student_id: number) => {
+            const reitng = await http.get(`api/student/${student_id}/integral_rating/${Storage.getItem('semester').id}/`)
+            return reitng.data
         },
         putUserInfo: async (userData: any) => {
             const user = (await http.put(`api/users/${userData.id}/`, userData.form)).data

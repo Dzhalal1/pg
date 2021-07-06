@@ -56,7 +56,7 @@
               <p>Учебный</p>
             </ion-col>
             <ion-col class="ion-text-end">
-              {{ parseFloat(integralRating.Ru).toFixed(1) }}
+              {{ parseFloat(integralRating.learning).toFixed(1) }}
             </ion-col>
           </ion-row>
           <ion-row>
@@ -64,7 +64,7 @@
               <p>Внеучебный</p>
             </ion-col>
             <ion-col class="ion-text-end">
-              {{ parseFloat(integralRating.Rv).toFixed(1) }}
+              {{ parseFloat(integralRating.extracurricular).toFixed(1) }}
             </ion-col>
           </ion-row>
           <ion-row>
@@ -72,7 +72,7 @@
               <p>Интегральный</p>
             </ion-col>
             <ion-col class="ion-text-end">
-              {{ parseFloat(integralRating.Ri).toFixed(1) }}
+              {{ parseFloat(integralRating.learning*0.8+integralRating.extracurricular*0.2).toFixed(1) }}
             </ion-col>
           </ion-row>
         </ion-col>
@@ -140,28 +140,28 @@ export default defineComponent({
       if (this.vneucRating === null) {
         return 0
       } else {
-        return this.vneucRating.rvneuch.obsh1 + this.vneucRating.rvneuch.obsh2 + this.vneucRating.rvneuch.obsh3
+        return this.vneucRating.obsh1 + this.vneucRating.obsh2 + this.vneucRating.obsh3
       }
     },
     nauchReit() {
       if (this.vneucRating === null) {
         return 0
       } else {
-        return this.vneucRating.rvneuch.nauch1 + this.vneucRating.rvneuch.nauch2 + this.vneucRating.rvneuch.nauch3
+        return this.vneucRating.nauch1 + this.vneucRating.nauch2 + this.vneucRating.nauch3
       }
     },
     sportReit() {
       if (this.vneucRating === null) {
         return 0
       } else {
-        return this.vneucRating.rvneuch.sport1 + this.vneucRating.rvneuch.sport2 + this.vneucRating.rvneuch.sport3
+        return this.vneucRating.sport1 + this.vneucRating.sport2 + this.vneucRating.sport3
       }
     },
     vospReit() {
       if (this.vneucRating === null) {
         return 0
       } else {
-        return this.vneucRating.rvosp.vosp1 + this.vneucRating.rvosp.vosp2 + this.vneucRating.rvosp.vosp3
+        return this.vneucRating.vosp1 + this.vneucRating.vosp2 + this.vneucRating.vosp3
       }
     },
 
@@ -176,7 +176,7 @@ export default defineComponent({
         translucent: true,
       })
       await loading.present();
-      Storage.methods.getVneucRating().then((response) => {
+      Storage.methods.getVneucRating(Storage.getItem('user').student).then((response) => {
         this.vneucRating = response
 
       }).catch(async (error) => {
@@ -196,7 +196,7 @@ export default defineComponent({
             })
         return toast.present();
       }).finally(() => {
-        Storage.methods.getIntegralRating().then((response) => {
+        Storage.methods.getIntegralRating(Storage.getItem('user').student).then((response) => {
           this.integralRating = response
         }).catch(async (error) => {
           let message = 'Ошибка сервера.'
