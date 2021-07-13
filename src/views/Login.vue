@@ -133,7 +133,7 @@
                 }).catch(async (error) => {
                     let message = 'Ошибка сервера'
                     if (error.response.status === 400)
-                        message = error.response.data.errors[0].detail
+                        message = 'Ошибка при авторизации'
                     const toast = await toastController
                         .create({
                             message,

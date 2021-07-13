@@ -221,7 +221,6 @@
                 } else {
                     this.subjectsInfo.success_students.splice(this.subjectsInfo.success_students.findIndex(item => item === student), 1)
                 }
-                console.log(method)
                 await Storage.methods.studenSubjectSuccess(data, `api/subject/${this.subject_id}/success_subject/`, method)
             },
             getDateWeek(week) {

@@ -63,7 +63,7 @@ const Storage = {
             let url = `api/student/${user_id}/orders/`
             let params = {}
             if (!Storage.is_student()) {
-                url = `api/teachers/${user_id}/orders/`
+                url = `api/teacher/${user_id}/orders/`
                 params = {learn_form_id: Storage.getItem('learning_form')}
             }
             const orders = await http.get(url, {params})
@@ -83,7 +83,7 @@ const Storage = {
         getStatements: async () => {
             let url = ''
             if (Storage.is_student()) {
-                url = `api/group/${Storage.getItem('group').id}/close_subjects`
+                url = `api/group/${Storage.getItem('group').id}/close_subjects/`
             } else {
                 url = `api/teacher/${Storage.getItem('user').id}/close_subjects/${Storage.getItem('semester').id}/${Storage.getItem('learning_form')}/`
             }

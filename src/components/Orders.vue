@@ -52,8 +52,8 @@
           </ion-col>
           <ion-col size="12" style="font-size: 8pt" class="ion-text-center">
             До: {{ formatDate(order.date_finish) }}
-            Сформирован: {{ formatDate(order.statement_info.date_formed) }}
-            Подписан: {{ formatDate(order.statement_info.date_teacher) }}
+            Сформирован: {{ formatDate(order.date_formed) }}
+            Подписан: {{ formatDate(order.date_teacher) }}
           </ion-col>
 
         </ion-row>
@@ -136,7 +136,11 @@ export default {
         translucent: true,
       })
       await loading.present();
-      Storage.methods.getOrders(Storage.getItem('user').student).then((response) => {
+      let user_id = Storage.getItem('user').student
+      if (!Storage.is_student()) {
+        user_id = Storage.getItem('user').id
+      }
+      Storage.methods.getOrders(user_id).then((response) => {
         this.orders = response
 
       }).catch(async (error) => {
@@ -160,7 +164,11 @@ export default {
       })
     },
     formatDate(str) {
-      return String(str).split('-').reverse().join('.')
+      const date = String(str).split('-').reverse().join('.')
+      if(str) {
+        return date
+      }
+      return '-'
     },
   },
   mounted() {
