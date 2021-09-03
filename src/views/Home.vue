@@ -28,7 +28,7 @@
             </ion-col>
           </ion-row>
         </a>
-        <a href="https://kgsxa.ru/images/files/raspisanie_2020-2021_2/www/index.htm">
+        <a href="https://kgsxa.ru/images/files/raspisanie_2021-2022_1/www/bg.htm">
           <ion-row class="calendar ion-align-items-center ion-activatable ripple-parent">
             <ion-ripple-effect></ion-ripple-effect>
             <ion-col>
