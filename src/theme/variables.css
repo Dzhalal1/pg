@@ -230,6 +230,10 @@ http://ionicframework.com/docs/theming/ */
     }
 }
 
+* {
+    font-family: "SFProDisplay-Medium", sans-serif !important;
+}
+
 .toolbar-container {
     /*border-radius: 50px !important;*/
 }
@@ -246,12 +250,12 @@ ion-tab-button {
 }
 
 
-
 ion-toast.error-message {
     --background: #ebc8c4 !important;
     font-family: "Jost SemiBold", sans-serif;
     color: #a22c26;
 }
+
 ion-toast.success-message {
     --background: #d4edda !important;
     font-family: "Jost SemiBold", sans-serif;
@@ -306,5 +310,9 @@ ion-loading .loading-wrapper {
 @font-face {
     font-family: 'SFProDisplayMedium';
     src: url('./../fonts/SFProDisplayMedium.ttf');
+}
+@font-face {
+    font-family: 'SFProDisplay-Medium';
+    src: url('./../fonts/SFProDisplay-Medium.ttf');
 }
 
