@@ -233,6 +233,9 @@ http://ionicframework.com/docs/theming/ */
 * {
     font-family: "SFProDisplay-Medium", sans-serif !important;
 }
+ion-toggle {
+    height: 20px;
+}
 
 .toolbar-container {
     /*border-radius: 50px !important;*/
